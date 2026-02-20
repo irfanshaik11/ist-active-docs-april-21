@@ -1,0 +1,21 @@
+import{u as t,j as e}from"./index-Cfn9vID0.js";const a={title:"The Outpost",description:"undefined"};function n(s){const r={a:"a",div:"div",h1:"h1",h2:"h2",h3:"h3",header:"header",hr:"hr",li:"li",p:"p",strong:"strong",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...t(),...s.components};return e.jsxs(e.Fragment,{children:[e.jsx(r.header,{children:e.jsxs(r.h1,{id:"the-outpost",children:["The Outpost",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#the-outpost",children:e.jsx(r.div,{"data-autolink-icon":!0})})]})}),`
+`,e.jsxs(r.h2,{id:"ranks--rewards",children:["Ranks & Rewards",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#ranks--rewards",children:e.jsx(r.div,{"data-autolink-icon":!0})})]}),`
+`,e.jsxs(r.p,{children:["Claim up to ",e.jsx(r.strong,{children:"45% cashback"})," on every trade."]}),`
+`,e.jsxs(r.p,{children:["Head over to ",e.jsx(r.a,{href:"https://interstate.so",children:"Interstate.so"})," and complete the required steps to start earning your cashback right away."]}),`
+`,e.jsx(r.hr,{}),`
+`,e.jsxs(r.h2,{id:"rewards",children:["Rewards",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#rewards",children:e.jsx(r.div,{"data-autolink-icon":!0})})]}),`
+`,e.jsxs(r.h3,{id:"gold",children:["Gold",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#gold",children:e.jsx(r.div,{"data-autolink-icon":!0})})]}),`
+`,e.jsx(r.p,{children:"Gold is the foundation of the Outpost reward system. You accumulate Gold with every action you take on the platform — every trade executed and every quest completed adds to your balance."}),`
+`,e.jsxs(r.ul,{children:[`
+`,e.jsxs(r.li,{children:[e.jsx(r.strong,{children:"Trade to earn"})," — Receive Gold for every dollar in volume you generate."]}),`
+`,e.jsxs(r.li,{children:[e.jsx(r.strong,{children:"Daily streaks"})," — Keep your trading streak alive for daily Gold bonuses. The longer your streak, the larger the reward."]}),`
+`,e.jsxs(r.li,{children:[e.jsx(r.strong,{children:"Rank progression"})," — Climbing through the ranks earns you Gold payouts and unlocks higher Gold multipliers."]}),`
+`,e.jsxs(r.li,{children:[e.jsx(r.strong,{children:"Quests"})," — Complete daily and seasonal quests to collect additional Gold."]}),`
+`,e.jsxs(r.li,{children:[e.jsx(r.strong,{children:"Special events"})," — Watch for limited-time quests that award bonus Gold and multiplier boosts."]}),`
+`]}),`
+`,e.jsxs(r.h3,{id:"solana",children:["Solana",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#solana",children:e.jsx(r.div,{"data-autolink-icon":!0})})]}),`
+`,e.jsxs(r.p,{children:["Solana rewards come from two sources: Cashback and the Referral System. As you advance through the Outpost ranks and engage with quests, your cashback can reach up to ",e.jsx(r.strong,{children:"45%"}),", and your referral fee share can climb as high as ",e.jsx(r.strong,{children:"50%"}),"."]}),`
+`,e.jsx(r.hr,{}),`
+`,e.jsxs(r.h2,{id:"outpost-ranks",children:["Outpost Ranks",e.jsx(r.a,{"aria-hidden":"true",tabIndex:"-1",href:"#outpost-ranks",children:e.jsx(r.div,{"data-autolink-icon":!0})})]}),`
+`,e.jsx(r.p,{children:"The Outpost is built around progression. Each rank you reach unlocks larger multipliers, better rewards, and exclusive perks."}),`
+`,e.jsxs(r.table,{children:[e.jsx(r.thead,{children:e.jsxs(r.tr,{children:[e.jsx(r.th,{children:"Rank"}),e.jsx(r.th,{children:"Cashback"}),e.jsx(r.th,{children:"Gold Multiplier"})]})}),e.jsxs(r.tbody,{children:[e.jsxs(r.tr,{children:[e.jsx(r.td,{children:e.jsx(r.strong,{children:"Degen"})}),e.jsx(r.td,{children:"10%"}),e.jsx(r.td,{children:"1x"})]}),e.jsxs(r.tr,{children:[e.jsx(r.td,{children:e.jsx(r.strong,{children:"Warrior"})}),e.jsx(r.td,{children:"15%"}),e.jsx(r.td,{children:"2x"})]}),e.jsxs(r.tr,{children:[e.jsx(r.td,{children:e.jsx(r.strong,{children:"Gladiator"})}),e.jsx(r.td,{children:"20%"}),e.jsx(r.td,{children:"2.5x"})]}),e.jsxs(r.tr,{children:[e.jsx(r.td,{children:e.jsx(r.strong,{children:"Commander"})}),e.jsx(r.td,{children:"25%"}),e.jsx(r.td,{children:"3x"})]}),e.jsxs(r.tr,{children:[e.jsx(r.td,{children:e.jsx(r.strong,{children:"Titan"})}),e.jsx(r.td,{children:"35%"}),e.jsx(r.td,{children:"4x"})]})]})]})]})}function i(s={}){const{wrapper:r}={...t(),...s.components};return r?e.jsx(r,{...s,children:e.jsx(n,{...s})}):n(s)}export{i as default,a as frontmatter};

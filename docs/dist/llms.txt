@@ -3,8 +3,11 @@
 ## Docs
 
 - [Validator Quickstart](/benefits-and-risks): Like flashbots & mev-boost, interstate offers a way to earn additional rewards for validators without having to put up any capital and minimal risk. It is almost a free lunch :).
+- [FAQs](/faqs): Interstate is an all-in-one onchain trading platform built so you never need to switch between apps. We bring together a full suite of integrations, letting you trade the most in-demand assets from a single interface.
 - [Intro](/intro): Interstate currently offers:
 - [Example](/privacy-policy): This is an example page.
+- [The Outpost](/rewards): Claim up to **45% cashback** on every trade.
+- [Support](/support): This page provides clear instructions to join our Telegram group and get help from the team. Follow each step carefully to avoid scams and ensure a smooth experience.
 - [Terms of Service](/terms-of-service): Please see our terms of service here:
 - [Setting Up Web3Signer](/validator/how-to-run-signer): You can run Web3Signer, CommitBoost Signer (with Dirk, or Web3Signer) as a signer. Signers allow you to safely use your keystores to sign messages, without exposing them. Interstate asks you to sign a one time message letting your relays know which RPC per beacon node is opted into.
 - [Connect to web3signer server.](/validator/how-to-run-signer): You can run Web3Signer, CommitBoost Signer (with Dirk, or Web3Signer) as a signer. Signers allow you to safely use your keystores to sign messages, without exposing them. Interstate asks you to sign a one time message letting your relays know which RPC per beacon node is opted into.
