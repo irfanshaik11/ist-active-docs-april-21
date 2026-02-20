@@ -3,8 +3,9 @@ import { defineConfig } from 'vocs'
 export default defineConfig({
   title: 'Interstate',
   titleTemplate: '%s | Interstate',
+  iconUrl: '/favicon.png',
   topNav: [
-    { text: 'Docs', link: '/terms-of-service' },
+    { text: 'Docs', link: '/faqs' },
     { text: 'Launch App', link: 'https://app.interstate.so' },
   ],
   sidebar: [
