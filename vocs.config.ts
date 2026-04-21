@@ -22,6 +22,10 @@ export default defineConfig({
       link: '/support',
     },
     {
+      text: 'Points',
+      link: '/points',
+    },
+    {
       text: 'Terms of Service',
       link: '/terms-of-service',
     },
