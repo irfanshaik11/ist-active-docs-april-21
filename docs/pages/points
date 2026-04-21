@@ -1,0 +1,202 @@
+---
+title: "Introducing the Interstate Points Program"
+description: "Earn Credits, rack up Points, and claim your share of the Moonsheet."
+date: 2026-04-21
+---
+
+# Introducing the Interstate Points Program
+
+Every trade you place, every referral you bring in, every quest you complete on Interstate now counts toward something real: a share of the **Moonsheet** — our airdrop pool worth up to **$50M at full valuation**.
+
+This post breaks down exactly how the program works, how to climb the ranks, and how your activity converts into tokens when the Moonsheet lands.
+
+---
+
+## The Two-Tier System
+
+Interstate rewards two different things, and we use two different currencies to track them.
+
+**Credits** measure your engagement. You earn them by trading, completing quests, referring friends, and showing up consistently. Credits level up your bird — a persistent on-platform identity that evolves as you grind.
+
+**Points** measure your economic contribution. They're driven by the volume you push through the terminal and the fees that volume generates. Points determine the size of your Moonsheet allocation.
+
+Your final Moonsheet score combines both:
+
+```
+POINT = (credit_multiplier × Credits) + (Volume ÷ 10)
+```
+
+Credits get you on the board. Points get you paid.
+
+---
+
+## Your Bird: The Leveling System
+
+Every Interstate account is tied to a bird. Your bird starts at Level 1 and can evolve all the way to Level 300. Levels are purely a function of Credits spent — 1 Credit = 1 XP toward the next level.
+
+The cost to advance from Level L to Level L+1 is:
+
+```
+100 × L Credits
+```
+
+So going from Level 1 → 2 costs 100 Credits. Going from 150 → 151 costs 15,000. Going from 299 → 300 costs 29,900.
+
+Cumulative Credits to reach any level N follows a clean closed form:
+
+```
+Total Credits = 50 × N × (N − 1)
+```
+
+### Milestone Costs
+
+| Level | Cumulative Credits |
+| ----: | -----------------: |
+|    10 |              4,500 |
+|    25 |             30,000 |
+|    50 |            122,500 |
+|   100 |            495,000 |
+|   150 |          1,117,500 |
+|   200 |          1,990,000 |
+|   250 |          3,112,500 |
+|   300 |          4,485,000 |
+
+Early levels come fast — new users will see their bird evolve within minutes of their first trades. Late levels are an endgame grind. Only the most dedicated traders and recruiters will ever see Level 300.
+
+---
+
+## How to Earn Credits
+
+There are four ways to earn: social, daily, seasonal, and referrals.
+
+### Social Quests
+
+One-time and repeatable tasks for plugging into the Interstate ecosystem.
+
+| Quest              | Credits | Notes                                |
+| ------------------ | ------: | ------------------------------------ |
+| Connect X Account  |     300 | One-time                             |
+| Follow @interstatefdn | 200  | One-time                             |
+| Join Telegram      |     250 | One-time                             |
+| Engage with a Post |     250 | Repeatable on new featured posts     |
+
+Social tasks alone will get you to roughly Level 20–50. To climb higher, you need to trade.
+
+### Daily Quests
+
+Repeatable every 24 hours. These are the backbone of long-term progression.
+
+| Quest                                 | Credits |
+| ------------------------------------- | ------: |
+| Volume King — Trade $500 in volume    |   1,500 |
+| Trading Spree — Make 10 trades        |   1,200 |
+| Volume Grinder — Trade $100 in volume |     900 |
+| High Five — Make 5 trades             |     800 |
+| Volume Builder — Trade $50 in volume  |     600 |
+| Triple Threat — Make 3 trades         |     500 |
+| Volume Starter — Trade $10 in volume  |     300 |
+| First Trade — Make 1 trade            |     200 |
+
+### Seasonal Quests
+
+Bigger milestones that reset each season.
+
+| Quest                                  | Credits |
+| -------------------------------------- | ------: |
+| $5K Trader — Trade $5,000 in volume    |  12,000 |
+| Century Club — Complete 100 trades     |   8,000 |
+| First $1K — Trade $1,000 in volume     |   4,000 |
+| Dedicated — Complete 50 trades         |   4,000 |
+| Week Warrior — Trade 7 days in a row   |   3,000 |
+| Consistent — Complete 25 trades        |   3,000 |
+| $500 Volume — Trade $500 in volume     |   2,500 |
+| Active Trader — Complete 10 trades     |   2,000 |
+| 5-Day Streak — Trade 5 days in a row   |   2,000 |
+| First $100 — Trade $100 in volume      |   1,200 |
+| 3-Day Streak — Trade 3 days in a row   |   1,000 |
+| Getting Started — Complete 5 trades    |   1,000 |
+| First $50 — Trade $50 in volume        |     800 |
+| First Steps — Complete 3 trades        |     700 |
+| 2-Day Streak — Trade 2 days in a row   |     600 |
+
+### Referral Rank-Up Quests
+
+Permanent rewards for bringing active traders into Interstate.
+
+| Milestone              | Credits |
+| ---------------------- | ------: |
+| Recruit 1 active trader |   2,000 |
+| Recruit 3 active traders |  5,000 |
+| Recruit 5 active traders |  8,000 |
+| Recruit 10 active traders | 15,000 |
+| Recruit 20 active traders | 25,000 |
+| Recruit 50 active traders | 50,000 |
+| Recruit 100 active traders | 100,000 |
+
+### Referral Seasonal Quests
+
+Deeper rewards when your referrals themselves climb the ranks.
+
+| Quest                   | Credits |
+| ----------------------- | ------: |
+| Recruit 5 Warriors      |   6,000 |
+| Recruit 5 Gladiators    |  10,000 |
+| Recruit 2 Commanders    |  15,000 |
+| Recruit 1 Titan         |  25,000 |
+
+---
+
+## What Gets You Where
+
+Different tiers of the leveling system correspond to different kinds of players.
+
+- **Level 1–50** — social tasks plus light trading. Anyone who shows up gets here.
+- **Level 50–100** — daily + seasonal trading quests become the dominant source.
+- **Level 100–150** — requires consistent trading focus across multiple seasonal milestones.
+- **Level 150–200** — heavy trading volume plus meaningful referral progress.
+- **Level 200–250** — every trading quest cleared plus a deep referral tree.
+- **Level 250–300** — maxing everything, repeatedly. Daily grind, every seasonal quest, every referral tier, plus repeatable social engagement. True endgame.
+
+---
+
+## Points & The Moonsheet
+
+Credits are one half of the equation. **Points** are the other.
+
+Points are earned from your trading volume and the fees that volume generates. They're the direct measure of how much economic activity you've contributed to Interstate, and they're what determines your allocation when the Moonsheet drops.
+
+### Volume-to-Points Conversion
+
+- Every **$100 in trading volume → 1 Point-equivalent base unit**
+- **20 Points per verified referred user**, 1 Point per unverified referred user
+- **0.10% kickback** on all referred volume once your referrals cross $100K total
+- Fees generated count directly toward your Points total
+
+### Moonsheet Allocation
+
+The Moonsheet is a **10% airdrop pool** denominated against the $INTR token's fully diluted valuation at launch.
+
+| Launch FDV | Moonsheet Pool |
+| ---------: | -------------: |
+|       $50M |            $5M |
+|      $100M |           $10M |
+|      $200M |           $25M |
+|      $500M |           $50M |
+
+Your final allocation is your share of the total Points pool, applied against the Moonsheet size at launch. More Points, more tokens. Simple as that.
+
+---
+
+## Getting Started
+
+1. **Connect your wallet** and link your X account in the dashboard.
+2. **Knock out the social quests** — a free 1,000 Credits and a Level 20 bird in under five minutes.
+3. **Place your first trade** — First Trade + First Steps + First $50 stack for 1,700 Credits off a single small position.
+4. **Come back tomorrow** — daily quests reset, and streak bonuses compound.
+5. **Refer your traders** — the compounding bonuses on referral rank-ups and their quest completions are how top accounts separate themselves.
+
+The terminal is live. Prediction markets are live. The Moonsheet is counting.
+
+See you on the leaderboard.
+
+— The Interstate Team
