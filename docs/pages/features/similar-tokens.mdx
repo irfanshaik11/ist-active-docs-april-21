@@ -1,0 +1,114 @@
+---
+title: "Similar Tokens"
+description: "Find tokens that look, sound, or trade like one you're already watching."
+date: 2026-04-21
+---
+
+# Similar Tokens
+
+Every token page on Interstate has a **Similar Tokens** panel that surfaces tokens matching the current one — by name, ticker, visual similarity, deployer, or trading pattern. Useful for catching imposter tokens, finding narrative duplicates, or hunting for fresh momentum plays riding a popular theme.
+
+---
+
+## What "Similar" Means
+
+Interstate checks multiple signals to find related tokens:
+
+### 1. Name / Symbol Overlap
+If the current token is named "PEPE3" with symbol $PEPE3, we surface every other token with:
+- Identical or near-identical ticker ($PEPE, $PEPE2, etc.)
+- Substring match in name ("Pepe Classic", "Pepe 2.0", etc.)
+- Edit-distance match (typos / common misspellings)
+
+**Use case**: spot scam/imposter tokens that copy a trending ticker. The genuine one usually has highest MCap + holders; imposters follow a few minutes later.
+
+### 2. Same Deployer (Dev)
+If the same wallet has deployed other tokens, those appear first. Dev track record is one of the strongest predictors of outcome.
+
+**Use case**: if your current token came from a dev with 5 rugs, Similar Tokens shows all 5 — context for your risk assessment. If your current token came from a dev who's had 3 previous winners, Similar Tokens tells you that too.
+
+### 3. Image Similarity (Logo / Meme)
+Our image indexing compares the token's profile picture against thousands of others:
+- **Reused images** — deployer reused the same logo across multiple tokens
+- **Visually-similar logos** — different but recognizable variants of the same meme
+
+**Use case**: the viral PEPE meme has hundreds of copycat tokens using variations of the same image. See them all at once instead of scrolling through Pulse.
+
+### 4. Narrative / Theme
+We tag tokens by narrative cluster (animals, political memes, tech, etc.) using LLM-based classification on the token's name, description, and social metadata.
+
+**Use case**: during a sector rotation — e.g., "cat memes are pumping" — Similar Tokens on any cat token surfaces the whole cluster.
+
+### 5. Trading Pattern Overlap
+Tokens that share holders or trading overlap with the current token — e.g., 60% of the current token's top holders also hold token X.
+
+**Use case**: identifying whale clusters that move between related tokens; front-running rotations.
+
+---
+
+## Reading the Similar Tokens Panel
+
+Each match shows:
+- Token avatar + name + symbol
+- Market cap
+- Why it matched (image / name / deployer / narrative / holder overlap)
+- Launch age
+- Mini price chart
+- Click → opens that token's trade page
+
+The panel ranks matches by **similarity strength**, so the top entries are the tightest matches. Scroll for looser associations.
+
+---
+
+## Hiding Already-Traded Tokens
+
+Toggle **"Hide tokens I already hold"** if you only want to see fresh opportunities — filters out anything already in your portfolio.
+
+Toggle **"Hide tokens I've traded"** for a stricter filter — excludes anything you've bought at any point, even if you've already sold.
+
+---
+
+## Reused Image Detection
+
+A related panel — **Reused Images** — is even stricter: it shows only tokens that used the *exact same profile image* as the current token. This is almost always deliberate:
+
+- Legit multi-token franchises (the team launches a series with consistent branding)
+- Recycle operations (same scam dev reusing a working meme for multiple rugs)
+- Forgery attempts (imposter copying a legitimate project's image)
+
+Combined with the deployer check, image reuse is a strong signal about whether you're looking at a coordinated play or a random token that happened to pick a similar name.
+
+---
+
+## Use Cases
+
+### Scam Detection
+You clicked a viral meme token. The Similar Tokens panel shows 8 tokens with the same ticker, same image, deployed within minutes of each other. **You're probably on the wrong one** — check which has the highest MCap + social footprint, that's the canonical one.
+
+### Narrative Rotation
+Every "dog meme" you check surfaces a dozen related dog-meme tokens. When the narrative catches wind, you can snapshot the whole cluster and pick the ones with the cleanest safety flags for fast entries.
+
+### Serial Dev Avoidance
+If you like a token but the deployer has 12 prior rugs (all visible in Similar Tokens), that's decisive signal to stay away — even if the current token looks clean today.
+
+### Narrative Momentum Check
+Before trading a theme, pull up Similar Tokens on a known example of that narrative. If 30 tokens in the cluster are all pumping, you're late. If the cluster is mostly dead with one outlier, you might be early.
+
+---
+
+## Limitations
+
+- **Image hashing isn't perfect** — tokens that use heavily-edited variants of an image may not match
+- **Narrative classification is best-effort** — new meme categories take a day or two to get indexed properly
+- **Holder overlap requires meaningful trade history** — brand-new tokens won't show this signal until they have enough holders to compare
+
+When in doubt, use Similar Tokens alongside the Pulse feed, not as a replacement.
+
+---
+
+## Related
+
+- [Security Check](/features/security-check) — per-token safety flags including dev track record
+- [Bundle & Sniper Detection](/analytics/bundle-detection) — detection of coordinated manipulators behind similar-token clusters
+- [Pulse](/features/pulse) — primary token discovery feed
+- [Trading System](/features/trading) — where the Similar Tokens panel lives on each trade page

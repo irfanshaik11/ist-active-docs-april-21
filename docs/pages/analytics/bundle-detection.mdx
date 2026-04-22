@@ -1,0 +1,144 @@
+---
+title: "Bundle, Sniper & Insider Detection"
+description: "How Interstate flags coordinated buys, bot sniping, and suspicious wallet distribution — in real time."
+date: 2026-04-21
+---
+
+# Bundle, Sniper & Insider Detection
+
+Every token on Interstate comes with real-time flags that tell you *who* is buying and *how*. These flags catch bot activity, coordinated manipulation, and dev malpractice — things raw price charts can't show you.
+
+---
+
+## The Three Core Flags
+
+### 🤖 Sniper
+
+A wallet whose first buy lands within **slots 0-3 (~1.6 seconds) of token creation**. On pump.fun the creator is excluded (create+buy is one tx); on Meteora DBC the creator is included because the creator's buy is a separate tx.
+
+**Sniper %** = (supply held by all sniper wallets) / (total supply). A launch where snipers hold >30% is bot-dominated — those wallets will exit the moment price moves up.
+
+The flag is permanent per wallet per token — once classified a sniper, that wallet stays flagged.
+
+---
+
+### 🔐 Insider
+
+A wallet (other than the creator) whose first buy lands in the **exact same slot as the creator's first buy**. These are wallets coordinated with the launch — team alts, pre-briefed backers, bot operators tipped off before the public.
+
+**Insider %** = (supply held by insider wallets) / (total supply). Above 10% means a clump of privileged holders can liquidate at any moment without any fundamental change in the token.
+
+---
+
+### 🤝 Bundler
+
+A set of **4+ distinct wallets buying in the same slot, each spending ≥ $5 (≈0.05 SOL)**. Creator excluded. All wallets in the qualifying slot are tagged bundlers.
+
+**Bundler %** = (supply held by all bundler wallets) / (total supply). High bundler % means a single actor is splitting a large buy across many wallets to fake organic demand. Coordinated bundles almost always sell together too.
+
+Threshold matches the industry-standard (Codex) definition.
+
+---
+
+## Additional Signals
+
+### 🧑‍💻 Dev %
+
+The creator's current wallet balance as a percentage of total supply. Tracked in-memory and updated only when the dev wallet itself trades — so the number reflects their real current exposure, not a stale snapshot.
+
+- **Dev % dropping over time** = creator is selling (very negative)
+- **Dev % holding steady** = creator is committed
+- **Dev % already 0** = creator has fully exited (could be clean completion or a pre-rug wipe)
+
+### 🎯 Top 10 %
+
+Combined balance of the 10 biggest wallets as a percentage of total supply. Computed by the token service from the live holders list, not from historical flags.
+
+- **< 30%** = well-distributed 🟢
+- **30–50%** = concentrated ⚠️
+- **> 50%** = whale-dominated 🔴 — one dump tanks the token
+
+### 📋 Copy Trade Flags
+
+Some wallets are known "copy trader" wallets — they follow smart-money addresses and mirror their buys. When a copy trader appears in a token's holder list, it's a weak signal that a smart-money wallet also traded there (positive for legitimacy).
+
+---
+
+## Where You See These Flags
+
+| Location | What's shown |
+|---|---|
+| **Pulse row** | Sniper %, insider %, bundler %, top 10 %, dev % — all as column values |
+| **Token trade page** | Dedicated security/metrics panel with full breakdown |
+| **Holders table** | Per-wallet flags (each holder gets its icons) |
+| **Recent trades** | Flagged wallets highlighted in yellow rows |
+
+---
+
+## How to Read the Flags Together
+
+### Red Flag Patterns
+
+- **Sniper % > 40%** — bot-owned launch, dumpster fire incoming
+- **Insider % > 15%** — creator's alt network holds too much
+- **Bundler % > 20%** — coordinated manipulation, not organic demand
+- **Top 10 > 60% AND dev > 20%** — one dump = token death
+- **Dev sold any amount** — immediate warning, reconsider position
+
+### Green Flag Patterns
+
+- Sniper % < 10%
+- Insider % < 5%
+- Bundler % < 5%
+- Top 10 < 30%
+- Dev hold between 3–8% (committed but not whale-risk)
+- Dev has **not** sold at all
+
+None of these individually guarantee a winner, but **a token clean on all of them is dramatically safer** than one red-flagged across multiple.
+
+---
+
+## How This Compares to Other Tools
+
+Other platforms (Trench Radar, etc.) compute bundles differently — often only within the first few blocks post-launch. Interstate runs the same detection **at any point in the token's lifetime**, so:
+
+- **Late-stage bundles** (coordinated buys 2 hours post-launch) are caught
+- **Post-migration manipulation** is visible in the same flags
+- **Wallet reuse across tokens** lets us recognize repeat-offender bundles
+
+**False positives**: no detection is perfect. A group of real friends coordinating a buy in the same Discord minute could get flagged as a bundle. The filtering step (excluding wallets whose *next* transaction is solo) catches most of this, but some noise remains.
+
+**False negatives**: sophisticated manipulators who intentionally stagger buys across slots 2+ slots apart avoid the same-slot detection. We track these via additional heuristics, but if a manipulator spreads buys across 30 slots with long gaps, it will look organic.
+
+---
+
+## Using the Flags in Automation
+
+[Migration snipers](/automation/sniper) and [limit orders](/automation/limit-orders) can both filter on these thresholds:
+
+```
+Only auto-buy tokens where:
+- sniper % < 25
+- insider % < 10
+- bundler % < 10
+- top 10 < 40
+```
+
+This turns a speculative sniper into a filtered one that only fires on tokens passing a minimum quality bar.
+
+---
+
+## Limitations
+
+- **Flags are live but not retroactive**: if a wallet first became a sniper two weeks ago on another token, that history isn't applied to current flags. Each token's flags are computed from events on that specific token.
+- **Percentage of supply** is what matters — a token with 10% sniper supply across 1 bot wallet is worse than 10% across 20 bots. We show count alongside % on the trade page.
+- **Numbers update live** — a % from 3 minutes ago is already stale. Always check the live view before trading.
+
+---
+
+## Related
+
+- [Security Check](/features/security-check) — contract-level rug/scam checks
+- [Pulse](/features/pulse) — where these flags show across every token
+- [FAQs](/faqs) — user-facing bundle checker explainer
+- [Trading System](/features/trading) — full trade page with flag columns

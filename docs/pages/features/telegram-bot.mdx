@@ -1,0 +1,206 @@
+---
+title: "Telegram Bot"
+description: "Link Interstate to Telegram for real-time trade alerts, wallet notifications, and Arena quest tracking."
+date: 2026-04-21
+---
+
+# Telegram Bot
+
+The Interstate Telegram bot is your trading cockpit on the go. Connect it once, and your tracked wallets, tweet monitors, limit orders, and Arena quest progress all flow directly into your Telegram chat — no need to keep the web app open.
+
+---
+
+## What the Bot Does
+
+### 1. Real-Time Trade Alerts
+
+When a trade triggers on your account, the bot sends you an instant notification:
+
+- **Limit order filled** — "Your take-profit on $WIF just executed at $3.45M MCap for +62%"
+- **Stop-loss triggered** — "Stop-loss on $TRUMP fired at -40% MCap"
+- **Migration sniper fired** — "Sniper bought 0.1 SOL of $BONK at migration, now tracking"
+- **Dev-sell trigger** — "⚠️ Dev wallet sold 5% supply on $PEPE. Auto-sell fired."
+
+You can fine-tune which events trigger alerts — see **Notification Settings** below.
+
+### 2. Wallet Tracker Pings
+
+If you have wallets on your [Wallet Tracker](/analytics/wallet-tracker), every trade they make can route straight to your Telegram:
+
+- "Smart Money #1 bought 2.5 SOL of $TOKEN at $120K MCap"
+- "Alpha Wallet sold 100% of $MEME — check their activity"
+
+One-tap from the notification → opens the trade page directly on **app.interstate.so** (or via in-bot quick-buy if you have that enabled).
+
+### 3. Twitter Monitor Alerts
+
+The bot forwards tweets from your tracked X/Twitter accounts, including any Solana CAs it extracts automatically:
+
+- "🐦 @AlphaCaller just tweeted about $PEPE: [tweet preview] — Trade now"
+- One-tap Quick Buy button launches you into the app at the mentioned token
+
+See [Twitter Monitor](/analytics/twitter-monitor) for which accounts to track.
+
+### 4. Arena Quest Tracking
+
+Daily and seasonal [Arena quest](/points) progress lives in the bot, too:
+
+- New daily quests refresh at midnight UTC — bot sends you a quick snapshot
+- Big seasonal milestone reached? Bot delivers a congratulations + Credits earned
+- Streak in danger of breaking? Bot pings you an hour before midnight to protect it
+
+### 5. Social Rewards
+
+Key tweet RT's, community channel joins, and other one-time Credit drops — the bot confirms each one as it happens so you know your Arena balance is updating.
+
+### 6. Daily & Weekly Summaries
+
+Opt into daily or weekly digest messages:
+
+- **Daily summary** — trades executed, PnL realized, rank progress, Credits earned
+- **Weekly summary** — leaderboard position, cashback balance, top wallets you tracked, highlights
+
+Easy way to see your activity at a glance without logging into the app.
+
+---
+
+## Connecting the Bot
+
+1. Open Interstate → **Settings** → **Notifications** → **Telegram**
+2. Click **Connect Telegram** → opens the bot (@InterstateTradingBot) in a new tab
+3. Start a chat with the bot → it'll show a one-time link code
+4. Enter the code into the Interstate web app (or just tap **"/link"** in the bot)
+5. Confirmation appears in both places — you're connected
+
+Linking is **two-way** — your Telegram account is tied to your Interstate account, and vice versa. Disconnect at any time from the same settings page.
+
+---
+
+## Notification Settings
+
+Fine-grain control over what the bot pings you about. In **Settings → Notifications**:
+
+| Event | Default | Recommended |
+|---|---|---|
+| Limit order filled | ✅ on | Leave on |
+| Migration sniper triggered | ✅ on | Leave on |
+| Dev-sell trigger fired | ✅ on | Leave on — this is your panic-exit signal |
+| Wallet tracker trade | ✅ on (for starred wallets) | Fine-tune per wallet |
+| Twitter monitor tweet | ⚠️ off by default | Enable for top 5 accounts only |
+| Daily quest refresh | ⚠️ off by default | On if you care about dailies |
+| Streak warning | ✅ on | Leave on |
+| Daily digest | ⚠️ off | Try it for a week |
+| Weekly digest | ✅ on | Good habit-builder |
+
+You can also set **quiet hours** (e.g., 11pm–7am in your timezone) during which no notifications fire.
+
+---
+
+## In-Bot Commands
+
+Chat with the bot directly using slash commands:
+
+| Command | What it does |
+|---|---|
+| `/balance` | Shows your SOL and Arena Credit balance |
+| `/rank` | Shows your current Arena rank + progress to next tier |
+| `/orders` | Lists active limit orders across all tokens |
+| `/positions` | Summarizes your open positions |
+| `/streak` | Current trading streak + streak quest progress |
+| `/digest` | Sends the latest daily digest immediately |
+| `/pulse` | Current top 5 trending tokens from Pulse |
+| `/help` | Full command list |
+
+More commands are added as the bot evolves.
+
+---
+
+## Quick Actions From Notifications
+
+Most alerts come with inline buttons:
+
+- **📈 Trade Now** — opens `app.interstate.so` at the relevant token
+- **📝 Order Details** — full info on a filled limit order
+- **🚫 Mute Wallet** — silence further pings from that tracked wallet
+- **🔕 Mute Token** — silence pings about a specific token
+
+Tap, act, close. No app-switching required for simple actions.
+
+---
+
+## Security & Privacy
+
+### What the Bot Has Access To
+
+- **Notification data** — trade events, quest progress, rank updates
+- **Public wallet data** — address, balance, positions (same as what's on your app)
+- **Arena progress** — Credits, streak, rank, referrals
+
+### What the Bot Does NOT Have Access To
+
+- **Your private key** — trading actions triggered from the bot still require signing through the web app or your wallet (the bot doesn't hold or transmit keys)
+- **Your authentication password** — link is one-way; the bot can push info, not pull credentials
+- **Full trade history of other users** — only your own account's data
+
+Unlink the bot at any time from the Interstate settings page. Doing so stops all notifications immediately and revokes the bot's ability to read your account.
+
+### Watch Out for Impersonators
+
+The **only official bot handle is `@InterstateTradingBot`**. Any other Telegram account claiming to be Interstate is a scam. Do NOT:
+
+- Share your private key or seed phrase with any Telegram account
+- Click links from DMs claiming to be Interstate support
+- Run commands from bots other than the official one
+
+Real Interstate staff never DM you first. Official support is in the [community Telegram channel](https://t.me/+DDXGrsJoe3szYTAx), not via DM.
+
+---
+
+## Use Cases
+
+### The Away Trader
+You work a day job. You set limit orders in the morning and a few trackers. The bot pings you only when something actually happens — a fill, a key-wallet signal, a dev-sell warning. You never have to keep the app open and you never miss a fill.
+
+### The Streak-Keeper
+You care about the Arena seasonal leaderboard. The bot pings you an hour before midnight UTC if you haven't traded yet. A tap on Trade Now, a 0.05 SOL exploration, streak protected.
+
+### The Alpha Hunter
+You follow 5 alpha accounts on X and 10 smart wallets. The bot feeds you everything in a single stream. When 3+ signals converge on one token in quick succession, you know it's time to dig in.
+
+### The Minimalist
+You want one daily digest with trades, PnL, and rank. Everything else off. The bot respects that — 95% less noise than your Twitter feed.
+
+---
+
+## Coming Soon
+
+Features in active development:
+
+- **In-bot trading** — execute buys / sells via the bot itself (multi-step confirm flow)
+- **Voice alerts** — audio notifications for critical events
+- **Custom alert thresholds** — "ping me when $MYTOKEN moves more than 20% in 5 minutes"
+- **Group chat mode** — invite the bot to a trading group chat, share trades with friends
+
+Join our [community Telegram](https://t.me/+DDXGrsJoe3szYTAx) to hear about new bot features first.
+
+---
+
+## Troubleshooting
+
+**"The bot isn't responding"** — Make sure you've linked your account. Try `/start` to re-initialize. If still silent, contact [Support](/support).
+
+**"I'm getting duplicate notifications"** — Sometimes a multi-wallet setup can double-fire if two wallets are linked to the same Telegram. Unlink one wallet's notifications.
+
+**"I want notifications only for large trades"** — Set a minimum USD threshold in Settings → Notifications → Tracker alerts.
+
+**"Bot commands say 'not linked'"** — Your Telegram account isn't linked to an Interstate account. Go through the connection flow in the web app first.
+
+---
+
+## Related
+
+- [Wallet Tracker](/analytics/wallet-tracker) — source of most tracker-based alerts
+- [Twitter Monitor](/analytics/twitter-monitor) — source of tweet-based alerts
+- [Limit Orders](/automation/limit-orders) — source of fill / trigger alerts
+- [Arena — Credits & Ranks](/points) — quest / streak / rank progression
+- [Support](/support) — Telegram community channel (separate from the bot)

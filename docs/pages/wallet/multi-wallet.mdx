@@ -1,0 +1,144 @@
+---
+title: "Multi-Wallet"
+description: "Run multiple wallets under one Interstate account — import external wallets, create isolated sub-accounts, and switch between them instantly."
+date: 2026-04-21
+---
+
+# Multi-Wallet
+
+Interstate supports running multiple wallets under a single account. Each wallet has its own isolated balance, positions, trade history, and limit orders — useful for separating strategies, keeping risk capital separate from long-term holdings, or running paper-trade experiments alongside live capital.
+
+---
+
+## Your Wallet Setup
+
+When you sign up, Interstate creates **one primary wallet** for you — a non-custodial Turnkey MPC wallet tied to your account. From there you can add:
+
+- **Additional Interstate-generated wallets** — new Turnkey MPC wallets under your account, each with a unique address
+- **Imported external wallets** — bring in a Solana wallet you already own (Phantom, Solflare, hardware wallet) via private key or seed phrase
+- **EVM wallets** — separate MetaMask / imported keys for EVM-chain trading
+
+All wallets live under your account's umbrella but are cryptographically independent. Transactions, balances, and positions don't commingle.
+
+---
+
+## Creating a New Wallet
+
+1. Click your wallet address at the top of any page → **Manage Wallets**
+2. Click **Add Wallet** → **Generate New**
+3. Name the wallet (e.g., "Snipe Fund", "Long-term Hold", "Paper Trade")
+4. Interstate creates a new Turnkey MPC sub-wallet instantly
+
+The new wallet appears in your wallet switcher with zero balance. Fund it by:
+- Sending SOL from your primary wallet
+- Using [Buy Crypto](/features/buy-crypto) with the new wallet selected
+- Receiving SOL from an external source
+
+---
+
+## Importing an External Wallet
+
+If you already have a Solana wallet with funds or history you want to use on Interstate:
+
+1. **Manage Wallets** → **Add Wallet** → **Import Existing**
+2. Choose input method:
+   - **Private key** (Base58 format — 88 characters)
+   - **Seed phrase** (12 or 24 words, BIP39)
+   - **Keystore JSON** (encrypted backup file)
+3. Name the imported wallet
+4. Interstate stores the key encrypted — only your account password / Turnkey session decrypts it
+
+The imported wallet's full on-chain history (balances, past trades, positions) becomes visible in Interstate's UI immediately. Any Solana tokens you already hold show up in your Portfolio.
+
+### Import Considerations
+
+- **Your imported key lives alongside our Turnkey wallet infrastructure.** The private key is encrypted with your account credentials.
+- **Any trades on the imported wallet sign from that key** — Turnkey is not involved for imported wallets.
+- **Exporting** — you can export the private key at any time.
+- **Revocation** — removing the imported wallet from Interstate doesn't affect the on-chain wallet itself; it just hides it from your UI.
+
+---
+
+## Exporting a Wallet
+
+1. **Manage Wallets** → select the wallet → **Export**
+2. Verify your account password
+3. Export as:
+   - Base58 private key (compatible with Phantom, Solflare, any Solana wallet)
+   - Seed phrase (if one was generated)
+   - Keystore JSON
+
+Exporting is **irreversible from a trust standpoint** — once the key leaves Interstate's encrypted storage, anyone with a copy can drain the wallet. Store exports offline.
+
+---
+
+## Wallet Switcher
+
+The wallet switcher at the top of Interstate lets you flip between wallets instantly:
+
+- Click your avatar → wallet list appears
+- Tap any wallet → the entire UI context switches (Portfolio, Pulse filters, open orders, positions)
+- Each wallet has its own balance, open positions, and trade history
+- Your **Arena account** is shared across all wallets (Credits, rank, cashback all accumulate in your single Arena profile)
+
+**Key distinction**: your Arena progression is per-account, not per-wallet. Trading from any of your wallets counts toward the same Credits pool and rank.
+
+---
+
+## Common Multi-Wallet Strategies
+
+### Separate Risk Capital from Savings
+- **Wallet 1 ("Trading")** — small balance, used for aggressive meme trades
+- **Wallet 2 ("Savings")** — larger balance, used only for long-term holds / yield via [Marginfi](/fees)
+
+Switching wallets before each trade enforces the separation. You can't accidentally dip into savings for a speculative trade.
+
+### Strategy Isolation
+- **Wallet 1 ("Sniper")** — runs migration snipers, automated rules fire here
+- **Wallet 2 ("Manual")** — all manual trades, cleaner trade history for review
+
+Makes post-trade analysis easier — winning / losing strategies are not mixed.
+
+### Paper Trading Alongside Live
+- **Wallet 1 ("Live")** — real capital
+- **Wallet 2 ("Paper")** — funded with tiny amounts, used to test ideas without meaningful risk
+
+You can run both simultaneously and compare performance.
+
+### Tax Bucketing
+- **Wallet 1** — long-term positions (held > 1 year for favorable tax treatment in some jurisdictions)
+- **Wallet 2** — short-term speculative
+
+Simpler tax reporting at year-end.
+
+---
+
+## Limits
+
+- **DEGEN tier**: 1 primary wallet (default)
+- **WARRIOR+**: up to 3 wallets (primary + 2 additional)
+- **GLADIATOR+**: up to 5 wallets
+- **COMMANDER+**: up to 10 wallets
+- **TITAN**: unlimited
+
+Wallet limits scale with [Arena rank](/points). Imported wallets count against your limit.
+
+---
+
+## Security Notes
+
+- **Each wallet is cryptographically independent.** Compromising one doesn't expose the others.
+- **Turnkey MPC wallets** are generated fresh each time (no shared seed across your multi-wallet set) — this is an intentional security property.
+- **Imported wallets** carry whatever security story they had before import. If you imported a hot wallet that's been exposed elsewhere, the import inherits that exposure.
+- **Your account credentials** (email / OAuth / password) govern access to the wallet switcher. Lose your account → lose access to all wallets. Export + offline backup if you hold meaningful value.
+
+See [Benefits & Risks](/benefits-and-risks) for the full wallet security discussion.
+
+---
+
+## Related
+
+- [Quick Start](/getting-started/quickstart) — primary wallet setup on signup
+- [Buy Crypto](/features/buy-crypto) — funding any wallet with SOL
+- [Portfolio](/features/portfolio) — per-wallet position/PnL view
+- [Benefits & Risks](/benefits-and-risks) — custodial vs non-custodial, key safety

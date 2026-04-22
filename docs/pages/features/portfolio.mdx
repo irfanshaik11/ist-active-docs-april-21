@@ -1,0 +1,173 @@
+---
+title: "Portfolio"
+description: "Your holdings, PnL, and trade history — all in one place."
+date: 2026-04-21
+---
+
+# Portfolio
+
+The Portfolio page is your complete view of everything you hold on Interstate: active positions, realized gains, historic trades, and claimable SOL cashback.
+
+Open it at **[app.interstate.so/portfolio](https://app.interstate.so/portfolio)**.
+
+---
+
+## Overview Card
+
+The top of the page shows your account-level numbers at a glance:
+
+- **Total Balance** — sum of all token holdings (in USD)
+- **Active SOL Balance** — spendable SOL
+- **Unrealized PnL** — gain/loss on open positions if you sold right now
+- **Realized PnL** — gain/loss from closed positions (lifetime)
+- **24h Change** — how much your total portfolio moved today
+- **SOL Cashback Balance** — accumulated Arena cashback claimable as SOL
+
+---
+
+## Active Positions
+
+Every token you currently hold, with per-position detail:
+
+| Column | What |
+|---|---|
+| **Token** | Avatar + name + symbol. Click → trade page. |
+| **Bought** | SOL spent + USD value at entry |
+| **Avg Entry** | Volume-weighted average entry price |
+| **Current** | Current market cap / price |
+| **Remaining** | Tokens + current USD value |
+| **Unrealized PnL** | Gain/loss in USD and % |
+| **Actions** | Quick sell buttons (25 / 50 / 75 / 100%) + detailed view |
+
+Click any position row to open the **Position Detail Modal** with:
+- Full trade history for this specific token
+- Entry/exit markers overlaid on the price chart
+- Realized vs unrealized split
+- Limit orders currently active
+- Dev wallet activity + safety flags
+
+### Sorting & Filtering
+
+- Sort by: PnL %, PnL $, size, entry date, last trade
+- Filter: only winners, only losers, only above a PnL threshold
+- Hide dust (default on — hides positions worth < $1)
+
+---
+
+## Closed Positions
+
+Tokens you've fully exited (sold 100%). Shows:
+
+- Total bought (SOL + USD at entry)
+- Total sold (SOL + USD at exit)
+- Realized PnL
+- Hold duration
+- Number of trades on the position
+
+Useful for reviewing your actual win-rate and avg holding time — honest data most traders avoid.
+
+---
+
+## Trade History
+
+Every individual buy and sell transaction:
+
+- Timestamp
+- Token
+- Side (buy/sell)
+- SOL amount
+- Token amount
+- Price/MCap at execution
+- Platform fee paid
+- Transaction signature (click to view on Solscan)
+
+Filterable by date range, token, side, or size. Exportable to CSV for tax reporting.
+
+---
+
+## SOL Cashback
+
+A dedicated panel tracks your [Arena SOL cashback](/points):
+
+- **This season** — cashback accrued in the current Arena season
+- **Lifetime** — all-time cashback earned
+- **Claimable** — unclaimed cashback available to withdraw to your wallet
+- **Claim** button — moves SOL from your Arena balance to your Interstate wallet
+
+Cashback is claimable at any time. No minimum, no cooldown, no approval step.
+
+---
+
+## Referral Earnings
+
+If you have referees, this panel shows:
+
+- Total referral passthrough Credits earned (lifetime)
+- This season's passthrough
+- Recruiter milestone bonuses unlocked
+- Active referee count
+
+See the full [Referral Program](/getting-started/referral-program) for mechanics.
+
+---
+
+## Analytics Tab
+
+Deep performance metrics on your trading (only shows if you have enough history):
+
+- **Win rate** — % of closed positions that ended in profit
+- **Avg hold time** — mean time from entry to exit
+- **Best / worst trade** — your PR and your disaster
+- **Breakdown by protocol** — are you doing better on pump.fun vs post-migration DEX?
+- **Breakdown by dev track record** — win rate on first-time devs vs repeat launchers
+- **Streak** — longest profitable streak, current streak
+- **Time-of-day heatmap** — when you trade vs when you make money
+
+Most of these metrics become meaningful after 50+ closed positions. Use them to find your own edge (or confirm you don't have one and should size down).
+
+---
+
+## Tax Export
+
+Click **Export Transactions** to download your complete trade history as CSV with columns ready for common tax tools (Koinly, CoinTracker, etc.).
+
+The export includes:
+- Timestamp (UTC)
+- Asset bought/sold
+- USD values at execution
+- Fees paid
+- Transaction signature
+
+**Important**: Interstate does not provide tax advice. Use this export with a qualified tax professional in your jurisdiction.
+
+---
+
+## Multi-Chain Portfolios
+
+If you've traded on multiple chains, each chain has its own Portfolio tab:
+
+- **Solana** (primary)
+- **Monad** (if you've used Monad trading)
+- Additional chains as they're added
+
+Each tab shows isolated data for that chain. There's no unified cross-chain portfolio view today — manage each side separately.
+
+---
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `P` | Jump to Portfolio from anywhere |
+| `1–5` | Switch tabs (Positions / Closed / History / Cashback / Analytics) |
+| `/` | Focus search/filter input |
+| `E` | Export current view to CSV |
+
+---
+
+## Related
+
+- [Trading System](/features/trading) — how to open and manage individual positions
+- [Limit Orders](/automation/limit-orders) — set stop-losses and take-profits
+- [Arena — Credits & Ranks](/points) — how SOL cashback accrues
+- [Fees](/fees) — fee breakdown reflected in every trade in your history

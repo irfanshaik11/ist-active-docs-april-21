@@ -1,0 +1,128 @@
+---
+title: "Trader Scan"
+description: "Deep-dive any Solana wallet — full trade history, PnL, win rate, and token distribution."
+date: 2026-04-21
+---
+
+# Trader Scan
+
+Trader Scan lets you deeply analyze any Solana wallet — yours, a wallet you're considering tracking, a top trader from a token page, or a suspicious wallet you want to profile before following.
+
+Access it by pasting any Solana address into Interstate's search bar, or from the trade page's **Top Traders** panel → click any wallet → **Scan**.
+
+---
+
+## What Trader Scan Reveals
+
+### Identity & Labels
+- **Known aliases** — if the wallet is in our labeled wallet database (known devs, influential traders, platform wallets)
+- **Interstate account** — if the wallet belongs to an Interstate user who has opted into public display
+- **Classification** — retail trader, sniper bot, copy trader, smart money, dev, or unlabeled
+
+### Performance Summary
+- **Realized PnL** — total across all closed trades on all tokens
+- **Win rate** — % of positions closed at a profit
+- **Avg hold time** — mean time from entry to exit
+- **Best / worst trade** — biggest single win, biggest single loss
+- **Sharpe-like score** — risk-adjusted return ranking (if sufficient history)
+
+### Portfolio
+- **Current holdings** — every token the wallet currently holds, with current value
+- **Historical** — tokens they've held in the past (even if sold completely)
+
+### Trade History
+- **Every trade** — buy/sell, token, size, timestamp
+- Filterable by date range, token, side, size
+- Clickable to open the corresponding token's trade page
+
+### Behavioral Flags
+- **Sniper signature** — does this wallet consistently buy within 3 slots of creation? (bot-like)
+- **Bundler cohort** — has this wallet participated in coordinated bundles? On which tokens?
+- **Copy-trader pattern** — does it follow other wallets with high correlation?
+- **Insider pattern** — does it receive tokens via direct transfer (not market buy)?
+
+### Cohorts
+- **Tokens held with** — top 20 other wallets that frequently appear alongside this wallet's positions
+- **Dev relationships** — if this wallet has received tokens from recognized dev wallets
+
+---
+
+## Typical Use Cases
+
+### Vet a Wallet Before Tracking
+Before you add a wallet to your [Wallet Tracker](/analytics/wallet-tracker) or enable copy-trade, run Trader Scan:
+
+- Win rate > 55% on 50+ positions = solid track record
+- Win rate < 40% = don't copy
+- High % of single-slot buys = bot; mirror-trading a bot is running blind
+
+### Investigate a Trade Signal
+You see a trade in the Recent Trades feed of a token you're considering. The wallet bought 2 SOL — is that a smart buy?
+- Scan the wallet
+- Check their historical win rate on tokens at similar MCap
+- Check if the wallet is marked as a copy-trader (= they're downstream of someone else)
+- Decide whether to weight the signal
+
+### Profile a Suspicious Wallet
+A large holder showed up in a new token. Is that a whale entering, a team alt wallet dumping soon, or a sniper bot?
+- Scan reveals:
+  - Holding history across many tokens = established whale
+  - Receives tokens via transfer, never buys = insider pattern (red flag)
+  - 3-slot buy signature across many tokens = sniper bot
+  - Behavior doesn't fit any pattern = unlabeled, unclear
+
+### Audit Your Own Wallet
+Scan yourself. Honest mirror of your trading:
+- What's your actual win rate (not what you think it is)?
+- Which token categories (by MCap, by launchpad, by age) do you actually profit on?
+- Where does your money leak out — excessive trading, bad slippage, late exits?
+
+---
+
+## Cohort Analysis
+
+Trader Scan's **Cohorts** panel shows the top 20 wallets that frequently appear alongside the scanned wallet:
+
+- If wallet A and wallet B both hold 12 tokens in common within narrow time windows, they're cohorted
+- Cohorts surface hidden group activity — dev alt wallets, trading groups, bundler teams
+
+A wallet with a tight cohort of 5 other wallets that always hold the same tokens is likely operating a coordinated strategy (or is one of many masks worn by the same person).
+
+---
+
+## Dev Wallet Profiling
+
+If you scan a wallet that's flagged as a **dev** (has deployed tokens), the profile expands to show:
+
+- Every token they've ever created
+- Each token's outcome (rugged, survived, pumped)
+- Their dev-level win rate for holders (% of their tokens that went up before dying)
+- Time between token deployments (serial rugger vs. occasional project dev)
+
+Bundle this with [Security Check](/features/security-check) for a complete pre-trade dev assessment.
+
+---
+
+## Limitations
+
+- **On-chain data only** — Trader Scan can't tell you off-chain reasoning. A wallet with 30% win rate might have been a disciplined trader in a horrible market, or a coin-flipper in a friendly one.
+- **Recent wallets** — a wallet with < 20 trades has insufficient history for meaningful statistics. The UI flags this.
+- **Pseudonymity** — wallets are identified by address. The same person can run 100 wallets and Trader Scan treats them as independent unless cohort analysis connects them.
+- **Backdating** — our history goes back to when Interstate's indexer started tracking. For very old wallets, deeper history is visible on Solscan directly.
+
+---
+
+## Privacy
+
+Your own wallet scan is always available to you. Public display of your profile / stats to other users is **opt-in** via Account Settings → Public Profile.
+
+By default, other users who scan your wallet see the on-chain data (it's public anyway) but not your Interstate account linkage, display name, or any off-chain identifiers.
+
+---
+
+## Related
+
+- [Wallet Tracker](/analytics/wallet-tracker) — follow wallets continuously after scanning
+- [Bundle & Sniper Detection](/analytics/bundle-detection) — how bot-like signatures are classified
+- [Security Check](/features/security-check) — dev wallet analysis on the trade page
+- [Portfolio](/features/portfolio) — your own stats visible as "Your Trader Scan"

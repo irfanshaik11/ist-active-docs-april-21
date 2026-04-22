@@ -1,0 +1,186 @@
+---
+title: "UI Icons & Badges Legend"
+description: "Every icon, badge, and flag you'll see in the Interstate UI — decoded."
+date: 2026-04-21
+---
+
+# UI Icons & Badges Legend
+
+Interstate packs a lot of information into tight UI space via icons and colored badges. This page is the reference for what every one of them means.
+
+---
+
+## Pulse Column Headers
+
+| Label | Meaning |
+|---|---|
+| **New Pairs** | Tokens just launched on a tracked launchpad (0-80% bonding) |
+| **Final Stretch** | Tokens near migration (80-99% bonding); high-volume window |
+| **Migrated** | Tokens successfully moved to a DEX pool |
+
+---
+
+## Detection Flags (per token row)
+
+See [Bundle & Sniper Detection](/analytics/bundle-detection) for how each is computed.
+
+| Icon | Flag | Meaning |
+|---|---|---|
+| 🤖 | **Sniper** | Wallet bought within slots 0-3 of creation (~1.6s). Bot-like behavior. |
+| 🔐 | **Insider** | Wallet bought in the exact same slot as the creator's first buy. Team/coordinated. |
+| 🤝 | **Bundler** | Wallet was part of a 4+ wallet bundle in the same slot. Coordinated manipulation. |
+| 👨‍💻 | **Dev** | Creator's wallet. Tracks their current holding live. |
+| 🎯 | **Top 10** | Combined balance of the 10 biggest holders. |
+| 📋 | **Copy Trader** | Wallet detected as following another wallet's trades. |
+
+**Percentage reading:**
+- Each flag's `%` = supply held by flagged wallets ÷ total supply
+- Higher = more concentration in that category = more risk
+
+---
+
+## Safety Indicators (CA Security Check)
+
+See [Security Check](/features/security-check) for details.
+
+| Badge | Meaning | Action |
+|---|---|---|
+| 🟢 **Green dot** | All critical checks passed | Relatively safe on contract level |
+| 🟡 **Yellow dot** | Soft flags present (concentration, past rugs) | Investigate before sizing up |
+| 🔴 **Red dot** | Critical flag (active mint, freeze, LP in dev wallet) | Likely unsafe — don't trade |
+
+### Specific Contract Flags
+
+| Icon | Meaning |
+|---|---|
+| 🔥 | **LP burned** — liquidity locked forever, dev can't rug |
+| 🔒 | **LP locked** — liquidity in a time-lock contract |
+| ⚠️ **LP in dev** | **LP in dev wallet** — dev can pull liquidity any moment |
+| ✅ **Mint renounced** | Creator cannot print more tokens |
+| ❌ **Mint active** | Creator can mint unlimited supply — massive dump risk |
+| ✅ **Freeze renounced** | Creator cannot freeze wallets |
+| ❌ **Freeze active** | Creator can freeze your wallet, preventing sells |
+
+---
+
+## Wallet & User Flags
+
+| Icon | Meaning |
+|---|---|
+| 💎 | **Smart money** — wallet flagged as profitable/consistent by our detection |
+| 🌟 | **KOL** — known influencer wallet (maintained list) |
+| 🤖 | **Bot** — automated wallet (sniper, bundler, or other bot pattern) |
+| 👁️ | **Tracked** — wallet you're following via [Wallet Tracker](/analytics/wallet-tracker) |
+
+---
+
+## Trade Flow Icons
+
+On the Recent Trades feed and position rows:
+
+| Icon / Color | Meaning |
+|---|---|
+| 🟢 Green row | Buy |
+| 🔴 Red row | Sell |
+| 🟡 Yellow row | Flagged wallet (sniper/insider/bundler) — trade weight is suspect |
+| ⚡ | **Instant trade** — triggered via [Instant Trade](/automation/instant-trade) popup |
+| 🎯 | **Sniper fire** — triggered by your [Migration Sniper](/automation/sniper) |
+| 📋 | **Limit filled** — triggered by a [Limit Order](/automation/limit-orders) |
+| 🤝 | **Copy trade fill** — triggered by your copy-trade rule |
+
+---
+
+## Portfolio & Position Indicators
+
+| Icon | Meaning |
+|---|---|
+| 📈 | **Unrealized gain** (open position in profit) |
+| 📉 | **Unrealized loss** (open position underwater) |
+| ✅ | **Closed profitable** (realized gain on a fully-exited position) |
+| ❌ | **Closed at a loss** (realized loss on fully-exited position) |
+| ⏳ | **Pending** (transaction submitted, not yet confirmed) |
+| ⚠️ | **Failed** (transaction reverted or never landed) |
+
+---
+
+## Arena / Rewards Icons
+
+See [Arena — Credits & Ranks](/points) for full mechanics.
+
+| Icon | Meaning |
+|---|---|
+| 🪙 **Credits** | Your Arena points (determine rank) |
+| 🏆 **Rank badge** | Your current Arena rank (DEGEN → TITAN) |
+| ⚔️ | **Quest available** (daily or seasonal) |
+| 🔥 **Streak** | Active consecutive-day trading streak |
+| 💰 **SOL Cashback** | Claimable cashback balance |
+| 👥 **Referral** | Referral activity / network indicator |
+
+---
+
+## Rank Badges
+
+| Badge | Rank | Multiplier | SOL Cashback |
+|---|---|---|---|
+| 🥉 | **DEGEN** | 1× | 10% |
+| 🥈 | **WARRIOR** | 2× | 15% |
+| 🥇 | **GLADIATOR** | 2.5× | 20% |
+| 🎖️ | **COMMANDER** | 3× | 25% |
+| 👑 | **TITAN** | 4× | 35% |
+
+Each rank has 4 sub-levels (I, II, III, IV) that gate expanded slot limits for wallet trackers, Twitter monitors, and multi-wallet.
+
+---
+
+## Top-Nav & Utility Icons
+
+| Icon | Meaning |
+|---|---|
+| 🔍 | Global search (tokens, wallets, tweets) |
+| 🔔 | Notifications feed |
+| ⚙️ | Settings |
+| 📖 | Docs (this site) |
+| 💬 | Support chat / Telegram link |
+| 👤 | Your profile / account menu |
+
+---
+
+## Notification Toast Icons
+
+When an alert fires in-app or on the Telegram bot:
+
+| Icon | Event |
+|---|---|
+| 💰 | Trade filled |
+| 🛑 | Stop-loss triggered |
+| 🎯 | Take-profit hit |
+| ⚠️ | Dev-sell detected |
+| 🎯 | Sniper fired on a migration |
+| 👁️ | Tracked wallet made a trade |
+| 🐦 | Tweet from monitored account |
+| ⚔️ | Daily quest completed |
+| 🏆 | Rank up |
+| 🔥 | Streak milestone |
+| 💰 | SOL cashback claimable |
+
+---
+
+## Glossary: Color Meanings
+
+| Color | Used for |
+|---|---|
+| **Indigo** (`#6366f1`) | Interstate brand, primary actions, active nav |
+| **Green** (`#10b981`) | Positive (gains, safe flags, buys, live status) |
+| **Red** (`#ef4444`) | Negative (losses, risk flags, sells, failures) |
+| **Yellow** (`#f59e0b`) | Warning / ambiguous (soft flags, flagged wallets) |
+| **Pink / Magenta** (`#ec4899`) | Arena rewards, cashback, milestones |
+| **Gray** (`#6b7280`) | Secondary text, disabled states, dust positions |
+
+---
+
+## Related
+
+- [Bundle & Sniper Detection](/analytics/bundle-detection) — full definitions of the detection flags
+- [Security Check](/features/security-check) — full breakdown of contract safety checks
+- [Pulse](/features/pulse) — where most of these icons appear live
+- [Arena — Credits & Ranks](/points) — the rank-badge system

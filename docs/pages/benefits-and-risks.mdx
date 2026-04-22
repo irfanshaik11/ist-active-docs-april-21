@@ -1,23 +1,146 @@
-# Validator Quickstart
+---
+title: "Benefits & Risks"
+description: "The real upside of trading on Interstate — and the real risks you're taking."
+date: 2026-04-21
+---
 
+# Benefits & Risks
 
-## Benefits 
+Trading crypto is not like using a stock broker. You control your own wallet, transactions are irreversible, and markets operate 24/7 without circuit breakers. Before you trade seriously on Interstate, understand exactly what you're getting into.
 
-Like flashbots & mev-boost, interstate offers a way to earn additional rewards for validators without having to put up any capital and minimal risk. It is almost a free lunch :).
+---
 
-We expect validator rewards to be in the 0.2% range with preconfirmation tips and token incentives. We also offer an incentivized testnet program which can offer much more in rewards.
+## Benefits
 
-As interstate develops, you can expect substantially higher rewards for participating in the network.
+### Speed
+Interstate executes trades in 1–2 seconds under normal network conditions. Our dedicated indexer gives you sub-second price feeds, meaning the chart you see reflects the current state of every pool — not a 30-second-stale snapshot. For volatile meme trading, this speed translates directly to better fills.
+
+### Non-Custodial
+Your private key lives in a [Turnkey](https://turnkey.com) MPC sub-organization tied to your account. Interstate cannot:
+- Move your funds
+- Freeze your wallet
+- Seize your tokens
+- Block your withdrawals
+
+This is a meaningful security benefit over centralized exchanges — but it also means you carry the risk (see below).
+
+### Integrated Tooling
+Trading, analytics, wallet tracking, limit orders, prediction markets, and yield — all in one place. You're not switching between six browser tabs. This reduces latency between signal and execution, and reduces the chance of an operational mistake across accounts.
+
+### Real Cost Back to You
+SOL cashback via [Arena](/points) returns 10–35% of platform fees as real SOL. Higher ranks get bigger cashback. No token, no vesting, no locked rewards — just SOL in your wallet.
+
+### Detection & Safety Flags
+Our [bundle / sniper / insider detection](/analytics/bundle-detection) catches coordinated manipulation in real time. The [Security Check](/features/security-check) flags dangerous contract settings automatically. These cut down the rug-pull surface area significantly — but they don't eliminate it.
+
+### Community & Alpha
+The [Twitter Monitor](/analytics/twitter-monitor) and [Wallet Tracker](/analytics/wallet-tracker) surface alpha from the people who actually have it, in real time. You're not scrolling Discord hoping someone posts the next big thing — you get the signal the moment it happens.
+
+---
 
 ## Risks
 
-- Lower MEV-Boost Rewards 
-  - Validators currently earn ~1.83% from Flashbots / MEV-Boost. The risk of allowing preconfirmations on your validator is that if the preconfirmation network misprices the preconfirmation, space in the block is sold for less than its worth and the block builder has less space to operate with, causing them to create blocks that are less mev-valuable than before.
-  - Interstate constantly monitors block rewards and ensures the proposer is strictly profitable, removing this constraint
-- Missed Blocks 
-  - We are audited by Spearbit and other leading auditors to ensure code correctness.
-  If there is a bug in interstate code, it could cause you to miss a block, getting penalized by Ethereum network 
-  - This is unlikely however, Interstate has an insurance fund to compensate the proposer in this case. Please reach out for details. Please note this is not a binding legal agreement unless one has been formally made with you.
-- VPC Exposure
-  - We are audited by Spearbit and other leading auditors to ensure code correctness. 
-  - A code bug could enable an outside entity to gain control of your vpc. 
+### Market Risk (The Big One)
+Most meme coins go to zero. The median pump.fun token launches, briefly spikes, and dies within hours. Migrations don't guarantee anything — a migrated token can still drop 90% in minutes. **Never trade size you can't afford to lose entirely.**
+
+This isn't hyperbole. It's the default outcome. The entire platform exists to help you find the exceptions and minimize losses on the rule.
+
+### Volatility
+Meme tokens routinely move 50%+ in a single minute. A position that's +200% now can be -40% in the time it takes to refresh the page. If you're not using [limit orders](/automation/limit-orders) — particularly stop-losses — you will eventually get caught in a dump you can't exit.
+
+### Smart Contract Risk
+Every on-chain transaction depends on the underlying smart contracts (the launchpad, the DEX, the token contract itself). Bugs, exploits, or malicious upgrades in any of those contracts can:
+- Freeze or steal tokens
+- Drain liquidity pools
+- Reverse expected trade outcomes
+
+Interstate routes through audited DEXes (Raydium, Meteora DAMM V2, PumpSwap, Jupiter), but **we do not audit every token's own contract**. A malicious token contract can do anything the creator programmed it to do.
+
+### Rug Pulls
+Despite our safety flags, rug pulls still happen. A dev can:
+- Launch with no obvious red flags
+- Let genuine organic volume build
+- Then dump their entire holding into the market, collapsing the price
+
+The [bundle detection](/analytics/bundle-detection) and [security check](/features/security-check) reduce the probability, they don't eliminate it. Assume any small-cap token you hold could rug at any moment.
+
+### Operational Risk (Yours)
+Because your wallet is non-custodial:
+- If you lose your authentication credentials (Google/email/password), recovery depends on those external providers
+- If you export your private key and lose it, no one — including Interstate — can recover your funds
+- If you send tokens to the wrong address, they are gone
+- If you approve a malicious transaction, signed with your key, that transaction executes
+
+**Security hygiene matters.** See [Quick Start Tips](/getting-started/quickstart-tips) for baseline practices.
+
+### Phishing & Impersonation
+Scammers actively target crypto traders. Common attacks:
+- **Fake support** — someone DMs you claiming to be Interstate support, asks for your seed phrase / private key. **Real support never DMs first.** See [Support](/support).
+- **Fake tokens** — scammers mint tokens with the same ticker as a legitimate project. Always verify the CA (contract address), not just the ticker.
+- **Fake Twitter accounts** — impersonators run compromised or fake versions of accounts you follow.
+- **Malicious approvals** — signing a transaction without reading what it does.
+
+Interstate surfaces as much safety info as possible, but we cannot prevent you from pasting a malicious CA into the search bar.
+
+### Regulatory Risk
+Crypto is a rapidly evolving regulatory environment. Rules in your jurisdiction may change. Your tax treatment of gains / losses varies by country and personal situation. Interstate does not provide tax advice. You are responsible for:
+- Understanding your local laws
+- Reporting your trades for tax purposes
+- Ensuring you're legally permitted to use the platform from your location
+
+### Platform Risk
+Interstate is software running on cloud infrastructure. We have:
+- Multi-region failover (us-west, us-east, Tokyo, Singapore)
+- Monitoring and on-call response
+- Redundant indexers
+
+But we are not perfect. Outages happen. If the UI is down mid-trade, your on-chain position is still yours — you can manage it via Phantom, Solflare, Raydium directly, or any other Solana interface pointing at your wallet. Your funds are never dependent on Interstate being online.
+
+### Automation Risk
+[Limit orders](/automation/limit-orders) and [snipers](/automation/sniper) fire based on rules you set. If your rules are wrong, they execute anyway. Common mistakes:
+- Stop-loss set too tight — executes on normal volatility
+- Take-profit set at unreachable levels — never fires, price reverses
+- Sniper config with no cap — a bad day buys 50 rugs in a row
+- Slippage too low — orders fail to fill when you need them most
+
+Automation multiplies whatever you tell it to do. If you tell it to lose money efficiently, it will.
+
+### Liquidity Risk
+On thin tokens, your own trade can move the price significantly. A 1 SOL buy on a $10k MCap token will push the price 10%+ just from your trade. Slippage reflects this — high slippage tolerance means you might get a much worse fill than the quote suggested.
+
+---
+
+## Risk-Mitigation Checklist
+
+Before every trading session:
+
+- [ ] I'm using amounts I can afford to lose completely
+- [ ] I have a stop-loss set on every open position
+- [ ] MEV protection is on for trades > 0.5 SOL
+- [ ] My Google / email authentication uses 2FA
+- [ ] I've verified the CA (not just the ticker) for any token I'm trading
+- [ ] I've not DM'd with anyone claiming to be support
+- [ ] I've not approved any transaction from a site I don't recognize
+
+---
+
+## If Something Goes Wrong
+
+**First**: don't panic-dump or try ten things at once. Stabilize.
+
+**Then**: reach out in the [official Telegram](https://t.me/+DDXGrsJoe3szYTAx) with:
+- Your Interstate email or wallet address (public)
+- The transaction signature (tx hash) of the problematic trade
+- A clear description of what you expected vs. what happened
+
+Include screenshots if UI was involved. The team can often trace and help within minutes. See [Support](/support).
+
+---
+
+## Summary
+
+Interstate is a powerful trading platform. It will not protect you from bad decisions. Use it carefully, use it with rules, and treat every position as if it could go to zero tomorrow — because statistically, most of them will.
+
+The traders who do best on Interstate treat it as a tool, not a casino. They set limits, size responsibly, pay attention to the flags, and know exactly what they'll do when a trade goes against them. That's the model.
+
+Good luck.

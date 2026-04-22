@@ -1,0 +1,120 @@
+---
+title: "Instant Trade"
+description: "Buy or sell any token from any page on Interstate in a single click — no page navigation required."
+date: 2026-04-21
+---
+
+# Instant Trade
+
+Instant Trade is Interstate's one-click trade popup. It lets you buy or sell any token from anywhere in the app without navigating to a dedicated trade page — useful when speed matters (sniper alerts, tweets breaking, dev activity firing).
+
+---
+
+## How to Trigger It
+
+Instant Trade opens from any of these entry points:
+
+- **Pulse row** — click the ⚡ icon next to any token
+- **Activity feed** (Wallet Tracker / Twitter Monitor) — "Quick Buy" button on any trade/tweet
+- **Portfolio** — ⚡ button next to any active position
+- **Search results** — ⚡ next to any token in search
+- **Keyboard shortcut** — press `I` anywhere in the app to open the quick-trade popup for the focused token
+
+The popup appears as an overlay without leaving your current page — you can fire a trade while still watching Pulse or monitoring tweets.
+
+---
+
+## Layout
+
+```
+┌────────────────────────────────┐
+│  Token: NAME (TICKER)          │
+│  MCap: $XXX,XXX                │
+│  [Buy] [Sell]                  │
+│  Amount: [   ] SOL             │
+│  [10%] [25%] [50%] [100%]      │
+│  Slippage: [X%]                │
+│  Priority Fee: [auto ▾]        │
+│  MEV Protect: [on/off]         │
+│                                │
+│  Est. receive: N.NN TOKEN      │
+│  Platform fee: 0.01 SOL        │
+│                                │
+│       [    BUY    ]            │
+└────────────────────────────────┘
+```
+
+Every field has a default from your global trade settings. Override per-trade if needed. Hit Buy — transaction signs and lands.
+
+---
+
+## Preset Amounts
+
+The percentage buttons (10 / 25 / 50 / 100) size against your current wallet SOL balance on buys, or against your position on sells. Customize the preset values in **Settings → Instant Trade Presets**:
+
+- Change defaults to any value (e.g., 5% / 15% / 50% / 100%)
+- Set custom SOL amounts (0.05, 0.1, 0.5, 1)
+- Separate presets per context (different defaults for Pulse quick-buys vs Portfolio quick-sells)
+
+---
+
+## Confirmation Prompt
+
+By default, Instant Trade **does not ask for confirmation** — that's the whole point (speed). But for trades above a threshold you set, it'll pop a "Are you sure?" confirm:
+
+- Default: confirm required for any trade > 1 SOL
+- Customize in Settings → Trading → Confirmation threshold
+- Disable entirely (power users) or set very low (cautious users) as you prefer
+
+Once the confirmation fires, the trade submits automatically. You can also hit Enter to skip the confirm for the current trade only.
+
+---
+
+## Speed & Safety Tradeoff
+
+Instant Trade is optimized for **minimum keypresses to execution**. That means less friction, but also less time to catch mistakes. Traders who use Instant Trade heavily should:
+
+- **Double-check slippage defaults** — a trade with 50% slippage that fires in 1 tap can fill you at a much worse price
+- **Use confirmation for large trades** — even a 0.5-second "are you sure" confirm catches fat-fingers
+- **Test your presets** with small amounts before firing large ones
+- **Keep MEV protection on** — an Instant Trade without MEV protection on a trending token is a free sandwich for bots
+
+---
+
+## Integration with Automation
+
+Instant Trade is the manual equivalent of what [Migration Sniper](/automation/sniper) and [Limit Orders](/automation/limit-orders) do automatically. Use it when:
+
+- You don't want to set up a full sniper but want to trade fast on a single alert
+- You want to front-run your own limit order — see price moving, fire Instant Trade, skip waiting
+- The signal is too nuanced for rules (e.g., a specific tweet + a specific holder-count threshold together)
+
+---
+
+## Keyboard Shortcuts Within Popup
+
+| Key | Action |
+|---|---|
+| `B` | Toggle Buy |
+| `S` | Toggle Sell |
+| `1–9` | Set percent (10%, 20%, ... 100%) |
+| `Enter` | Submit |
+| `Esc` | Close popup |
+| `Tab` | Move between fields |
+
+---
+
+## Failure Modes
+
+Same as any trade — slippage exceeded, priority fee too low, network congestion. Failed Instant Trades appear in your Portfolio history marked FAILED with the reason.
+
+A failed Instant Trade costs only the Solana base fee (fractions of a cent) — no platform fee is charged for failed transactions.
+
+---
+
+## Related
+
+- [Trading System](/features/trading) — full trade page interface when you need more detail
+- [Migration Sniper](/automation/sniper) — auto-buy rules for token migrations
+- [Limit Orders](/automation/limit-orders) — stop-loss / take-profit automation
+- [Quick Start Tips](/getting-started/quickstart-tips) — slippage and priority-fee guidance
