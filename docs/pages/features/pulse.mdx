@@ -1,0 +1,115 @@
+---
+title: "Pulse — Token Discovery"
+description: "The live feed of tokens launching and migrating in real time."
+date: 2026-04-21
+---
+
+# Pulse — Token Discovery
+
+Pulse is Interstate's real-time feed of every token launching and graduating across Solana launchpads. Three columns of tokens at three lifecycle stages, streaming live.
+
+Open it at **[app.interstate.so/pulse?chain=sol](https://app.interstate.so/pulse?chain=sol)**.
+
+---
+
+## The Three Columns
+
+### NEW
+Tokens that just launched on a tracked launchpad and haven't hit graduation criteria yet. Typically first few minutes of life — fastest column, highest token count.
+
+**Launchpads indexed**: pump.fun, Meteora DBC, bonk.fun, boop.fun, moonit, Raydium Launchpad, moonshot, heaven, sugar.
+
+### FINAL STRETCH
+Tokens that are **close to migrating** to a DEX. High bonding curve progress (typically 70%+), building real volume, climbing the graduation threshold. This is often the best trading window — liquidity is thin enough for big moves, but the token has proven some traction.
+
+### MIGRATED
+Tokens that **successfully graduated** to a DEX. Usually Raydium CPMM, DAMM V2, or PumpSwap. Deeper liquidity, more stable, less wicks. Most "safe" trading happens here.
+
+---
+
+## Row Columns Explained
+
+| Column | What it shows |
+|---|---|
+| **Token** | Avatar + name + symbol. Click → opens the trade page. |
+| **MCap** | Current market cap in USD. |
+| **Age** | Minutes / hours since launch. |
+| **Vol** | Volume over the last configurable window (default 5m). |
+| **Txs** | Trade count in the same window. |
+| **Holders** | Unique wallet count that currently holds. |
+| **Dev %** | Creator's remaining token holding as % of supply. |
+| **Sniper %** | % of supply bought within 3 slots of creation. |
+| **Insider %** | % of supply held by wallets that received via transfer (not trade). |
+| **Bundler %** | % of supply held by wallets that bought as coordinated bundles. |
+| **Top 10 %** | Combined holding of the 10 biggest wallets. |
+| **Chart** | Sparkline of price over the last window. |
+
+All these fields update live. See [Detection Signals](/analytics/bundle-detection) for how each percentage is computed.
+
+---
+
+## Filters
+
+The filter popout (top-right) lets you narrow Pulse to the tokens you care about. Key filters:
+
+- **Min market cap / max market cap** — exclude dust or oversized tokens
+- **Min holders** — filter out launches that haven't built any community
+- **Max dev %** — exclude rug-risk tokens where the creator still holds >X%
+- **Max sniper %** — filter out bot-heavy launches
+- **Max bundler %** — filter out suspicious coordinated buys
+- **Min age** — hide the first N seconds of chaos
+- **Launchpad** — only show tokens from specific launchpads
+- **Search** — substring match on name or symbol
+
+Filters are saved per-user. Your preset travels across devices.
+
+---
+
+## Watchlist
+
+Click the star icon next to any token to add it to your **Watchlist** (visible in the Pulse header toggle). Watchlist rows show prominently and you get sound/popup notifications on major events (migration, >100% move, etc.).
+
+---
+
+## Live Updates
+
+Pulse is powered by a dedicated **token service** that:
+
+- Subscribes to Solana gRPC (Yellowstone) for every on-chain event
+- Indexes trades, holders, and token state in real time
+- Pushes updates to your browser via WebSocket (sub-second from chain → UI)
+
+When a token's state changes (a new trade lands, a holder enters, dev sells), the row updates in place without page refresh.
+
+---
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `/` | Focus search bar |
+| `F` | Toggle filters |
+| `W` | Toggle watchlist-only view |
+| `R` | Manual refresh (rarely needed) |
+| `Esc` | Close any open popout |
+
+---
+
+## Reading Pulse Like a Trader
+
+**New launches (NEW column)** — Too chaotic for most. Unless you're sniping with a filter, most of what you see here will die within minutes. Ignore unless you've set clear rules.
+
+**Final Stretch column** — This is where experienced traders hunt. A token at 80% bonding with strong holder growth and low dev % is a real asymmetric bet.
+
+**Migrated column** — Safer. Deeper pools. You lose the earliest-entry upside but gain the ability to actually size up without slippage eating you.
+
+The [Quick Start Tips](/getting-started/quickstart-tips) doc has specific rules for each column.
+
+---
+
+## Related
+
+- [Trading System](/features/trading) — what happens when you click a token
+- [Security Check](/features/security-check) — automatic contract-level safety flags
+- [Migration Sniper](/automation/sniper) — auto-buy tokens the moment they graduate
+- [Bundle Detection](/analytics/bundle-detection) — how the Sniper/Insider/Bundler flags work

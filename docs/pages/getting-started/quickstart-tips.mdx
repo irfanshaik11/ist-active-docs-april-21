@@ -1,0 +1,141 @@
+---
+title: "Quick Start Tips"
+description: "Pro tips for your first week on Interstate — how to rank up fast, avoid fees, and not get rekt."
+date: 2026-04-21
+---
+
+# Quick Start Tips
+
+Shortcuts, defaults, and gotchas for your first week trading on Interstate. Read this once and save yourself several losses.
+
+---
+
+## Rank Up Arena Fast
+
+Every Credit you earn at a higher rank multiplies — so the single most valuable early move is climbing through DEGEN → WARRIOR as quickly as possible. See the full [Arena guide](/points) for mechanics.
+
+**Stack every free earning path on day 1:**
+
+- Connect your X account (one-time Credit lump)
+- Follow Interstate on X (one-time lump)
+- Join Telegram + Discord (two more one-time lumps)
+- Retweet any active Key Tweet (bonus Credits)
+- Make your first trade (kicks off your streak)
+
+These alone get you a meaningful head start without any trading volume.
+
+---
+
+## MEV Protection: When to Use It
+
+MEV protection routes your transaction through a protected bundle to prevent sandwich attacks and front-running. It costs a small tip (~0.0005–0.005 SOL) on top of network fees.
+
+**Turn it ON when:**
+- Trading a freshly-launched or trending token (high MEV activity)
+- Trade size > 0.5 SOL
+- Volatile migration window
+
+**Leave it OFF when:**
+- Small exploratory trade (< 0.1 SOL)
+- Deep liquidity token that's not trending
+- You want minimum network cost
+
+Interstate defaults to MEV protection **on** for spot trades. You can toggle per trade in the buy/sell ticket.
+
+---
+
+## Priority Fee: Auto vs. Manual
+
+Priority fee is your "tip" to validators for faster block inclusion. Solana isn't congested 24/7 — the right priority fee varies 100x throughout a day.
+
+- **Auto-Fee mode** (recommended default) — Interstate watches the mempool and picks a reasonable priority fee for current conditions.
+- **Manual override** — Use when sniping a highly-anticipated launch. Bump priority fee to 0.005+ SOL during the first 2–3 seconds of migration.
+
+**Rule of thumb**: If a trade fails with "transaction not included", your priority fee was too low. Bump it and retry.
+
+---
+
+## Slippage: Match to Volatility
+
+Slippage tolerance is how much the token price can move between quote and execution before the trade aborts.
+
+| Token state | Suggested slippage |
+|---|---|
+| Just-launched on pump.fun (< 5 min old) | 20–30% |
+| Final stretch / about to migrate | 15–20% |
+| Fresh migrations (first hour post-migration) | 10–15% |
+| Established token (> 24h, deep pools) | 2–5% |
+
+**Too low = failed trades during volatility.** **Too high = you get a worse fill.** Interstate's default is 20% on spot buys, which is correct for most meme trades but overkill for stable large-cap swaps.
+
+---
+
+## Buy-On-Migration Sniper: Use With Rules
+
+[Migration snipers](/automation/sniper) automatically buy a token the moment it graduates from a launchpad to a DEX. Great for catching early entries — but also the fastest way to lose SOL if you pick bad tokens.
+
+**Never set a sniper without:**
+- A budget cap you're comfortable losing (say, 0.05–0.1 SOL per token)
+- A paired auto-sell (stop-loss at -50% and/or take-profit at +100%)
+- Reasonable filter criteria (min dev-hold %, min holder count, bundle detection flags off)
+
+Sniping "everything that migrates" is a speedrun to liquidation. Sniping **tokens that pass a filter** is a real strategy.
+
+---
+
+## Limit Orders: Set Before You Need Them
+
+Set your stop-loss and take-profit **as soon as you enter a position**, not after you're down 40% and panicking. Market conditions tank fast — if you're not at your desk, limit orders are the difference between -30% and -90%.
+
+See [Limit Orders](/automation/limit-orders) for how auto-buy and auto-sell work.
+
+---
+
+## Read the Safety Signals
+
+Every token row on Pulse shows flags that matter:
+
+- **Dev Hold %** — How much the creator still holds. >5% = concentrated risk of dump. 0% = already sold (could be clean or rug).
+- **Sniper %** — How much was bought within 3 slots of creation. >30% = bot-heavy launch.
+- **Insider %** — Wallets that received tokens via transfer (not buy). High = suspicious distribution.
+- **Bundler %** — Wallets that bought as coordinated bundles. High = manipulation likely.
+- **Top 10 holders %** — If top 10 hold >40%, you're exposed to whale dumps.
+
+Interstate also runs a **CA Security Check** on every token — see [Security Check](/features/security-check).
+
+---
+
+## Position Management
+
+- **Take profits in stages** — Sell 25% at +100%, 25% at +200%, let the rest ride with a trailing stop. You'll almost never catch the exact top.
+- **Never average down on a memecoin dump** — memes don't recover; they bleed to zero. Exit at -30% and free up capital for the next trade.
+- **Track realized vs unrealized PnL** — The Portfolio page separates them. Unrealized PnL is noise until you actually exit.
+
+---
+
+## Save on Fees
+
+- **Rank up fast** — TITAN returns 35% of platform fees as SOL cashback vs DEGEN's 10%. On $10k/month volume, that's $25 saved.
+- **Claim cashback regularly** — SOL cashback sits in your Arena balance until you claim. No auto-compound, so claim + re-deploy if you're an active trader.
+- **Consolidate small trades** — Every trade pays a network fee. 10 trades of 0.01 SOL cost more in fees than 1 trade of 0.1 SOL.
+
+---
+
+## Security Hygiene
+
+- **Use a dedicated email** — Don't mix your main inbox with a trading platform that has wallet access.
+- **Enable 2FA on your Google account** if you sign in via Google.
+- **Never DM "support"** — Real Interstate support happens in the [public Telegram](https://t.me/+DDXGrsJoe3szYTAx). Anyone DMing you claiming to be support is a scammer.
+- **Export your private key and store it offline** if you plan to hold large positions long-term.
+
+---
+
+## When to Ask for Help
+
+Head to [Support](/support) if:
+
+- A trade went through on-chain but your Interstate balance is wrong
+- You're locked out or can't sign in
+- You suspect a bug (wrong price, missing trade, etc.)
+
+Include your transaction signature (tx hash) when reporting — makes it 10× faster to trace.

@@ -1,0 +1,156 @@
+---
+title: "Twitter Monitor"
+description: "Track influential X/Twitter accounts and get notified the instant they post about a token."
+date: 2026-04-21
+---
+
+# Twitter Monitor
+
+Twitter Monitor tracks the X/Twitter accounts you care about and pings you the moment any of them post, reply, or retweet — with automatic token-mention extraction so you can act on alpha in seconds, not minutes.
+
+---
+
+## How It Works
+
+Most meme-coin pumps trace back to a specific tweet — a known alpha caller posting a CA, a key influencer mentioning a token, or a founder announcing a narrative. By the time you refresh X manually and scroll past unrelated posts, the first 2× has already happened.
+
+Interstate monitors your selected X accounts continuously. When they post:
+1. The tweet text is scanned for Solana mint addresses, ticker symbols, and known narratives.
+2. If a token is mentioned, the tweet + the token's current price / Pulse row are pushed to your feed instantly.
+3. You can buy with one click directly from the notification.
+
+Typical latency from tweet posted → Interstate notification is **under 5 seconds**.
+
+---
+
+## Setting Up
+
+1. Open **Trackers** → **Twitter** tab.
+2. Click **Add Account**.
+3. Paste the X/Twitter handle (with or without the `@`).
+4. Label the account (e.g., "Alpha Caller #1", "Protocol Founder").
+5. Choose notification preferences (in-app, Telegram, sound, push).
+
+The tracker is live immediately. Any new post, reply, or retweet from that account is captured.
+
+---
+
+## Automatic Token Extraction
+
+When a tracked account posts, Interstate runs NLP + pattern-matching against the text to find:
+
+- **Solana mint addresses** — 32-44 char Base58 strings
+- **$TICKER mentions** — `$PEPE`, `$WIF`, etc.
+- **Known token names** — matched against our indexed token database
+- **Contract addresses in image OCR** — some alpha callers post CAs as screenshots
+
+Extracted tokens appear as **clickable badges** in the notification. Tap → jump straight to the trade page.
+
+---
+
+## Filters
+
+Track a lot of accounts and want to cut noise? Use filters:
+
+- **Only posts containing a token mention** (skip personal tweets)
+- **Only original posts** (skip retweets)
+- **Only first-time mentions** (skip when they keep re-tweeting the same token)
+- **Minimum follower count of mentioned token** (if we have it indexed)
+- **Exclude replies** (some accounts are noise in replies)
+
+Filters are per-account. Your top 3 critical accounts might get "notify on everything"; your 20 watched accounts might get "notify only on new token mentions".
+
+---
+
+## Pairing with Automation
+
+Combine Twitter Monitor with [Limit Orders](/automation/limit-orders) for hands-free alpha response:
+
+**Auto-Buy-on-Tweet rule:**
+1. A specific account tweets a Solana CA
+2. Interstate detects the CA
+3. Auto-buy triggers if token passes your safety filters (low bundler %, reasonable holder count)
+4. Paired take-profit at +50% auto-sells
+
+This is aggressive — tweets can be compromised accounts, pumping a bag, or baiting. Always pair with:
+- Safety filter thresholds (see [Bundle Detection](/analytics/bundle-detection))
+- A small per-trigger cap (e.g., 0.05 SOL max)
+- Stop-loss paired in advance
+
+---
+
+## Reading the Twitter Activity Feed
+
+Each entry in the feed shows:
+- Profile avatar + handle + your label
+- Tweet text
+- Extracted token badges (if any)
+- Engagement stats (likes, RT, replies)
+- Time since posted
+- Quick action buttons: **View**, **Buy**, **Add to Watchlist**
+
+---
+
+## Notification Channels
+
+| Channel | Best for |
+|---|---|
+| **In-app toast** | Active trading sessions |
+| **Sound alert** | Multi-tab users |
+| **Telegram bot** | Away from desktop |
+| **Mobile push** | On-the-go alerts |
+
+Each tracker supports multiple channels — critical accounts get Telegram + Push, casual ones stay in-app.
+
+---
+
+## Account Limits
+
+Twitter Monitor slots are gated by Arena rank:
+
+- **DEGEN** — 3 accounts
+- **WARRIOR** — 10 accounts
+- **GLADIATOR** — 25 accounts
+- **COMMANDER** — 50 accounts
+- **TITAN** — unlimited
+
+Climbing the ranks unlocks more slots. See [Arena](/points) for mechanics.
+
+---
+
+## Key Tweets & Rewards
+
+If you connect your own X account to Interstate, you can earn Credits by retweeting **Key Tweets** — highlighted posts from the Interstate team or partners. Retweets are detected automatically and the Credits drop into your Arena balance.
+
+This is separate from the monitor — monitor is about receiving signals, Key Tweets is about earning rewards.
+
+---
+
+## Good Accounts to Track
+
+Interstate maintains a community-curated list of accounts known for alpha quality. See the **Recommended** tab inside the Twitter tracker. Popular categories:
+
+- **Solana DEX / launchpad announcements** (official accounts)
+- **Known meme-coin alpha callers** (various)
+- **Protocol founders you respect**
+- **Industry analysts** (for macro narratives)
+
+Recommendations are starting points only — no account is right for every trader.
+
+---
+
+## Limitations
+
+- **X API rate limits** affect how fast we can detect tweets. Typical latency 2–5 seconds.
+- **Tweet deletion** — if an account deletes a tweet, we retain it in your feed (the data was already captured) with a "deleted" badge.
+- **Private / protected accounts** — not trackable (X API restriction).
+- **Image OCR** — best effort, not guaranteed to catch all image-based CAs.
+
+---
+
+## Related
+
+- [Wallet Tracker](/analytics/wallet-tracker) — same concept for on-chain wallets
+- [Bundle Detection](/analytics/bundle-detection) — filter out bot-heavy launches even if a tweet goes viral
+- [Limit Orders](/automation/limit-orders) — auto-act on tweet-triggered signals
+- [Pulse](/features/pulse) — see if tweeted tokens are already live

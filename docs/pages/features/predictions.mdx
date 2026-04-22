@@ -1,0 +1,142 @@
+---
+title: "Prediction Markets"
+description: "Trade yes/no markets alongside memecoins — all under one wallet, one account, one Arena rank."
+date: 2026-04-21
+---
+
+# Prediction Markets
+
+Interstate runs prediction markets (Polymarket-style yes/no markets) as a first-class trading track alongside memecoin spot trading. Same wallet, same account, same Arena rank. No separate signup, no custody handoff, no friction between memecoin trading and prediction trading.
+
+Open it at **[app.interstate.so/predictions](https://app.interstate.so/predictions)**.
+
+---
+
+## What Is a Prediction Market?
+
+A prediction market is a binary event contract. The market poses a yes/no question with a defined resolution date — e.g., "Will X happen by date Y?"
+
+Two outcome shares trade against each other:
+- **YES** — pays $1 if the event happens, $0 if not
+- **NO** — pays $1 if the event doesn't happen, $0 if it does
+
+Prices sit between $0 and $1, representing the implied probability. A YES share trading at $0.65 means the market thinks there's a 65% chance of the event happening. If you buy YES at $0.65 and the event happens, you collect $1 — a ~54% return. If it doesn't happen, your YES share is worth $0.
+
+It's not gambling in the dice sense — it's a market with real participants, real price discovery, and real edge if you know something the market doesn't.
+
+---
+
+## The Predictions Page
+
+Open `/predictions` to see the full market board:
+
+- **Categories** — Politics, sports, crypto, tech, culture, current events, etc.
+- **Each market card** — question, current YES / NO prices, volume, open interest, resolution date
+- **Filters** — time to resolution, minimum liquidity, category, volume-to-open-interest ratio
+
+Click any market to open its trade page with full order book, chart, and position management.
+
+---
+
+## Trading a Prediction Market
+
+Each market has a trade page similar to a spot trade — but with binary-outcome mechanics:
+
+1. **Pick a side** — YES or NO
+2. **Enter amount** (USD) — shows you how many shares you'll receive at current price
+3. **Review**:
+   - Shares receive
+   - Max payout (if your side wins)
+   - Platform fee
+4. **Buy**
+
+Positions appear in your Portfolio alongside your memecoin holdings, with implied probability and current mark-to-market value.
+
+### Selling a Position
+
+You can sell a prediction share before resolution at whatever the current market price is — just like selling a stock before earnings. If the market has moved in your favor, you lock in the gain. If it's moved against you, you take the smaller loss rather than riding to zero.
+
+### Holding to Resolution
+
+If you hold to resolution and your side wins, payout is automatic: your shares convert to USD at $1 per share. If your side loses, shares expire worthless.
+
+---
+
+## Arena Integration
+
+Prediction markets are a full parallel earning track in [Arena](/points):
+
+| What it does | Prediction markets | Spot memecoins |
+|---|---|---|
+| Earn Credits on every trade | ✅ | ✅ |
+| Rank multiplier applies | ✅ | ✅ |
+| Counts toward streak | ✅ | ✅ |
+| Dedicated daily + seasonal quest track | ✅ | ✅ (separate track) |
+| SOL cashback on platform fees | ❌ | ✅ |
+| Counts toward lifetime Credits | ✅ | ✅ |
+
+If you only trade memecoins, you're leaving an entire parallel earning track on the table. Users who trade both stack Credits from two independent quest tracks and diversify their daily activity — which matters a lot when seasonal leaderboards are close.
+
+**Why no SOL cashback on predictions:** prediction markets have a different fee structure than spot trading. Their Credits rewards are tuned accordingly, but the cashback isn't passed through as SOL.
+
+---
+
+## Why Prediction Markets Matter for Traders
+
+### Information Convergence
+Prediction markets aggregate information better than polls, pundits, or vibes. When a market settles on a probability, it's pricing in every trader's best guess weighted by their willingness to bet real money. That's a sharper signal than any single opinion.
+
+### Cross-Narrative Hedging
+Holding a memecoin position tied to a specific narrative (e.g., a political meme)? You can hedge the underlying event in the prediction market. If the narrative depends on X happening and prediction markets let you short X, your memecoin downside is partially covered.
+
+### Cheaper Diversification
+Prediction market outcomes are often uncorrelated with crypto price action. Spreading exposure across prediction markets adds true diversification — something hard to get inside the memecoin universe.
+
+### Lower Variance
+Outcomes resolve at $0 or $1. No overnight gaps, no pump-and-dump tail risk. Volatility is bounded. For traders tired of 80% memecoin drawdowns, predictions are a breath of different air.
+
+---
+
+## What Makes a Good Prediction Trade
+
+**Edge-first thinking:**
+
+- Do you know something the market doesn't? (Insider knowledge, uniquely close analysis, domain expertise)
+- Is the probability mispriced vs. your honest assessment? (If you think 70% and market says 50%, that's a +20% edge buy)
+- Does resolution arrive before the price will meaningfully move? (Time decay matters — 6-month markets move slowly)
+
+**Red flags:**
+- Markets with near-zero volume (your trade moves the price)
+- Markets resolving in years (your capital is locked up)
+- Markets that depend on off-chain resolution (counterparty/resolution risk)
+- Betting emotionally on outcomes you want (vs. outcomes you believe are mispriced)
+
+---
+
+## Fees & Settlement
+
+Prediction market fees are shown inline in every trade ticket before you confirm. Payouts on resolution land automatically in your Interstate balance once the oracle settles the market.
+
+Resolution typically happens within hours of the triggering event. For markets resolving on deterministic data (election results, sports scores), resolution is automated. For ambiguous markets, a human review process handles edge cases.
+
+See [Fees](/fees#prediction-markets) for the breakdown.
+
+---
+
+## Risks Specific to Prediction Markets
+
+Beyond the general [platform risks](/benefits-and-risks):
+
+- **Resolution ambiguity** — a market's outcome language might leave room for interpretation; oracle disputes can delay payout
+- **Counterparty risk** — same as any on-chain contract; a bug in the underlying protocol could affect settlements
+- **Thin-market manipulation** — in low-volume markets, a single whale can push prices artificially
+- **Time decay** — if you enter a long-dated market and the underlying situation clarifies, the price can move a lot before resolution
+
+---
+
+## Related
+
+- [Arena — Credits & Ranks](/points) — how prediction trades earn Credits
+- [Fees](/fees) — fee breakdown for prediction markets
+- [Trading System](/features/trading) — memecoin trading interface (parallel track)
+- [Portfolio](/features/portfolio) — where prediction positions appear alongside memecoins

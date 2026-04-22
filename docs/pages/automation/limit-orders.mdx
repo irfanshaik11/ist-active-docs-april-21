@@ -1,0 +1,161 @@
+---
+title: "Limit Orders (Auto-Buy & Auto-Sell)"
+description: "Set rules that execute trades automatically when price, market cap, or conditions are met."
+date: 2026-04-21
+---
+
+# Limit Orders (Auto-Buy & Auto-Sell)
+
+Limit orders let you set a rule today that executes a trade automatically when a condition is met. They power stop-losses, take-profits, bonding-curve entries, and dev-sell exits.
+
+---
+
+## Supported Trigger Types
+
+| Trigger | Fires when… | Used for |
+|---|---|---|
+| **Market cap (Above / Below)** | Token market cap crosses a threshold | Take-profit, stop-loss |
+| **Bonding curve %** | Token reaches X% of migration threshold | Pre-migration entry |
+| **Dev sell** | Creator wallet sells any amount | Panic-exit on rug signal |
+| **Time-based** | N minutes/hours after entry | Hard-exit regardless of price |
+
+Every limit order pairs one trigger with one action (buy or sell with specific amount and slippage).
+
+---
+
+## Stop-Loss (Auto-Sell Below MCap)
+
+The most common use case. Set a rule: "If market cap drops below $X, sell my entire position."
+
+1. On the trade page → Limit Orders panel → **Set Stop Loss**.
+2. Enter MCap floor (e.g., -50% of your entry MCap).
+3. Choose % of position to sell (usually 100%).
+4. Set slippage (15–20% for volatile exits — you need to actually fill).
+5. Confirm.
+
+The order fires automatically the moment on-chain MCap drops below the threshold. Fill typically lands within 1–2 seconds.
+
+**Pro tip**: Set the stop-loss **immediately** when you open a position, not after you're already down 40%. Pre-commit to your exit level when you're calm.
+
+---
+
+## Take-Profit (Auto-Sell Above MCap)
+
+The inverse. Sell a percentage of your position when market cap crosses above a target.
+
+Typical staged strategy:
+
+| Target | Action |
+|---|---|
+| +100% MCap (2×) | Sell 25% |
+| +200% MCap (3×) | Sell 25% |
+| +400% MCap (5×) | Sell 25% |
+| Trailing stop | Last 25% rides with a trailing stop-loss |
+
+This captures gains at each level while letting a portion ride for maximum upside. Losing the last 25% if the token reverses is a known cost — but if it 100×'s, you still caught most of it.
+
+---
+
+## Limit Buy (Auto-Buy Below MCap)
+
+Auto-buy when a token drops to your target MCap.
+
+Classic entry: you want into a token but think current MCap is too high. Set a limit buy at -30% MCap. If the token dips, you buy automatically.
+
+**Caution**: "Buy the dip" on dying memecoins is a money incinerator. Combine limit buys with a quality filter — only set them on tokens with healthy holder growth and low bundler %.
+
+---
+
+## Bonding Curve Entry
+
+Target tokens while they're still on the bonding curve. Rule: "Buy 0.1 SOL when this token reaches 80% bonding."
+
+This catches the pre-migration window where price action often accelerates. Pairs well with:
+- A paired take-profit at MCap doubling (which typically happens on migration itself)
+- A paired stop-loss if migration fails and the token stalls
+
+---
+
+## Dev-Sell Trigger (Panic-Exit)
+
+The strongest panic trigger available. Rule: "If the creator wallet sells any amount, sell 100% of my position immediately."
+
+Dev sells are often the first warning sign of a rug or coordinated dump. By the time you notice in Discord and log in to sell manually, the price is already -50%. A dev-sell trigger fires on the same slot the dev's sell transaction lands — you exit simultaneously or within 1 slot.
+
+**Worth setting on every position where the dev still holds >3% of supply.**
+
+---
+
+## Time-Based Exit
+
+"Sell 100% after 30 minutes regardless of price."
+
+Useful for:
+- Migration snipes where you want to realize gains fast and not bag-hold
+- Trading around news catalysts where you don't want to wait indefinitely
+- Any position where you've decided "if it hasn't worked by X, exit"
+
+---
+
+## Multiple Orders on One Position
+
+You can stack as many limit orders as you want on a single position:
+
+Example: Entered 0.2 SOL at $50k MCap. Active orders:
+- Stop-loss: sell 100% if MCap < $25k
+- Take-profit 1: sell 25% at $100k
+- Take-profit 2: sell 25% at $250k
+- Dev-sell: sell 100% if dev sells any
+- Time exit: sell remaining at 24h mark
+
+Interstate processes them in the order they fire. Once 100% is sold, remaining orders auto-cancel.
+
+---
+
+## Slippage on Limit Orders
+
+Slippage matters more for limits than for market orders. A stop-loss firing during a panic dump needs **high slippage** (20–30%) to actually fill — otherwise the price keeps dropping while your order reverts.
+
+**Rule of thumb**:
+- Take-profit orders — 10% slippage is usually plenty (price rising = buyer filled easily)
+- Stop-loss orders — 20–30% slippage (panic dumps have thin liquidity, need wider tolerance)
+- Dev-sell trigger — 30%+ slippage (guaranteed contested liquidity)
+
+---
+
+## Fees on Limit Orders
+
+Same fees as manual trades — 1% platform fee, applicable [SOL cashback](/fees) based on your Arena rank, plus Solana network fee.
+
+There's no additional charge for setting or automating a limit order. You only pay when it actually fills.
+
+---
+
+## Monitoring Active Orders
+
+- **Per-token view** — every token's trade page shows active orders for that token
+- **Global view** — top-nav → **Orders** — all your active limit orders across every token
+- **History view** — filled, canceled, and failed orders with reasons
+
+Failed orders show why they failed:
+- **Slippage exceeded** → price moved past your tolerance
+- **Insufficient liquidity** → no sell liquidity available at target price
+- **Priority fee too low** → tx didn't land in time
+- **Token not tradable** → liquidity removed or pool closed
+
+Most failures are fixable — cancel, adjust settings, resubmit.
+
+---
+
+## Advanced: OCO (One-Cancels-Other)
+
+When you set both a stop-loss and a take-profit on the same position, Interstate treats them as OCO by default: the moment one fires, the other cancels automatically. This prevents the scenario where both trigger in rapid succession and you accidentally double-sell beyond your position size.
+
+---
+
+## Related
+
+- [Migration Sniper](/automation/sniper) — auto-buy on graduation
+- [Trading System](/features/trading) — manual buy/sell interface
+- [Quick Start Tips](/getting-started/quickstart-tips) — when to use stop-losses vs take-profits
+- [Fees](/fees) — fee breakdown on limit order executions

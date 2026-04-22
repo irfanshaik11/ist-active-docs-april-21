@@ -1,0 +1,136 @@
+---
+title: "Migration Sniper"
+description: "Auto-buy tokens the moment they graduate from a launchpad to a DEX."
+date: 2026-04-21
+---
+
+# Migration Sniper
+
+The Migration Sniper watches every token on tracked launchpads and auto-buys the moment a token graduates to a DEX. This is how you catch post-migration runs without being glued to your screen.
+
+---
+
+## How It Works
+
+When a token on pump.fun, Meteora, or other launchpads reaches graduation threshold, it "migrates" — its liquidity moves from the bonding curve to a DEX pool (Raydium, DAMM V2, PumpSwap). This is often when serious price action happens: new buyers can now size up with deep liquidity, and the graduation itself is a public event bots race to front-run.
+
+Interstate's sniper:
+1. Watches every tracked token's bonding curve progress in real time.
+2. When a target token crosses graduation, the buy transaction is submitted within **milliseconds**.
+3. Your position appears immediately in the Positions panel.
+
+Because Interstate's indexer runs with a Yellowstone gRPC feed, the latency from "migration event on-chain" to "sniper fires" is sub-second — typically within the same Solana slot.
+
+---
+
+## Setting Up a Sniper
+
+From the trade page of any pre-migration token:
+
+1. Scroll to the **Limit Orders** panel → choose **Migration Sniper**.
+2. Set:
+   - **Buy amount** (SOL)
+   - **Slippage** (recommend 15–25% for migration moments)
+   - **Priority fee** (bump higher than default — you're competing with other snipers)
+   - **MEV protection** (recommend ON for any large sniper)
+3. Optionally add a paired **auto-sell** (stop-loss + take-profit) — see [Limit Orders](/automation/limit-orders).
+4. Confirm.
+
+The sniper sits in your active orders list until it fires or you cancel it.
+
+---
+
+## Filter-Based Sniper (Advanced)
+
+Instead of targeting one specific token, you can set **filter rules** that auto-buy any token matching your criteria:
+
+- **Max dev hold %** (e.g., only tokens where dev holds < 3%)
+- **Min holder count at migration**
+- **Max sniper %** (avoid bot-heavy launches)
+- **Max bundler %** (see [Bundle Detection](/analytics/bundle-detection))
+- **Min volume in last 5m**
+- **Launchpad source** (e.g., only pump.fun migrations)
+
+A filter-based sniper with a per-token cap (e.g., 0.05 SOL per token, max 5 tokens per hour) lets you cast a wide net without exposing yourself catastrophically.
+
+---
+
+## Recommended Preset: "Safe Migration Hunter"
+
+A conservative config that pays for itself without blowing up:
+
+| Setting | Value |
+|---|---|
+| Buy amount | 0.05 SOL per token |
+| Max per hour | 5 tokens |
+| Max dev hold | < 3% |
+| Min holders at migration | > 100 |
+| Max sniper % | < 25% |
+| Max bundler % | < 10% |
+| Slippage | 20% |
+| Priority fee | 0.003 SOL |
+| MEV protection | ON |
+| Auto-sell paired | Stop-loss -50%, Take-profit +150% |
+
+With these rules, a bad day loses ~0.25 SOL across 5 tokens (-100% on all five), and a good day can return multiple times that from a single winner.
+
+---
+
+## Recommended Preset: "Aggressive Snipe"
+
+If you're chasing a specific viral token and want the highest chance of landing the migration buy first:
+
+| Setting | Value |
+|---|---|
+| Buy amount | Your risk tolerance |
+| Slippage | 30% |
+| Priority fee | 0.01 SOL (aggressive) |
+| MEV protection | ON (mandatory for contested migrations) |
+| Auto-sell | Take-profit +50%, quick-sell after 60 seconds |
+
+**Note**: Aggressive sniping often competes with dozens of bot wallets also targeting the same migration. Even with max priority, you're not guaranteed to win the race. Plan for the 50%+ chance of a failed or slow fill.
+
+---
+
+## Auto-Sell Integration
+
+Every sniper should have a paired auto-sell. Without one, a successful snipe that pumps 300% in 10 seconds can dump back to -50% while you're in a meeting.
+
+**Common pairings:**
+
+- **Take profits in stages**: Sell 50% at +100%, 25% at +200%, 25% trails on a stop-loss.
+- **Quick flip**: Full exit at +50% regardless of further upside. Lower variance, consistent realized gains.
+- **Strict SL**: -30% stop-loss, no take-profit. Let winners run, cut losers fast.
+
+See [Limit Orders](/automation/limit-orders) for how to configure.
+
+---
+
+## What Can Go Wrong
+
+- **Migration fails** — some tokens reach graduation threshold but fail to actually migrate (usually because no DEX pool creation transaction lands). Your sniper sits unfired.
+- **Sandwich attack** — without MEV protection, a sandwich bot can front-run your snipe, pump the price, and sell to you at a worse fill.
+- **Insufficient priority fee** — your tx gets stuck in the mempool, the window closes, the transaction reverts. Bump priority fee for next time.
+- **Rug-on-migration** — the dev dumps their tokens immediately at migration, leaving you with a token that's already -80% from your entry. This is why holder distribution + dev-hold filters matter.
+- **Slippage exceeded** — price moved more than your slippage tolerance between quote and execution. Increase slippage for volatile migrations.
+
+All failed snipers appear in your trade history marked as FAILED with the reason. No fees are charged for a failed transaction on Interstate (though the Solana network fee is still paid).
+
+---
+
+## Monitoring Active Snipers
+
+All active snipers appear in:
+- **Token trade page** → Limit Orders panel
+- **Global active orders** → top-nav menu → "Orders"
+
+Each shows: target token, trigger (migration), amount, current status, and cancel button. Canceling refunds any reserved SOL back to your balance.
+
+---
+
+## Related
+
+- [Limit Orders](/automation/limit-orders) — auto-buy and auto-sell rules
+- [Trading System](/features/trading) — manual trading interface
+- [Bundle Detection](/analytics/bundle-detection) — avoid bot-heavy launches
+- [Quick Start Tips](/getting-started/quickstart-tips) — sniper rules of thumb

@@ -1,0 +1,111 @@
+---
+title: "Quick Start"
+description: "Get trading on Interstate in under 3 minutes — from signup to your first trade."
+date: 2026-04-21
+---
+
+# Quick Start
+
+Interstate is a hybrid Solana trading platform and wallet. This guide gets you from zero to your first trade in about three minutes.
+
+> **TL;DR**
+> 1. Go to [app.interstate.so](https://app.interstate.so) and sign in.
+> 2. A non-custodial wallet is created for you automatically — no seed phrase to back up manually.
+> 3. Deposit SOL (or buy via Coinbase on-ramp).
+> 4. Open the [Pulse](/features/pulse) page, pick a token, and trade in one click.
+
+---
+
+## Step 1 — Sign In
+
+Go to **[app.interstate.so](https://app.interstate.so)** and choose how you want to sign in:
+
+| Method | What you get |
+|---|---|
+| **Google** | Fastest — uses your Google account, Interstate creates a Turnkey MPC wallet behind the scenes. |
+| **Email + Password** | Classic flow. Same Turnkey MPC wallet is created. |
+| **Phantom / Solflare** | Connect your existing Solana wallet directly. |
+| **MetaMask** | EVM signing for cross-chain support (EVM chains coming). |
+
+New users get assigned a **waitlist spot** — see [waitlist/status](/faqs) for how invites flow. Once activated, your full dashboard is live.
+
+---
+
+## Step 2 — Your Wallet
+
+Interstate wallets are **non-custodial** — your private key is held in a [Turnkey](https://turnkey.com) MPC sub-organization tied to your account. Interstate never has custody of your funds.
+
+You can see your public address at the top of the screen. Click it to:
+
+- **Deposit** — shows a QR code and address for receiving SOL
+- **Withdraw** — send SOL to any external wallet (no Interstate fee, only Solana network cost)
+- **Export** — export your private key if you ever want to migrate (power-user feature, guard carefully)
+- **Buy crypto** — on-ramp via Coinbase (up to $500/week without KYC depending on region)
+
+---
+
+## Step 3 — Fund Your Wallet
+
+You have three options to get SOL into your Interstate wallet:
+
+1. **Send SOL from another wallet** — Copy your Interstate public address, send SOL from Phantom / Solflare / an exchange / a friend. Shows up in ~10 seconds.
+2. **Coinbase on-ramp** — Click "Buy crypto" → purchase up to $500/week in SOL with card/bank. No KYC under that threshold.
+3. **Import an existing wallet** — If you already have a Solana wallet with SOL, import the private key or seed phrase to use it directly on Interstate.
+
+A SOL balance of 0.05–0.1 SOL is enough to start small trades and cover network fees.
+
+---
+
+## Step 4 — Find a Token
+
+The **[Pulse](/features/pulse)** page (`/pulse?chain=sol`) shows live token flow across three columns:
+
+- **New** — tokens that just launched on pump.fun / Meteora / Bonk / Moonit / Raydium Launchpad
+- **Final Stretch** — tokens near migration (high bonding curve %, building volume)
+- **Migrated** — tokens that successfully moved to a DEX (Raydium, DAMM V2, PumpSwap)
+
+Each row shows: market cap, holder count, dev's holding, sniper %, insider %, bundler %, and a live mini-chart. Hover for tooltips, click to open the full trade page.
+
+You can also search any mint address directly in the search bar.
+
+---
+
+## Step 5 — Your First Trade
+
+On any token's trade page:
+
+1. **Pick side** — Buy or Sell toggle.
+2. **Enter amount** — In SOL for buys, percentage of your position for sells.
+3. **Check fees** — Platform fee, priority fee, optional MEV protection tip all shown inline.
+4. **Hit Buy / Sell** — Transaction signs via Turnkey (invisible to you), lands on-chain in ~1–2 seconds.
+
+Your position instantly appears in the **Positions** panel below the chart. Every trade earns **Credits** toward your Arena rank — see [how Credits work](/points).
+
+---
+
+## Quick Start Tips
+
+For an opinionated list of pro moves — how to rank up Arena faster, when to turn MEV protection on/off, how to set sensible limit orders — see **[Quick Start Tips](/getting-started/quickstart-tips)**.
+
+---
+
+## Common First-Day Issues
+
+**"Transaction failed"** — Usually a priority fee too low during congestion. Turn on Auto-Fee in trade settings, or manually bump priority fee to 0.001 SOL.
+
+**"Slippage exceeded"** — Token price moved more than your slippage tolerance between quote and execution. Increase slippage to 10–20% for volatile launches.
+
+**"Insufficient SOL"** — You need a small buffer (~0.01 SOL) above your trade amount to cover network fees.
+
+**"Wallet not showing balance"** — Give it ~15 seconds after a deposit for the blockchain to finalize and Interstate to re-scan.
+
+Still stuck? See [Support](/support) to reach the team on Telegram.
+
+---
+
+## Next Steps
+
+- Learn the [trading interface](/features/trading) in depth
+- Set up a [migration sniper](/automation/sniper) to auto-buy tokens the moment they graduate
+- Track top traders with [wallet tracking](/analytics/wallet-tracker)
+- Climb the [Arena leaderboard](/points) and stack SOL cashback

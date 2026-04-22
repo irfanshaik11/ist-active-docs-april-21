@@ -1,0 +1,127 @@
+---
+title: "Security Check (CA Safety)"
+description: "How Interstate flags risky token contracts automatically — before you trade."
+date: 2026-04-21
+---
+
+# Security Check (CA Safety)
+
+Every token on Interstate is automatically scanned for common rug-pull and scam patterns. The results appear inline on Pulse and on every trade page.
+
+---
+
+## What Gets Checked
+
+### Mint & Freeze Authority
+Solana tokens can have mint authority (creator can print new tokens) and freeze authority (creator can freeze any wallet). Legit tokens renounce both.
+
+| Flag | Meaning |
+|---|---|
+| 🟢 **Mint renounced** | Creator cannot print more tokens. Supply is fixed. |
+| 🔴 **Mint active** | Creator can mint new tokens at will — massive dump risk. |
+| 🟢 **Freeze renounced** | Creator cannot freeze your wallet. You can always sell. |
+| 🔴 **Freeze active** | Creator can freeze your wallet. You may be unable to sell. |
+
+Any token with active mint or freeze authority gets a red badge on Pulse.
+
+### LP Lock / Burn
+After migration to a DEX, the liquidity pool tokens (LP) can be locked or burned. Burned = gone forever. Locked = time-locked in a contract. Active LP in dev wallet = rug risk.
+
+| Flag | Meaning |
+|---|---|
+| 🟢 **LP burned** | LP tokens sent to burn address — dev cannot pull liquidity. |
+| 🟢 **LP locked** | LP tokens time-locked in a known locker contract. |
+| 🔴 **LP in dev wallet** | Dev can pull the entire pool any moment. Classic rug setup. |
+
+### Holder Concentration
+If the top few wallets control too much supply, one of them dumping tanks the price.
+
+- **Top 10 holders %** — combined holding of the ten biggest wallets
+- **Top 1 holder %** — the biggest single wallet
+
+Interstate flags:
+- Top 10 > 50% = ⚠️ concentrated
+- Top 1 > 15% = ⚠️ whale risk
+- Top 10 < 30% = 🟢 well-distributed
+
+### Dev Wallet Activity
+The creator's wallet is tracked from token creation. Flags:
+
+- **Dev has sold** — creator has dumped any amount (sets a dev-paper-hands flag)
+- **Dev has bought back** — creator has bought on-market (rare, usually a positive signal)
+- **Dev wallet drained** — creator wallet has 0 SOL (often pre-rug state)
+
+### Dev Track Record
+Interstate indexes every token the creator has ever deployed. The dev-tokens panel on the trade page shows:
+
+- Total past tokens launched
+- How many rugged (lost >90% within 24h)
+- Best performer
+- Median outcome
+
+A dev with 10 past rugs is a different risk than a first-time deployer.
+
+### Copy Trade / Bot Signals
+- **Sniper %** — portion of supply bought in the first 3 slots (bot-like behavior)
+- **Insider %** — wallets that received tokens via transfer rather than buying on market
+- **Bundler %** — coordinated multi-wallet bundle buys (see [Bundle Detection](/analytics/bundle-detection))
+
+High values on any of these = manipulation likely.
+
+### External Listings
+Interstate cross-references:
+- Is the token on DexScreener / Birdeye?
+- Does it have CoinGecko / CoinMarketCap listings?
+- Is the socials (Twitter, Telegram, website) validated?
+
+Missing or freshly-created socials = lower trust.
+
+---
+
+## How to Read the Badges
+
+On Pulse, each token row has a **security column** with up to three colored dots:
+
+- **Green dot** — all critical checks pass (mint renounced, LP burned/locked, no freeze)
+- **Yellow dot** — one or more soft flags (high holder concentration, past dev rugs)
+- **Red dot** — at least one critical red flag (active mint, freeze, LP in dev wallet)
+
+Hover the dot for the full breakdown. On the trade page, the same info is laid out in the **Security** panel with full flag details.
+
+---
+
+## Limitations — What Security Check Can't Tell You
+
+Security Check is **necessary but not sufficient**. It can't:
+
+- **Predict price action** — a "safe" token can still go to zero if nobody buys.
+- **Catch clever rugs** — some scams hide behind technically-safe contracts. A burned LP doesn't help you if the dev holds 40% of supply and dumps.
+- **Verify off-chain claims** — if the team claims to be audited, Interstate can't verify that without the audit firm's cryptographic attestation.
+- **Save you from yourself** — all green flags on a memecoin doesn't mean it'll go up.
+
+Treat Security Check as a **filter to avoid the worst**, not a **signal to buy**.
+
+---
+
+## Combining With Other Flags
+
+On a typical meme token you're considering:
+
+| Signal | Weight |
+|---|---|
+| Security Check (contract-level) | Eliminates bad-actor tokens |
+| Dev track record (past tokens) | Biggest predictor of outcome |
+| Holder growth over time | Real community vs bot wash |
+| Volume / trade count pattern | Organic flow vs bundles |
+| [Bundler %](/analytics/bundle-detection) | Manipulation level |
+| Market narrative / catalyst | Outside data — your own research |
+
+No single signal wins. The security check handles the "is this outright a rug pull" question so you can spend your attention on the harder signals.
+
+---
+
+## Related
+
+- [Bundle Detection](/analytics/bundle-detection) — sniper, insider, bundler flag mechanics
+- [Trading System](/features/trading) — where security flags appear on the trade page
+- [FAQs](/faqs) — bundle checker details

@@ -1,0 +1,112 @@
+---
+title: "Discover — Explore Tokens"
+description: "A curated browse view of tokens across trending categories, narratives, and performance cohorts."
+date: 2026-04-21
+---
+
+# Discover — Explore Tokens
+
+Discover is Interstate's curated browse view. While [Pulse](/features/pulse) streams every token in real time across launch/migration/post-migration states, Discover is optimized for **deliberate exploration** — finding what's moving in specific narratives, top-performing cohorts, and time-window leaderboards.
+
+Open it at **[app.interstate.so/discover](https://app.interstate.so/discover)**.
+
+---
+
+## Discover vs Pulse
+
+| | Pulse | Discover |
+|---|---|---|
+| **Primary use** | Reacting to live launches and migrations | Scanning for ideas across narratives and time windows |
+| **Update cadence** | Sub-second live stream | Rolling time-window snapshots |
+| **Best for** | Snipers, migration hunters, reactive traders | Thematic plays, late-session review, scouting narratives |
+| **Data density** | High (lots of live columns) | Curated (ranked leaderboards) |
+
+Most active traders use both: Pulse for real-time, Discover for "what actually performed today in the cat-meme category".
+
+---
+
+## What Discover Shows
+
+### Time-Window Leaderboards
+Top tokens ranked by performance within your chosen window:
+
+- **Last 5 minutes** — very short-term momentum
+- **Last hour** — session-scale movers
+- **Last 24 hours** — day's biggest plays
+- **Last 7 days** — broader trend view
+
+Ranked by a composite of price change, volume growth, and holder growth — so you catch the actual winners, not just tokens pumping on thin volume.
+
+### Narrative Clusters
+Tokens grouped by narrative theme (cats, dogs, political, gaming, AI, etc.). When a narrative is trending, Discover surfaces it as a cluster so you can see the entire cohort at once rather than hunting for peers token-by-token.
+
+Narratives are classified using metadata + our LLM tagging pipeline. New narratives get indexed within 5-10 minutes of a meaningful cohort forming.
+
+### Cohort Rankings
+Pre-built cohorts grouped by quality signal:
+
+- **Best dev track records** — tokens launched by creators with past winners
+- **Cleanest safety flags** — low sniper/insider/bundler across recently-migrated tokens
+- **Highest holder growth** — tokens where organic holder count is accelerating
+- **Smart-money following** — tokens where multiple tracked smart wallets have bought recently
+
+### Recently Migrated
+A dedicated view of just the last 24 hours of migrations, ordered by post-migration performance. Useful for finding tokens that successfully graduated AND had real trading activity, filtering out the 90% that migrate and die immediately.
+
+---
+
+## Filters
+
+Same filter popout as Pulse, tuned for browse mode:
+
+- Market cap range (min / max)
+- Minimum holders
+- Max dev hold, max sniper %, max bundler %
+- Minimum 24h volume
+- Launchpad source
+- Narrative tags
+- Hide tokens you already hold
+
+Filter presets are saved per-user and travel with your account.
+
+---
+
+## Watchlist Integration
+
+Click the star on any row to add to your [Pulse watchlist](/features/pulse#watchlist). The two features share the same watchlist — a token saved from Discover appears starred in Pulse too.
+
+---
+
+## Typical Discover Workflows
+
+### The Theme Scout
+You heard cat memes are running. Open Discover → Narrative Clusters → "Cats". The full cluster ranks by recent performance. Pick the cleanest on safety flags + healthy holder growth.
+
+### The 24-Hour Review
+End of trading session, open Discover → Last 24 hours. See what actually mattered today — biggest movers, highest volume, most migrations. Great for end-of-day journaling and spotting patterns you missed in the moment.
+
+### The Quality Hunter
+Discover → "Best dev track records" cohort. Bypass the noise of every new pump.fun launch and look only at tokens from creators who have a winning history. Much tighter funnel than Pulse's firehose.
+
+### The Smart Money Shadow
+Discover → "Smart-money following" cohort. Tokens where multiple of your [tracked wallets](/analytics/wallet-tracker) have bought recently. A single smart-money buy is noise; 3+ smart-money wallets converging is a real signal.
+
+---
+
+## Data Freshness
+
+- Time-window leaderboards update every **30 seconds**
+- Narrative clusters refresh every **5 minutes**
+- Cohort rankings refresh every **2 minutes**
+- Recently migrated is live (sub-second)
+
+If you're reacting to a breaking signal, Pulse is faster. If you're investigating patterns, Discover's aggregation gives you the clearer view.
+
+---
+
+## Related
+
+- [Pulse](/features/pulse) — the real-time side of token discovery
+- [Similar Tokens](/features/similar-tokens) — find narrative peers of any specific token
+- [Security Check](/features/security-check) — auto-safety flags visible on every Discover row
+- [Wallet Tracker](/analytics/wallet-tracker) — feeds the "Smart-money following" cohort

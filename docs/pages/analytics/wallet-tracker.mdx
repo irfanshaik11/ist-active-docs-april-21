@@ -1,0 +1,144 @@
+---
+title: "Wallet Tracker (Copy Smart Money)"
+description: "Follow top-performing wallets and get notified on every trade they make."
+date: 2026-04-21
+---
+
+# Wallet Tracker
+
+Wallet Tracker lets you follow specific Solana wallets and receive live notifications every time they trade. Combine it with [Limit Orders](/automation/limit-orders) and you have a copy-trade setup without writing a single line of code.
+
+Open it at **[app.interstate.so/trackers](https://app.interstate.so/trackers)**.
+
+---
+
+## Why Track Wallets?
+
+Certain wallets consistently outperform. Dev wallets of past-successful tokens, well-known alpha callers, consistent profitable snipers — their trade flow often leads retail by minutes. Following them:
+
+- Surfaces new tokens earlier than Pulse can (because they hit these wallets before the filters catch them)
+- Lets you validate your own thesis ("is a smart wallet already in this?")
+- Provides a free signal source without writing scraping bots
+
+---
+
+## Adding a Wallet
+
+1. Open **Trackers** from the top-nav or sidebar.
+2. Click **Add Wallet**.
+3. Paste the Solana address.
+4. Add a **label** (e.g., "Smart Money #1", "Dev of last rug").
+5. Choose notification preferences:
+   - **All trades**
+   - **Only buys >$X** (filter noise)
+   - **Only on tokens you don't hold** (avoid re-signaling known positions)
+
+The wallet now appears in your Trackers list. Every trade it makes shows up in your **Activity Feed** within seconds of landing on-chain.
+
+---
+
+## Activity Feed
+
+The tracker activity feed shows:
+
+| Column | What |
+|---|---|
+| Wallet label | Your custom label for the wallet |
+| Action | Buy / Sell |
+| Token | Mint + current Pulse row |
+| Size | SOL / USD value |
+| Time | Seconds ago, live updating |
+| Quick buy | One-tap button to mirror the trade |
+
+You can filter the feed by: wallet, token, buy-only, sell-only, or size threshold.
+
+---
+
+## Notifications
+
+When a tracked wallet trades, you can choose how to be notified:
+
+- **In-app toast** (default) — popup in the corner of the UI
+- **Sound alert** — audible ping
+- **Telegram** — connect the Interstate Telegram bot and receive direct messages
+- **Push notification** (on mobile app)
+
+Each wallet has its own notification settings, so you can get Telegram pings for your top 3 wallets and silent feed-only for the rest.
+
+---
+
+## Copy Trade Mode
+
+For your highest-confidence tracked wallets, enable **Copy Trade Mode**:
+
+- Every buy they make triggers an auto-buy from your wallet
+- You set a **proportion** (e.g., 10% of their trade size, capped at 0.1 SOL per token)
+- Optional filters: only copy if passes bundle-detection thresholds, only under X MCap, etc.
+- Paired auto-sells trigger on their exits
+
+**Caveats**:
+- You never mirror faster than 1 block after them (the chain enforces ordering)
+- If they're sniping migrations, their fill often lands in a slot you can't compete with
+- Pure copy-trading = pure dependence; tracked wallets can turn bad
+
+---
+
+## Finding Wallets Worth Tracking
+
+### From the Token Trade Page
+Every token's **Top Traders** panel shows the top 10 sellers by realized PnL on that token. Click any wallet → "Add to tracker". Now you're tracking proven winners on the tokens you care about.
+
+### From Pulse
+Hover any trade in the "Recent trades" feed. Wallets that appear repeatedly across multiple successful tokens are candidates.
+
+### From External Lists
+Public leaderboards like Birdeye's top wallets, GMGN's trader rankings, or niche Telegram channels often publish lists of profitable wallets. Paste them into Trackers.
+
+### Your Own Cohort
+Track a friend's wallet to see their entries / exits in real time. Useful for trading together without voice chat.
+
+---
+
+## Copy-Trader Detection
+
+When you add a wallet, Interstate automatically checks whether it's been flagged as a **copy-trader** itself — meaning the wallet primarily follows other wallets rather than finding opportunities independently.
+
+Copy-trader wallets aren't worth tracking because:
+- They add latency (you're copying a copier, who's copying someone smarter)
+- The actual alpha is upstream
+
+If Interstate flags a wallet you're tracking as a copy-trader, it'll suggest the upstream wallet to track instead.
+
+---
+
+## Wallet Limits & Plans
+
+- **Free tier**: up to 10 tracked wallets, in-app + sound notifications
+- **Higher tiers** (Arena rank gating): more wallets, Telegram + push, copy-trade mode
+
+Limits scale with your Arena rank — WARRIOR+ unlocks expanded tracker slots, COMMANDER+ unlocks copy-trade mode. See [Arena](/points).
+
+---
+
+## Use Cases
+
+### The Alpha Scout
+Track 5–10 known smart wallets. Use notifications only (no copy-trade). When multiple smart wallets buy the same token within a short window, you get a "cluster alert" — a strong signal to dig in.
+
+### The Risk-Off Exit Signal
+Track the dev wallets of tokens you hold. The moment a dev wallet sells, your Telegram lights up. Pair with a [dev-sell limit order](/automation/limit-orders) and you're both notified and out of the position.
+
+### The Full Copy-Trader
+Identify one truly consistent wallet (not easy). Enable copy-trade with 10–20% proportion. You mirror their winners and losers in equal proportion — the expected value is positive only if your target wallet is actually skilled.
+
+### The Portfolio Mirror
+Track your friend group's wallets. See who's in what. Nobody has to broadcast their trades in chat — it's all visible in real time.
+
+---
+
+## Related
+
+- [Twitter Monitor](/analytics/twitter-monitor) — similar but for alpha accounts on X
+- [Bundle Detection](/analytics/bundle-detection) — separate detection engine for bot/manipulator wallets
+- [Limit Orders](/automation/limit-orders) — pair tracker signals with auto-buy/sell
+- [Pulse](/features/pulse) — where smart-money trades often surface as `Top Trader` flags

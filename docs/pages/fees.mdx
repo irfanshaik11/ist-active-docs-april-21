@@ -1,0 +1,129 @@
+---
+title: "Fees"
+description: "Full breakdown of Interstate's platform fees, network fees, and how SOL cashback reduces your effective cost."
+date: 2026-04-21
+---
+
+# Fees
+
+Interstate keeps fees simple and transparent. You pay a small platform fee on trades, plus whatever the underlying network charges — and on spot trades a portion of the platform fee comes back to you as real SOL via Arena cashback.
+
+> **TL;DR**
+> - **Spot trade platform fee**: 1% of trade size, applied on entry and exit.
+> - **SOL cashback**: 10% → 35% of the platform fee returned to you as real SOL, scaled by your Arena rank.
+> - **Network fees**: Solana base fee + priority fee + optional MEV-protection tip — paid on-chain, not to Interstate.
+> - **Deposits & withdrawals**: No Interstate fee. You only pay the Solana network cost to move SOL in or out.
+
+---
+
+## Platform Fees
+
+### Spot Trading (Solana)
+
+Interstate charges a **1% platform fee** on every spot trade — applied once when you enter a position and once when you exit. This fee funds platform development, infrastructure, and the Arena rewards program that pays a slice of it back to you.
+
+| Trade type | Platform fee |
+|---|---|
+| Buy (spot) | 1% of SOL spent |
+| Sell (spot) | 1% of SOL received |
+| Migration sniper, limit orders, quick sell | Same 1% (no surcharge for automation) |
+
+### Prediction Markets
+
+Prediction market trades have their own fee structure tuned to the mechanics of yes/no markets. Fees are disclosed inline in the trade ticket before you confirm every position — there are no hidden fees. Prediction trades **do not earn SOL cashback** but do earn Credits toward your Arena rank via the prediction-market quest track.
+
+---
+
+## SOL Cashback — The Discount You Actually Earn Back
+
+Every spot trade returns a percentage of Interstate's platform fee to you as real SOL, scaled by your Arena rank.
+
+| Rank | Cashback % of platform fee | Effective platform fee |
+|---|---|---|
+| **DEGEN** | 10% | 0.90% |
+| **WARRIOR** | 15% | 0.85% |
+| **GLADIATOR** | 20% | 0.80% |
+| **COMMANDER** | 25% | 0.75% |
+| **TITAN** | 35% | 0.65% |
+
+Cashback accumulates in your Arena balance and is claimable to your wallet as SOL at any time.
+
+**Worked example**: You're a **COMMANDER** trading $10,000 of spot volume in a month.
+- Gross platform fees: 1% × $10,000 = **$100**
+- Cashback returned to you: 25% × $100 = **$25 in SOL**
+- Effective platform fee: **0.75%**
+
+For a TITAN, that same month returns $35 in SOL — an effective fee of 0.65%.
+
+See the [Arena rewards guide](/points) for how to climb ranks.
+
+---
+
+## Network Fees (Paid to Solana, not Interstate)
+
+When you trade on Solana, the network itself charges transaction fees. These are paid to validators, not to Interstate — we pass them through at cost.
+
+### Base Fee
+
+Every Solana transaction pays a **base fee of 0.000005 SOL** per signature — a fraction of a cent at current prices. This is set by the network, not Interstate.
+
+### Priority Fee
+
+Solana blocks have limited space. During high-traffic moments (token launches, migrations, popular trades), users compete for inclusion by paying a priority fee — a tip to validators to process your transaction first.
+
+Interstate picks a sensible default priority fee automatically. You can override it per trade in the buy/sell ticket if you want to pay more for faster inclusion or less when the network is quiet. **Auto-fee** mode watches network congestion and adjusts dynamically.
+
+### MEV Protection Tip (Optional)
+
+When MEV protection is enabled, your transaction routes through a protected bundle so front-running bots and sandwich attackers can't intercept it. This costs a small **tip** on top of the base fee, typically 0.0005–0.005 SOL per trade depending on market conditions.
+
+- **MEV protection on** — safer for large trades and high-volatility launches; small tip added.
+- **MEV protection off** — cheaper, but vulnerable to sandwich attacks during volatile swaps.
+
+You control MEV protection per trade. Interstate defaults to on for spot trades and off for low-value prediction market interactions, but you can change either default in settings.
+
+---
+
+## Deposits & Withdrawals
+
+| Action | Interstate fee | Network cost |
+|---|---|---|
+| Deposit SOL into your Interstate wallet | **$0** | Solana base fee only (fractions of a cent) |
+| Withdraw SOL to an external wallet | **$0** | Solana base fee only |
+| Buy SOL via Coinbase integration | **$0 Interstate fee** | Coinbase's on-ramp fee applies (varies by region/payment method) |
+
+Interstate never takes a cut of deposits or withdrawals. Your SOL is always yours, held in your own non-custodial wallet.
+
+---
+
+## Earning Yield (Marginfi Integration)
+
+When you opt in to earn yield on idle SOL through our Marginfi integration, Marginfi's own rates and fees apply. Marginfi currently offers up to **15% APY** with instant withdrawals. Interstate charges no additional fee for routing your position — you receive the full net yield from Marginfi.
+
+See [Marginfi's documentation](https://marginfi.com) for their most current rates and risk parameters.
+
+---
+
+## Referral Fees & Passthrough
+
+There is no referrer fee added to a referee's trades. Instead, **Interstate gives 10% of the referee's Credits back to the referrer** — this is paid from Interstate's own reward pool, not from the referee's fees. Referring someone costs them nothing extra.
+
+---
+
+## Comparison
+
+Interstate's 1% base fee is in line with leading Solana trading platforms, and the SOL cashback mechanism lowers your effective cost further as you rank up. Unlike platforms that gate lower fees behind token staking or upfront capital, Arena cashback is earned purely through trading activity.
+
+| Platform tier | Fee model |
+|---|---|
+| Interstate DEGEN | 1% base, 0.90% effective |
+| Interstate WARRIOR | 1% base, 0.85% effective |
+| Interstate GLADIATOR | 1% base, 0.80% effective |
+| Interstate COMMANDER | 1% base, 0.75% effective |
+| Interstate TITAN | 1% base, 0.65% effective |
+
+---
+
+## Questions About Fees?
+
+All fees are displayed inline in the trade ticket before you confirm any transaction. If you see a discrepancy or have a specific question about a past trade, reach out via [Support](/support) with the transaction signature and we'll help you trace exactly what was paid where.

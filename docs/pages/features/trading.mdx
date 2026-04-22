@@ -1,0 +1,184 @@
+---
+title: "Trading System"
+description: "The trade page — charts, buy/sell, positions, holders, and everything packed into it."
+date: 2026-04-21
+---
+
+# Trading System
+
+Every token on Interstate opens to the same full-featured trade page. This doc walks through every panel.
+
+---
+
+## The Trade Page Layout
+
+```
+ ┌────────────────────┬─────────────────────────────┬───────────────────┐
+ │ Token header       │                             │ Trade action      │
+ │  - name + symbol   │          Chart              │  - Buy / Sell     │
+ │  - mint address    │   (candlestick, multi-TF)   │  - amount         │
+ │  - creator         │                             │  - slippage       │
+ │  - security flags  │                             │  - priority fee   │
+ ├────────────────────┤                             │  - MEV protect    │
+ │  Positions panel   │                             │  - BUY / SELL btn │
+ │  Holders table     │                             ├───────────────────┤
+ │  Top traders       │                             │ Limit orders      │
+ │  Recent trades     │                             │ Quick sell presets│
+ │  Dev tokens        │                             │                   │
+ └────────────────────┴─────────────────────────────┴───────────────────┘
+```
+
+---
+
+## Chart
+
+Interstate uses **TradingView-compatible OHLCV charts** powered by our own indexer — trade ticks are live via WebSocket, no 30-second polling lag.
+
+**Supported timeframes**: 1s, 5s, 15s, 1m, 5m, 15m, 30m, 1h, 4h, 1d, 1w
+
+**Chart tools:**
+- Drawing tools (trendlines, rectangles, fib retracements)
+- Volume histogram (default on)
+- Dev wallet markers (see where the creator bought/sold)
+- MCap toggle (switch between price and market cap Y-axis)
+
+The chart data comes from your own indexer — the same one that powers Pulse — so candles reflect the state of the bonding curve or DEX pool in real time. No stale prices.
+
+---
+
+## Buy / Sell Panel
+
+### Buying
+
+1. Toggle **Buy**
+2. Enter amount in SOL (or use percent presets: 10%, 25%, 50%, 100% of wallet)
+3. Review:
+   - Estimated tokens received (post-slippage)
+   - Platform fee (1% — see [Fees](/fees))
+   - Network fee + MEV tip
+4. Hit **Buy**
+
+The transaction signs invisibly via your Turnkey MPC wallet. Lands on-chain in 1–2 seconds under normal conditions.
+
+### Selling
+
+1. Toggle **Sell**
+2. Choose percentage (25%, 50%, 75%, 100%) or enter exact token amount
+3. Same fee review → **Sell**
+
+The **Quick Sell** preset buttons in the Positions panel let you exit in one tap without opening the full trade ticket — useful when a position is crashing.
+
+---
+
+## Positions Panel
+
+Every token you currently hold shows here, with:
+
+- **Bought** (SOL + USD value at entry)
+- **Sold** (if partial exits)
+- **Remaining** (tokens + current USD value)
+- **PnL** (realized + unrealized)
+- **Actions** — quick sell, view details, set limit order
+
+Click any row to open **Position Detail Modal** with full trade history, avg entry, realized/unrealized split, and a mini-chart of your entry/exit points overlaid on price.
+
+---
+
+## Holders Table
+
+Shows the top 50 holders of the token, with per-wallet flags:
+
+- **Dev** — the creator wallet
+- **Sniper** — bought within 3 slots of creation (bot-like behavior)
+- **Insider** — received tokens via transfer (not bought on market)
+- **Bundler** — part of a coordinated bundle buy (4+ wallets same slot)
+- **Copy trader** — suspected follower wallet
+
+Each flag is computed by our [detection engine](/analytics/bundle-detection) in real time. Hover any flag for details on why it was assigned.
+
+---
+
+## Top Traders
+
+Ranks the top 10 sellers by realized PnL on this specific token. Great for spotting whales who've successfully extracted value — you can click through to track their wallet.
+
+The table shows: wallet address (abbreviated), total bought / sold, realized PnL in USD, win-rate on similar tokens.
+
+---
+
+## Recent Trades
+
+Live feed of the last 1,000 trades on the token. Each row: timestamp, buy/sell, SOL size, price, wallet address.
+
+Colored rows let you scan quickly:
+- **Green** = buys
+- **Red** = sells
+- **Yellow** = flagged wallet (sniper / insider / bundler)
+
+Useful for reading flow: if you see 10 consecutive red rows of 0.5+ SOL, something's dumping.
+
+---
+
+## Dev Tokens
+
+Shows other tokens the creator has deployed — their success rate, how long those tokens lasted, whether they rugged. A creator with 5 past rugs is a different risk profile than a first-time deployer.
+
+This panel answers: **"Has this dev made money for anyone before?"**
+
+---
+
+## Limit Orders
+
+Bottom-right panel lists your active limit orders on this token:
+
+- **Stop loss** (auto-sell if price drops below X)
+- **Take profit** (auto-sell if price hits Y)
+- **Limit buy** (auto-buy when price drops to Z)
+
+See [Limit Orders](/automation/limit-orders) for how to set them up and what triggers they support.
+
+---
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `B` | Focus Buy panel |
+| `S` | Focus Sell panel |
+| `Q` | Quick sell 100% (with confirmation) |
+| `1–9` | Set amount percent (10%, 20%, …) |
+| `Enter` | Submit trade |
+| `Esc` | Cancel / close modal |
+
+---
+
+## Settings That Matter
+
+In the trade ticket's settings menu (gear icon):
+
+- **Default slippage** — Applies to every trade unless overridden
+- **Default priority fee** — Auto / manual
+- **MEV protection default** — on / off
+- **Confirmation prompt** — require double-confirm for trades > X SOL
+- **Quick sell presets** — customize the 25/50/75/100 buttons to your preferred split
+
+---
+
+## Multi-Chain
+
+Interstate supports **Solana** as primary chain. Additional chains roll out periodically:
+
+- **Monad** — integrated, see `/bnb` page
+- **BNB** — integrated with limited pools
+- Additional chains coming
+
+The chain switcher at the top of the UI toggles contexts. Each chain has its own wallet balance and trade ticket — amounts are always in the native gas token (SOL on Solana, etc.).
+
+---
+
+## Performance Notes
+
+- Trade confirmations typically arrive in **1–2 seconds** when Solana isn't congested
+- During peak congestion (major launches), priority fee matters — see [Quick Start Tips](/getting-started/quickstart-tips)
+- WebSocket price feed latency is sub-second from on-chain event to your chart
+- If the chart freezes, refresh the page — the WS reconnects automatically
