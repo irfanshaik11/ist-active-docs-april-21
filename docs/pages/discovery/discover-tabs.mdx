@@ -1,0 +1,71 @@
+---
+title: "Discover"
+description: "Discover is Interstate's tab-based token browser — Trending, New Pairs, DEX, and Live."
+---
+
+# Discover
+
+Discover is the tab-based token browser at [app.interstate.so/discover](https://app.interstate.so/discover) and as an in-app popout panel. It complements [Pulse](/discovery/pulse): where Pulse is a live launchpad stream, Discover groups tokens into curated lists you can sort and scan.
+
+## Tabs
+
+| Tab | What it shows | Source | Status |
+|---|---|---|---|
+| **Trending** | Tokens ranked by internal momentum score across 5m / 1h / 6h | Volume, tx count, price change, volume growth | Live |
+| **New Pairs** | Newly listed pairs across supported DEXes | DEX indexers | Live |
+| **DEX** | DexScreener's trending list | DexScreener scrape, 60 s poll | Live |
+| **Live** | Real-time new-token launches | PumpPortal WebSocket | Live |
+| **Surge** | Tokens with unusual volume spikes | — | **Coming soon** |
+| **xStocks** | Synthetic stock tokens | — | **Disabled** |
+
+The **Surge** tab is a placeholder — no live data is rendered. The **xStocks** tab is disabled in the UI. Do not rely on either until they ship.
+
+## Trending
+
+Trending is Interstate's own momentum ranking. It combines volume, transaction count, price change, and volume growth over a short window into a single score, and publishes three ranked lists: **5m**, **1h**, **6h**. Rankings update in real time over WebSocket as scores change.
+
+See [Trending](/discovery/trending) for weights, timeframes, and the blacklist that keeps wrapped SOL and known spam out of results.
+
+## New Pairs
+
+New Pairs surfaces tokens with freshly created DEX pools. Useful for catching tokens that have just migrated off a launchpad or launched directly on Raydium / Meteora without a bonding curve.
+
+## DEX (DexScreener)
+
+The DEX tab mirrors DexScreener's own trending list. This is a **separate source** from the internal Trending tab — Interstate scrapes DexScreener's trending page every 60 seconds and serves the results across M5 / H1 / H6 / H24 timeframes. Use it when you want cross-tool consensus; use internal [Trending](/discovery/trending) when you want Interstate's fresh ranking.
+
+See [DexScreener trending](/discovery/dexscreener-trending) for details on the data and timeframes.
+
+## Live
+
+Live streams new-token launches in real time from PumpPortal's WebSocket. The connection is opened only when the tab is selected — so it doesn't consume bandwidth when you're elsewhere in the app. Use it as a firehose for brand-new launches alongside Pulse.
+
+## Every row supports
+
+- **Quick-buy** — one-click buy at your active [Quick-buy preset](/trading/solana-spot/quick-buy-presets) amount
+- **Watchlist** — star a token to [Watchlist](/discovery/watchlist)
+- **Open trade page** — click through to chart and full safety panel
+- **Safety bar indicators** — sniper / bundler / insider / dev % surfaced inline. Full breakdown on the trade page's [analytics panel](/discovery/token-analytics).
+
+## Chain
+
+Discover defaults to Solana. You can switch to Monad via the chain switcher in the header.
+
+::: info Monad on Discover
+Monad exposes only Trending and New Pairs. DEX, Live, Surge, and xStocks are not available on Monad.
+:::
+
+## Discover vs Pulse — when to use which
+
+| Use Discover when | Use Pulse when |
+|---|---|
+| You want ranked lists (best momentum, newest pairs, DexScreener's view) | You want the live launchpad feed in real time |
+| You're hunting for tokens beyond the launchpads | You're trading tokens as they graduate bonding curves |
+| You're comparing your ranking to DexScreener's | You need sub-50 ms notification of migrations |
+
+## What to read next
+
+- [Trending](/discovery/trending) — how the internal rank is computed
+- [DexScreener trending](/discovery/dexscreener-trending) — separate scraped source
+- [Pulse](/discovery/pulse) — launchpad-first live feed
+- [Token search](/discovery/token-search) — go straight to a specific token

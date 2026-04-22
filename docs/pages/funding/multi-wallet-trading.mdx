@@ -1,0 +1,98 @@
+---
+title: "Multi-wallet trading"
+description: "Split one buy or sell across multiple wallets at once. Strategies: Proportional, Equal, Greedy, Auto. ~0.0035 SOL per-wallet minimum. 5–10 wallets recommended."
+---
+
+# Multi-wallet trading
+
+One click, one trade, executed simultaneously from multiple wallets on your account. Useful for avoiding per-wallet size flags on fresh launches, spreading a large order across addresses, or stress-testing a fill.
+
+## How it works
+
+You select a set of wallets, pick a split strategy, and submit the trade. Interstate fans the single trade out into one on-chain transaction per wallet and tracks them all under a parent trade ID.
+
+Each child trade has:
+
+- Its own transaction hash
+- Its own slippage / priority fee (inherited from the parent trade settings)
+- Its own success/failure outcome
+
+Partial success is possible — some wallets fill, some fail — and the UI shows both.
+
+## Enable multi-wallet mode
+
+On a trade page, open the **wallet selector** in the buy/sell panel. Pick more than one wallet. The trade button now says "Buy from N wallets" (or Sell).
+
+By default, the trade uses all selected wallets. To remove a wallet for a single trade, uncheck it in the selector.
+
+## Split strategies
+
+| Strategy | How the amount is distributed |
+|---|---|
+| **Proportional** | Each wallet contributes in proportion to its available balance. **Recommended** — the natural fit for most situations. |
+| **Equal** | Every selected wallet trades the same amount. Skips wallets that can't meet the equal amount. |
+| **Greedy** | Fills from the largest-balance wallet first, then moves down the list. Useful when you want size concentrated in the big wallet but with a fallback. |
+| **Auto** | Backend picks between the above based on balances and order size. Safe default if you don't want to choose. |
+
+## Per-wallet minimum
+
+::: warning ~0.0035 SOL minimum per wallet
+A wallet needs roughly **0.0035 SOL** available — trade amount + Solana transaction fee + a wallet-reserve cushion + priority fee — to participate. Wallets below this threshold are **skipped silently**, and the trade runs with the remaining eligible wallets.
+:::
+
+If your selected set is 10 wallets but 4 are below the threshold, the trade runs with 6.
+
+## How many wallets
+
+| Count | Outcome |
+|---|---|
+| 2–4 | Clean, fast, almost always succeeds. |
+| **5–10** | **Recommended maximum**. Sequential execution stays within RPC rate limits. |
+| 10+ | Supported but slower. More risk of partial failure due to RPC throttling. |
+
+Execution is **sequential by default on Solana** — safer, avoids RPC rate limits and block-order conflicts on the same pool. Total time scales with wallet count.
+
+## Partial success
+
+A multi-wallet trade can land in any of three states:
+
+- **All succeed** — every child transaction confirmed.
+- **Partial** — some confirmed, some failed. You see the outcome per wallet; the ones that failed are isolated to that wallet.
+- **All fail** — usually a pool-level issue (no liquidity, slippage too tight, graduated curve).
+
+Partial success is normal. It does not roll back the successful children. If you need "all or nothing," don't use multi-wallet — make single-wallet trades in sequence and stop after one fails.
+
+## What the result looks like
+
+After submission, the trade panel shows:
+
+- Parent trade ID
+- Per-wallet rows: wallet name, amount, tx hash, status
+- Aggregated totals (total token received, total SOL spent)
+
+Failed rows show a brief reason (`SLIPPAGE_EXCEEDED`, `INSUFFICIENT_BALANCE`, `NO_ACTIVE_POOL`, etc.).
+
+## Monad multi-wallet
+
+Supported. The UX matches Solana — select wallets, pick a strategy, submit. The 10 MON reserve applies **per wallet**. See [Trading on Monad](/trading/monad).
+
+## When to use this
+
+| Situation | Good fit? |
+|---|---|
+| Fresh launch, want size from multiple wallets | Yes. |
+| Hiding a large order across addresses | Yes — subject to public on-chain traceability. |
+| Splitting risk across imported + Turnkey wallets | Yes. |
+| Need guaranteed atomic execution | No — use a single wallet. |
+| Very small total order | No — per-wallet minimum eats the size. |
+
+## Imported wallets in multi-wallet
+
+Turnkey wallets and imported local wallets can be mixed in the same multi-wallet trade. Imported wallets will route through [MEV protection](/trading/mev-protection) on Solana; Turnkey wallets will silently fall back to standard RPC in the same trade.
+
+## What to do next
+
+- Manage the wallet set → [Multi-wallet management](/funding/multi-wallet-management)
+- Import a local wallet for MEV routing → [Wallet import & export](/funding/wallet-import-export)
+- Standard single-wallet trading → [Your first trade](/getting-started/first-trade)
+- Monad-specific rules → [Trading on Monad](/trading/monad)

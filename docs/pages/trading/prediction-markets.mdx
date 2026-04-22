@@ -1,0 +1,87 @@
+---
+title: "Prediction markets"
+description: "Trade YES/NO on Polymarket events through Interstate. Live order book, price history, holder data, comments."
+---
+
+# Prediction markets
+
+Interstate integrates **Polymarket** for event-based YES/NO markets, routed via DFlow for swap execution.
+
+## Where to trade
+
+| Route | Page |
+|---|---|
+| Market index | `app.interstate.so/predictions` |
+| Individual market | `app.interstate.so/predictions/[ticker]` |
+
+From Predictions you can browse markets by category, see trending events, and click into any market to trade.
+
+## What's on a market page
+
+- **YES / NO** trade panel
+- **Live order book**
+- **Price history chart**
+- **Holders** — top positions in the market
+- **Comments** — social stream per market
+- **Activity feed** — recent trades in this market
+- **AI insights drawer** (where available) — summary narrative
+
+## Requires a Polygon wallet
+
+::: warning Polymarket runs on Polygon
+Polymarket is a Polygon-based product. Trading requires a **Polygon wallet** — the Polygon Wallet Card surfaces this in the UI. Your Solana wallet is not used for Polymarket trades.
+:::
+
+When you open a predictions market for the first time, the UI walks you through wiring up your Polygon wallet.
+
+## How a trade places
+
+1. Pick YES or NO.
+2. Enter an amount.
+3. Review the price (price = implied probability).
+4. Confirm.
+
+Swap execution routes through **DFlow**. You receive outcome tokens (YES or NO shares) that redeem for $1 each if the market resolves in your favor, $0 if not.
+
+## Positions and portfolio
+
+Your prediction positions show up in [Portfolio](https://app.interstate.so/portfolio) alongside spot and perps. Portfolio displays:
+
+- Market and outcome (YES / NO)
+- Entry price and quantity
+- Current price
+- Unrealized PnL
+
+## Market resolution
+
+When a market resolves, winning outcome tokens redeem at $1 each. Losing tokens go to $0. You don't manually close the position — resolution is handled by Polymarket.
+
+## AI-generated markets (experimental)
+
+Interstate also embeds **Talarion**, an experimental tool for AI-generated prediction markets. Talarion markets appear on the Predictions index alongside Polymarket events.
+
+::: info Experimental
+Talarion markets are a beta surface. Treat them as experimental — liquidity, resolution, and feature coverage may differ from standard Polymarket events.
+:::
+
+## Rewards on prediction trades
+
+Prediction market trades earn **Credits** toward your Arena rank, exactly like spot trades:
+
+- Volume counts toward lifetime Credits and rank-ups
+- Rank multiplier (up to 4× at Titan) applies
+- Prediction trades have their own **daily and seasonal quest tracks** — separate from spot
+- Streaks count: a prediction trade keeps your daily streak alive
+
+One thing to know: **SOL cashback applies to spot trades only**. Prediction markets have a different fee structure and are rewarded via the prediction quest tracks instead. See the [Points guide](/points) for the full mechanics.
+
+## Live data
+
+Prices, order book, and activity update live via WebSocket. The page does not need to be refreshed to see new trades or price moves.
+
+## Read next
+
+- [Perpetuals](/trading/perpetuals)
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [How Credits, Ranks & Rewards work](/points)
+- [What is Interstate](/getting-started/what-is-interstate)

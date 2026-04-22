@@ -1,0 +1,62 @@
+---
+title: "DexScreener trending"
+description: "Interstate's DEX tab mirrors DexScreener's trending list — scraped every 60 seconds across four timeframes."
+---
+
+# DexScreener trending
+
+The **DEX** tab on [Discover](/discovery/discover-tabs) shows DexScreener's own trending list inside Interstate. This is a **separate source** from the internal [Trending](/discovery/trending) tab — different data, different methodology, different update cadence.
+
+## Where the data comes from
+
+Interstate runs a headless-browser scraper against DexScreener's trending page. Results are cached and served to Interstate's UI and WebSocket channel. You see DexScreener's ranking, not Interstate's.
+
+## Update cadence
+
+| Property | Value |
+|---|---|
+| Poll interval | Every **60 seconds** |
+| Timeframes exposed | **M5**, **H1**, **H6**, **H24** |
+| Delivery | HTTP cache + WebSocket push on list changes |
+
+Compared to the internal Trending tab — which updates every few seconds — the DexScreener tab is deliberately slower. You see what DexScreener shows, after a short cache window.
+
+## Timeframes
+
+| Timeframe | Window |
+|---|---|
+| **M5** | 5 minutes |
+| **H1** | 1 hour |
+| **H6** | 6 hours |
+| **H24** | 24 hours |
+
+The H24 timeframe is only available here. The internal Trending tab caps at 6 hours.
+
+## When to use DexScreener trending vs internal Trending
+
+| Use **DexScreener** (DEX tab) when | Use **internal Trending** when |
+|---|---|
+| You want an external, well-known ranking | You want Interstate's fresh momentum score |
+| You want a 24-hour view | You want sub-10-second updates |
+| You want to cross-check against a third-party source | You're hunting for tokens that just started moving |
+
+Many traders run both side by side — a token ranking well on both lists is a stronger signal than one appearing in only one.
+
+## Every row supports
+
+- **Quick-buy** at your active [Quick-buy preset](/trading/solana-spot/quick-buy-presets)
+- **Watchlist** pinning — see [Watchlist](/discovery/watchlist)
+- **Click through** to the full [trade page](/getting-started/first-trade)
+- **Inline safety indicators** — sniper / bundler / insider / dev. Full breakdown on the [token analytics panel](/discovery/token-analytics).
+
+## Caveats
+
+- **Scraping means lag.** A token trending on DexScreener at 12:00:00 may appear here at 12:00:59 in the worst case.
+- **DexScreener methodology is not ours.** The list reflects their ranking — we do not reweight it.
+- **Monad is not covered.** DexScreener trending on Interstate is Solana-only.
+
+## What to read next
+
+- [Trending](/discovery/trending) — Interstate's internal ranking
+- [Discover tabs](/discovery/discover-tabs) — all tabs side by side
+- [Token search](/discovery/token-search) — jump straight to a ticker or CA

@@ -1,0 +1,111 @@
+---
+title: "Quick Buy — paste a CA"
+description: "Paste any Solana contract address in the Interstate Telegram bot to get a token card and buy in one tap."
+---
+
+# Quick Buy — paste a CA
+
+The primary way to buy in the bot is to paste a Solana contract address (CA) into any chat state. The bot detects it, fetches a token card, and shows one-tap buy buttons. This works from the welcome screen, from inside another flow, or anywhere else in the conversation.
+
+## The flow
+
+You paste:
+
+```
+9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump
+```
+
+Bot replies:
+
+```
+Looking up token…
+```
+
+Then the token card:
+
+```
+<Name> (<SYMBOL>)
+
+Price:        $0.0000123
+Market Cap:   $1,234,567
+Liquidity:    $87,500
+24h Volume:   $412,330
+CA:           9BB6NFEcj…pump  (tap to copy)
+
+Buy amount:
+[ 0.1 SOL ] [ 0.5 SOL ] [ 1 SOL ] [ 5 SOL ]
+[ X SOL (custom) ]
+```
+
+Tap an amount, the bot executes, and you get:
+
+```
+Buy successful
+
+Bought:  123,456.789 <SYMBOL>
+Spent:   1.0000 SOL
+
+View on Solscan ↗
+
+Sell:
+[ 25% ] [ 50% ] [ 100% ]
+```
+
+The post-buy sell buttons are shortcuts — you can also sell later via `/sell` or `/assets`.
+
+## Custom SOL amount
+
+Tap **X SOL** and the bot prompts:
+
+```
+Enter SOL amount (e.g. 0.25)
+```
+
+Type a number. The next text message is captured by a session flag (`awaitingBuyAmount`) and interpreted as the buy amount for that specific token. Only digits and a decimal point are accepted. Send `/cancel` or tap **Cancel** to abort.
+
+The flag persists across bot restarts thanks to the 7-day Redis session, so a restart mid-flow does not strand you.
+
+## What the bot looks up
+
+The bot asks the Interstate token service for the token's name, symbol, price, market cap, liquidity, 24h volume, and pool address. If the token service does not have pool data for that mint, the bot falls back to a backend lookup. Either way, the result is cached briefly so repeated pastes of the same CA are instant.
+
+**24h price change is intentionally not shown** on the bot's token card today — upstream data is unreliable for a majority of mints. It will be re-enabled once the token service can compute it from OHLC candles.
+
+## First-time buys need extra SOL
+
+The first time you buy a specific token, Solana needs roughly **0.002 SOL** beyond your buy amount and priority fee to create the associated token account (account rent). The bot's pre-buy balance check accounts for this and surfaces a clear error if you are short:
+
+```
+Insufficient balance. First-time buys for a token need about 0.002 SOL extra for the Solana token account. Top up and try again.
+```
+
+Top up your wallet and retry. You only pay this rent once per token per wallet.
+
+## Default buy presets
+
+Out of the box the buy buttons are **0.1 / 0.5 / 1 / 5 SOL**. Change them under **Settings → Buy amounts** — see [Settings](/telegram-bot/settings).
+
+## Slippage, priority fee, and MEV
+
+The values from `/settings` apply to every buy:
+
+- **Slippage** (default 20%) — max price movement you will accept.
+- **Buy priority fee** (default 0.0001 SOL) — the tip paid to land the transaction.
+- **MEV protection** (default off) — when on, the bot flags the buy for MEV-protected routing server-side.
+
+Adjust them any time — changes apply to the next buy.
+
+## Errors you may see
+
+- `Token lookup timed out. Please paste the address again to retry.` — token service was slow. Paste again.
+- `Could not find token.` — the CA is invalid or the token service has no data right now. May also appear briefly during an upstream outage.
+- `Insufficient balance.` — top up SOL (including the ~0.002 SOL token-account reserve for first-time buys).
+- `Slippage exceeded.` — the price moved past your slippage tolerance. Raise slippage under `/settings` or try a smaller size.
+
+Full error taxonomy: [Error messages](/telegram-bot/error-messages).
+
+## What to read next
+
+- [Sell by percentage](/telegram-bot/sell-by-percentage)
+- [Settings — slippage, tips, presets](/telegram-bot/settings)
+- [Portfolio and trade history](/telegram-bot/portfolio-assets)

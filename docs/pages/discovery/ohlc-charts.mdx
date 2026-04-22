@@ -1,0 +1,86 @@
+---
+title: "OHLC charts"
+description: "Interstate's candlestick charts — supported intervals, timeframes, the 1,500-point cap, and real-time candle streaming."
+---
+
+# OHLC charts
+
+Every trade page on Interstate renders a candlestick chart for the token. Charts combine historical OHLC data with a real-time WebSocket stream so the current candle updates as trades land.
+
+## Supported intervals
+
+Candle sizes you can select:
+
+`1s` · `5s` · `15s` · `30s` · `1m` · `5m` · `15m` · `30m` · `1h` · `4h` · `12h` · `1d` · `7d`
+
+Shorter intervals are useful for launchpad trading and scalps; longer intervals for position context.
+
+## Supported timeframes
+
+Historical windows you can load:
+
+`1h` · `4h` · `24h` · `7d` · `30d` · `90d` · `180d` · `365d`
+
+Up to one year of history is available where the token has been trading that long.
+
+## The 1,500-point cap
+
+Every chart request is capped at **1,500 data points**. That's a hard limit — combinations that would exceed it return a descriptive error.
+
+Practical coverage:
+
+| Interval | Maximum coverage |
+|---|---|
+| 1s | ~25 minutes |
+| 1m | ~25 hours |
+| 5m | ~5 days |
+| 1h | ~62 days |
+| 1d | ~4 years |
+
+If you ask for 1-second candles over 7 days, the request is rejected — that would be ~600,000 points.
+
+## `optimize=true` — automatic shortening
+
+Passing `optimize=true` tells the chart service to shorten your requested timeframe automatically so the response stays under 1,500 points. Useful when you want the finest interval possible without manually doing the math.
+
+Example behavior: request 1-second candles over 24 hours with `optimize=true` → the service returns the most recent ~25 minutes at 1-second resolution instead of rejecting the request.
+
+## Real-time candle streaming
+
+Charts are not static. A persistent WebSocket connection streams `ohlc_update` messages as trades land:
+
+- The **current candle** updates with every new trade — open, high, low, close, volume all change live
+- When the candle's interval closes, a new candle is started and the closed one is finalized
+- Historical candles are loaded once on connect as a snapshot; afterwards only deltas are pushed
+
+You can subscribe and unsubscribe from token pairs without reconnecting the WebSocket.
+
+## Candle data
+
+Each bar in the response carries:
+
+| Field | Meaning |
+|---|---|
+| `unix_time` | Timestamp in seconds |
+| `o` | Open price, USD |
+| `h` | High price, USD |
+| `l` | Low price, USD |
+| `c` | Close price, USD |
+| `v_usd` | Volume traded in that candle, USD |
+
+All prices are denominated in USD. Perpetuals use TradingView's widget and have their own feed — this page covers spot charts only.
+
+## How to read launchpad charts
+
+Early launchpad charts can look extreme. A few pointers:
+
+- The **1s** and **5s** intervals are most useful in the first minutes of a launch — longer intervals collapse early volatility into a single candle.
+- **Wicks** often reflect bonding-curve trades across many quick buys; they're not always meaningful price rejection.
+- Migration from the bonding curve to a permanent pool creates a **clean cut** in liquidity — the chart continues, but pricing is now AMM-based rather than curve-based. See [Pulse lifecycle](/discovery/pulse-lifecycle).
+
+## What to read next
+
+- [Token analytics](/discovery/token-analytics) — the safety panel next to the chart
+- [Top traders and holders](/discovery/top-traders-holders) — who holds the token
+- [Market orders](/trading/solana-spot/market-orders) — executing against the chart
+- [Pulse](/discovery/pulse) — live feed where most of these charts start

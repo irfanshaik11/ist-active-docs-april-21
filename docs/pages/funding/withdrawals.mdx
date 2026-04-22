@@ -1,0 +1,81 @@
+---
+title: "Withdrawals"
+description: "Withdraw SOL on Solana or MON on Monad. Flat 0.0005 SOL fee on Solana. Same endpoint routes by chain. 10 MON reserve on Monad."
+---
+
+# Withdrawals
+
+Move funds out of your Interstate wallet to any external address.
+
+## Open the withdraw tab
+
+Header → **Deposit** → **Withdraw** tab (same modal as deposits).
+
+## Fees
+
+| Chain | Fee |
+|---|---|
+| **Solana** | **0.0005 SOL flat**, per withdrawal. |
+| **Monad** | Gas only (Monad charges on gasLimit — see [Trading on Monad](/trading/monad)). |
+
+The Solana fee is not a percentage. It's the same whether you withdraw 0.01 SOL or 100 SOL.
+
+## Chain-aware routing
+
+The withdraw action is chain-aware. The request carries a `chain` field — the backend routes to the Solana or Monad handler automatically based on the chain selected in the app header. There is no separate "Monad Withdraw" button to hunt for.
+
+Pick the chain in the header before opening the modal. The amount and destination fields validate against that chain's format.
+
+## Monad — 10 MON reserve
+
+::: danger 10 MON must remain after withdrawal
+Every Monad withdrawal pre-checks that your MON balance stays ≥ 10 MON after the transfer and gas. Withdrawals that would breach the reserve are rejected.
+:::
+
+The 10 MON floor is the same rule that applies to trading — see [Trading on Monad](/trading/monad). Plan withdrawals to leave the reserve plus gas buffer.
+
+## Destination address validation
+
+| Chain | Format expected |
+|---|---|
+| Solana | Base58, 32–44 chars, on the Ed25519 curve. |
+| Monad | EVM, `0x` prefix, 40 hex chars, checksum-aware. |
+
+Sending to the wrong-chain format is blocked at submission. Sending to a valid-format address on the wrong chain is **not** blocked — the burden is on you to pick a correct destination.
+
+::: danger Double-check the address
+Withdrawals are on-chain and irreversible. Paste the address fresh — clipboard hijacking malware is a known attack vector.
+:::
+
+## Multi-wallet withdrawals
+
+Withdrawals debit the **wallet currently selected** in the header switcher. To withdraw from a different wallet, switch first.
+
+To consolidate before withdrawing, use the **redistribute** flow in multi-wallet settings — see [Managing multiple wallets](/funding/multi-wallet-management).
+
+## Withdrawal history
+
+Accessible from the Withdraw tab. Shows:
+
+- Destination address
+- Amount and chain
+- Status (pending / completed / failed)
+- Transaction hash (links to Solscan or the Monad explorer)
+
+Use it to confirm a withdrawal landed before contacting support.
+
+## Common failures
+
+| Error | Cause |
+|---|---|
+| Insufficient balance | Amount + fee > wallet balance. |
+| Reserve breach (Monad) | Would drop you below 10 MON. |
+| Invalid address | Wrong format for the selected chain. |
+| Network congestion | Solana priority-fee landing issues — retry after a minute. |
+
+## What to do next
+
+- Deposit more funds → [Deposits](/funding/deposits)
+- Trade on Monad → [Trading on Monad](/trading/monad)
+- Swap before withdrawing → [Convert](/funding/convert)
+- Export your private key → [Wallet import & export](/funding/wallet-import-export)

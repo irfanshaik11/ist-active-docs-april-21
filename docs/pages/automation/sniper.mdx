@@ -1,0 +1,89 @@
+---
+title: "Sniper (Arm Sniper)"
+description: "Pre-arm a buy that fires automatically when a new Solana token matching your criteria launches."
+---
+
+# Sniper
+
+Sniper lets you pre-arm a buy that fires automatically when a new token matching your criteria launches. You configure it once; the backend executes when the condition is met.
+
+Solana only. Available from the [Pulse](/discovery/pulse) feed.
+
+::: info Not the same as "sniper %"
+Sniper (arm-sniper) is a **trade trigger** — it buys for you when a new launch hits. The **sniper %** metric on a trade page shows how much of a token's supply is held by wallets that sniped it at launch. Different things. Same word. Don't confuse them.
+:::
+
+## How to arm a snipe
+
+From Pulse:
+
+1. Open a token row's action menu, or tap **Snipe**.
+2. The snipe modal opens.
+3. Fill in the buy amount, criteria, and any trade settings (slippage, priority fee).
+4. Confirm.
+
+Once armed, the snipe sits in the queue. When a matching token launches, it fires without further input.
+
+## What gets configured
+
+| Input | What it does |
+|---|---|
+| **Buy amount** | How much SOL to spend per fire |
+| **Criteria** | The match conditions that trigger the buy |
+| **Slippage** | Max acceptable slippage on the auto-buy |
+| **Priority fee** | Validator tip for fast inclusion |
+
+Configure snipe settings like you would any other spot buy — the same preferences apply. See [Your first trade](/getting-started/first-trade) for the full breakdown of slippage and priority fee behavior.
+
+## When it fires
+
+The sniper hooks into the same pipeline that powers [Pulse](/discovery/pulse). When a new token lands and matches your criteria, the armed snipe submits a market buy through the trading backend.
+
+- **Inclusion** is subject to Solana network conditions — priority fee matters.
+- **Slippage** behaves exactly like a manual market buy. Too tight and the snipe reverts; too loose and you may overpay.
+- **First-time buy costs** (Solana account creation) still apply. Keep a small buffer beyond the buy amount in your active wallet.
+
+## What it doesn't do
+
+- **No market-cap or price triggers for existing tokens.** Sniper fires on new launches. For conditional entries on tokens that already exist, use [limit orders](/trading/solana-spot/limit-orders) (web only).
+- **No cross-chain sniping.** Solana only.
+- **No copy-sniping from a watched wallet.** Sniper is independent of [Wallet Tracker](/monitors/wallet-tracker-overview) — it doesn't trigger because another wallet bought.
+- **No automatic take-profit or stop-loss.** Sniper places the entry; exits are manual or via limit orders.
+
+## Safety before you arm
+
+Sniper bypasses the usual "open the trade page, review, buy" flow. Treat it accordingly:
+
+- **Know your wallet balance.** A fire that can't pay gas will just fail; a fire that drains your wallet is on you.
+- **Use a reasonable buy amount.** Snipes fire fast and can fire on tokens you'd reject after inspection.
+- **Review [Token analytics](/discovery/token-analytics)** once the buy lands — sniper fires on launch, before safety metrics are mature.
+- **Manage exits.** Sniper doesn't sell for you. Check your position in [Portfolio](https://app.interstate.so/portfolio) and sell manually or set a limit.
+
+## Canceling or editing an armed snipe
+
+Armed snipes are managed from the snipe modal. Opening it again shows the current armed state; cancel or edit there.
+
+## Status
+
+| Item | Status |
+|---|---|
+| Arm Sniper on Solana | Shipped |
+| Monad sniper | Not available |
+
+## Troubleshooting
+
+**Snipe didn't fire on a token I expected.**
+The token didn't match your criteria, or didn't pass through the indexed launchpads Interstate watches. See [Pulse](/discovery/pulse) for which launchpads are supported.
+
+**Snipe fired and the buy failed.**
+Check your wallet balance (buy amount plus fees), slippage (too tight on a fast-moving launch), or priority fee (too low for network congestion).
+
+**Snipe fired on a token I don't want.**
+Tighten your criteria. Consider lowering the buy amount for sniper trades so mistakes are bounded.
+
+## What to read next
+
+- [Pulse](/discovery/pulse) — where sniper lives
+- [Token analytics](/discovery/token-analytics) — review what the sniper bought
+- [Your first trade](/getting-started/first-trade) — manual trade flow and settings
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — watch-only monitoring, distinct from sniper

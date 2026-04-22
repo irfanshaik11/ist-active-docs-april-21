@@ -1,0 +1,70 @@
+---
+title: "Telegram Bot Overview"
+description: "What the Interstate Telegram bot does, how it differs from the web app, and which features live where."
+---
+
+# Telegram Bot Overview
+
+The Interstate Telegram bot is a second trading surface alongside [app.interstate.so](https://app.interstate.so). It runs inside Telegram, uses the same account and the same Turnkey-backed Solana wallet as the web app, and is designed for fast mobile trading — paste a contract address, tap a buy button, done.
+
+It is intentionally narrower than the web app. Some features that traders rely on in the terminal do not exist in the bot, and some are disabled today. The table below is the source of truth.
+
+## Feature parity
+
+| Feature | Bot | Web |
+|---|---|---|
+| Quick Buy by pasting a contract address | Yes | Yes |
+| Sell by percentage (25 / 50 / 100 / custom) | Yes | Yes |
+| Portfolio with live PnL | Yes | Yes |
+| Trade history (last 10, inline) | Yes | Full history |
+| Wallet — address, balance, deposit, withdraw | Yes | Yes |
+| Settings — slippage, tips, MEV, presets | Yes | Yes |
+| Limit orders — **view + cancel** | Yes | Yes |
+| Limit order **creation** | No — use web app | Yes |
+| 24h price change on token card | Hidden (disabled) | Yes |
+| 8-language UI | Yes | Partial |
+| Referrals | **Not available in the bot** | Yes |
+| Perpetual futures | No | Yes |
+| Prediction markets | No | Yes |
+| Pulse, Discover, token analytics pages | No | Yes |
+| Multi-wallet, Arena leaderboards, Airdrop Genesis | No | Yes |
+| Twitter / Telegram monitors, Wallet Tracker | No | Yes |
+| Quick-buy presets (3 profiles) | No | Yes |
+| Sniper (arm on new launches) | No | Yes |
+
+## What the bot is good for
+
+- Paste a CA, buy in one tap.
+- Sell a position by percentage without opening a browser.
+- Check balance, check PnL, check your last 10 trades.
+- Withdraw SOL to another wallet.
+- Cancel a limit order you set from the web app.
+- Change slippage, priority fee, and MEV on the fly.
+
+## What the bot is not for
+
+- Creating new limit orders. The `/limit` command only views and cancels — creation happens on the web app. See [Limit orders (trading)](/trading/solana-spot/limit-orders).
+- Referrals. The referral program is live on the web app only. See [Referrals (web app)](/arena/referrals).
+- Perps, prediction markets, Arena pages, monitors, wallet tracker, and the full token analytics view. These are web-only.
+
+## How accounts work
+
+One account spans both surfaces. The Telegram `/start` flow silently creates a Turnkey-backed Solana wallet tied to your Telegram user ID. If you sign up on the web app first and then open the bot, the bot uses the same backend account — no re-linking needed.
+
+Trades made from the bot show up in your web portfolio immediately, and vice versa.
+
+## Operational limits
+
+A few numbers worth knowing upfront:
+
+- **Rate limit:** 30 messages per minute per user. Exceed it and the bot replies `Too many messages. Please slow down.` and drops subsequent messages until the window resets.
+- **Session TTL:** 7 days. If you don't touch the bot for 7 days, run `/start` again.
+- **Temporary outages:** if the token service or backend is failing, the bot will fast-fail with messages like `could not find token` or a generic lookup error for a short window rather than hanging. Retry after ~30 seconds.
+
+## What to read next
+
+- [Find the bot and run `/start`](/telegram-bot/setup)
+- [Quick buy by pasting a CA](/telegram-bot/quick-buy-paste-ca)
+- [Sell by percentage](/telegram-bot/sell-by-percentage)
+- [All commands and error messages](/telegram-bot/error-messages)
+- Back to the [product overview](/getting-started/what-is-interstate)

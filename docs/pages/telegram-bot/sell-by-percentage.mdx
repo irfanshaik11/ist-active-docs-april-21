@@ -1,0 +1,113 @@
+---
+title: "Sell by percentage"
+description: "Sell any Solana position from the Interstate Telegram bot with a 25 / 50 / 100% tap or a custom percentage."
+---
+
+# Sell by percentage
+
+The bot sells by percentage of the position, not by token amount. You pick a token, tap a percent, and it sells that share of your holdings.
+
+## The flow
+
+```
+/sell
+```
+
+Bot replies with your positions:
+
+```
+Your positions
+
+1. <SYMBOL_A>  0.82 SOL   +12.3%
+2. <SYMBOL_B>  1.40 SOL   −4.1%
+3. <SYMBOL_C>  0.05 SOL   +210.0%
+
+Tap a token to sell.
+```
+
+Tap a token (`position:<address>` callback). The bot shows the position detail:
+
+```
+<SYMBOL_A>
+
+Tokens:         123,456.789
+Value:          0.82 SOL
+Avg buy:        $0.0000091
+Current price:  $0.0000102
+PnL:            +0.09 SOL (+12.3%)
+
+Sell:
+[ 25% ] [ 50% ] [ 100% ] [ X% (custom) ]
+```
+
+Tap a percent. Bot executes:
+
+```
+Sell successful
+
+Sold:       30,864.197 <SYMBOL_A>  (25%)
+Received:   0.2050 SOL
+
+View on Solscan ↗
+```
+
+## Custom percentage
+
+Tap **X%** and the bot prompts:
+
+```
+Enter sell percentage (1–100)
+```
+
+Type a whole number between 1 and 100. The next text message is captured via the `awaitingSellPercentage` session flag and applied to that specific position. Send `/cancel` or tap **Cancel** to abort.
+
+The session flag survives bot restarts (7-day Redis TTL), so restarting mid-flow does not lose your place.
+
+## Entry points
+
+Three ways to reach the sell screen for a token:
+
+| Entry | How |
+|---|---|
+| `/sell` | Lists positions, tap one to sell |
+| `/assets` or `/positions` | Same portfolio list, tap a token → position detail → sell buttons |
+| Post-buy shortcuts | After a successful buy, the bot shows `25% / 50% / 100%` shortcuts for the token you just bought |
+
+All three land on the same sell percentage keyboard.
+
+## Default presets
+
+Sell buttons are **25 / 50 / 100%** out of the box. Change them under **Settings → Sell percentages** — see [Settings](/telegram-bot/settings). Your custom preset list appears in the same sell keyboard for every position.
+
+## Slippage, priority fee, MEV
+
+The values from `/settings` apply to every sell:
+
+- **Slippage** (default 20%) — max price movement allowed before the sell reverts.
+- **Sell priority fee** (default 0.0001 SOL) — the tip paid to land the transaction.
+- MEV protection applies to buys, not sells.
+
+Adjust any time — changes apply to the next sell.
+
+## No positions?
+
+```
+You have no positions yet. Paste a contract address to buy your first token.
+```
+
+Go to [Quick buy](/telegram-bot/quick-buy-paste-ca).
+
+## Errors you may see
+
+- `Slippage exceeded.` — price moved past your tolerance. Raise slippage in `/settings` or try a smaller size.
+- `No route found.` — no DEX route has enough liquidity right now. Try a smaller percentage or wait.
+- `Transaction failed.` — the sell didn't land. Retry; if it keeps failing, raise the sell priority fee.
+- `Please run /start first.` — your 7-day session expired. Run `/start` once, then try again.
+
+Full list: [Error messages](/telegram-bot/error-messages).
+
+## What to read next
+
+- [Quick buy](/telegram-bot/quick-buy-paste-ca)
+- [Portfolio and trade history](/telegram-bot/portfolio-assets)
+- [Settings](/telegram-bot/settings)

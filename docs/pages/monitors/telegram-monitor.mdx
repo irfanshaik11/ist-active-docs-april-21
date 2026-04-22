@@ -1,0 +1,91 @@
+---
+title: "Telegram Monitor"
+description: "Aggregate messages from curated alpha Telegram channels into one in-app feed."
+---
+
+# Telegram Monitor
+
+Telegram Monitor pulls messages from a curated list of alpha Telegram channels into a single in-app feed, so you don't have to switch apps to track what alpha groups are posting.
+
+Open it at [app.interstate.so/trackers](https://app.interstate.so/trackers) under the **Telegram** tab.
+
+## What you see
+
+Messages from every tracked channel, merged into one timeline and sorted newest-first. Each row shows:
+
+| Field | What it is |
+|---|---|
+| **Channel** | Name and handle of the source channel |
+| **Time** | When the message was posted |
+| **Content** | The message body, including links and contract addresses |
+| **Media** | Images or previews where available |
+
+The feed is scoped to the channels in your personal tracked list.
+
+## Adding channels
+
+Two ways:
+
+- **Browse the preset list.** Interstate ships a curated set of approved alpha channels. Add any you want to your feed in one click.
+- **Add an approved channel by handle.** Paste the channel handle. Only channels on Interstate's approved list can be added.
+
+Not every public Telegram channel is supported — the curated list exists to keep the feed focused on high-signal sources and avoid spam-heavy groups.
+
+## Remove a channel
+
+Click the remove button on a channel's row in your tracked list. It stops appearing in your feed immediately.
+
+## Update cadence
+
+The feed reflects the latest messages Interstate has indexed from each tracked channel. Open the tab to see fresh messages.
+
+There are no push notifications — the monitor is pull-based, read-only, in-app. Use it as a passive feed you check between trades.
+
+## What it doesn't do
+
+- **No alerts.** Nothing notifies you when a channel posts.
+- **No posting or replies.** You can't reply to a channel from inside Interstate.
+- **No private groups.** Only curated, approved public channels.
+- **No per-message filtering, mentions, or search.** Messages render in timeline order.
+- **No arbitrary channel adds.** You're picking from the approved list or browsing presets.
+
+## Using the monitor
+
+A common pattern:
+
+1. Scan the feed between trades for contract addresses or token names
+2. Click through or copy the CA into Interstate's search
+3. Review the token on its [trade page](/getting-started/first-trade) and check [Token analytics](/discovery/token-analytics)
+4. Trade it if the setup makes sense
+
+Telegram Monitor is discovery, not execution. It doesn't auto-buy, doesn't hook into [Wallet Tracker](/monitors/wallet-tracker-overview), and doesn't pre-arm a snipe. All actions are manual.
+
+## Combining with other monitors
+
+Traders typically run the three monitors side-by-side on `/trackers`:
+
+| Tab | Signal source |
+|---|---|
+| **Wallet Tracker** | On-chain smart money |
+| **Twitter / X** | Approved alpha accounts, last 15 days |
+| **Telegram** | Curated alpha channels |
+
+Each surfaces a different kind of signal. Cross-referencing them — a wallet you watch buying a token that just appeared in a Telegram channel — is a useful filter against noise in any single source.
+
+## Troubleshooting
+
+**"Channel not approved" error.**
+The handle isn't in the curated list. Nothing to do from the client side.
+
+**Feed is stale.**
+Interstate indexes messages from the source channel with a short delay. Refresh the tab. If a specific channel is silent, it likely just hasn't posted recently.
+
+**Media missing for a message.**
+Some media types don't render inline. The full message is still visible.
+
+## What to read next
+
+- [Twitter / X Monitor](/monitors/twitter-monitor) — the other social feed
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — on-chain activity tracking
+- [Pulse](/discovery/pulse) — live launchpad feed
+- [Your first trade](/getting-started/first-trade) — executing a setup you found

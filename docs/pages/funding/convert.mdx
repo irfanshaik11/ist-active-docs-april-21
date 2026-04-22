@@ -1,0 +1,79 @@
+---
+title: "Convert"
+description: "In-app swap between SOL, USDC, and other assets held in your Interstate wallet. Convert tab in the deposit modal."
+---
+
+# Convert
+
+Swap between assets you already hold — without opening a trade page, without a contract address. Use this when you bought the wrong asset on the onramp, or want to park a position in USDC before re-entering.
+
+## Where to find it
+
+Header → **Deposit** → **Convert** tab.
+
+The Convert tab sits alongside Deposit, Withdraw, and Buy in the same modal.
+
+## What it does
+
+A simple two-sided swap:
+
+1. Pick the asset you're swapping **from** (e.g., SOL)
+2. Pick the asset you're swapping **to** (e.g., USDC)
+3. Enter the amount
+4. Confirm
+
+The swap executes against Solana DEX liquidity, using the same routing backbone as a normal trade. You'll see the quote, price impact, and the amount you'll receive before you confirm.
+
+## Supported pairs
+
+Convert is primarily for utility swaps on Solana:
+
+- SOL ↔ USDC
+- SOL ↔ USDT
+- USDC ↔ USDT
+- Plus common large-cap Solana assets
+
+If the pair you want isn't in Convert, open the token's trade page and swap there — the full spot flow supports any tradeable token on Solana.
+
+## When to use Convert vs. Trade
+
+| Situation | Use |
+|---|---|
+| "I bought USDC on the ramp, need SOL to trade" | **Convert** |
+| "I want to exit to stables before tonight" | **Convert** (SOL → USDC) |
+| "I want to buy a specific memecoin" | **Trade page** — [Your first trade](/getting-started/first-trade) |
+| "I want a limit order" | **Trade page** (Convert is market-only) |
+
+Convert is market-only and meant for known stable-ish pairs. For memecoin trading with slippage / priority fee control, use the trade page.
+
+## Fees
+
+- **Platform fee** — same Interstate trading fee as a normal swap. See [Fees](/fees).
+- **DEX fee** — paid to the underlying pool (built into the quote).
+- **Network fee** — Solana priority fee, small.
+
+No flat "convert" fee. The quote shown is what you get.
+
+## Slippage and priority fee
+
+Convert uses sensible defaults for stable-ish pairs. For very large amounts, price impact may exceed defaults — the quote shows expected impact before you confirm. If it's too high, split into smaller swaps or use the trade page with custom slippage.
+
+## MEV protection
+
+Same caveat as normal trading: MEV protection only applies to **imported local wallets**. Turnkey wallets (the default for email / Google signup) route through standard RPC regardless of setting. See [MEV protection](/trading/mev-protection).
+
+For large stable-pair conversions where a sandwich is possible, import a local wallet first. See [Wallet import & export](/funding/wallet-import-export).
+
+## Multi-wallet
+
+Convert operates on the **currently selected wallet** in the header switcher. To convert from a different wallet, switch first. See [Managing multiple wallets](/funding/multi-wallet-management).
+
+## Monad
+
+Convert is Solana-side. To swap on Monad, use the trade page for any Monad token — the same buy/sell flow lets you swap from MON into any Monad ERC-20. See [Trading on Monad](/trading/monad).
+
+## What to do next
+
+- Withdraw stables out → [Withdrawals](/funding/withdrawals)
+- Buy with fiat → [Onramp](/funding/onramp)
+- Make a memecoin trade → [Your first trade](/getting-started/first-trade)

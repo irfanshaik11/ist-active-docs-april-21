@@ -1,0 +1,98 @@
+---
+title: "Twitter / X Monitor"
+description: "Follow approved alpha accounts from inside Interstate. Allowlist-gated to ~1,500 handles. Last 15 days of tweets."
+---
+
+# Twitter / X Monitor
+
+Twitter / X Monitor lets you build a personal feed of tweets from approved crypto accounts without leaving Interstate.
+
+Open it at [app.interstate.so/trackers](https://app.interstate.so/trackers) under the **Twitter** tab.
+
+::: warning Allowlist-gated
+Only handles on Interstate's approved list (approximately **1,500 accounts**) can be tracked. You cannot follow an arbitrary Twitter handle. If the handle you want isn't on the list, the add action will fail — there is no opt-in or request flow inside the app today.
+:::
+
+## What you see
+
+For each tracked handle:
+
+| Field | What it is |
+|---|---|
+| **Profile** | Avatar, display name, handle, bio |
+| **Followers** | Current follower count |
+| **Recent tweets** | Posts from the last 15 days only |
+
+Older tweets are not returned — the 15-day window is a hard cap.
+
+## Add a handle
+
+1. Click **Add Twitter Handle**.
+2. Type the handle (without the `@`).
+3. Confirm.
+
+If the handle is on the approved list, it's added to your tracker. If not, you'll see an error and the handle is not added.
+
+## Remove a handle
+
+Click the remove button on the handle's row. It unsubscribes you from that handle's feed.
+
+## Multi-account feed
+
+The Twitter tab aggregates tweets from all your tracked handles into one timeline, sorted newest-first. The aggregated feed:
+
+- Accepts up to **50 handles** per request
+- Returns up to a configurable **tweet count** (default 20)
+- Only includes tweets from the last **15 days**
+
+If you track more than 50 handles, the feed pulls from a subset per request. Narrow your tracked list if you want full coverage in a single pull.
+
+## Update cadence
+
+Twitter / X Monitor is **on-demand** — there is no background polling loop. Every time you open the tab or refresh the feed, tweets are fetched fresh from the X API.
+
+No push notifications. No WebSocket stream. Opening the tab is the trigger.
+
+## What it doesn't do
+
+- **No alerts.** Nothing fires when a tracked account tweets. You have to open the tab.
+- **No full history.** Anything older than 15 days is unavailable.
+- **No private accounts.** Only public X profiles work.
+- **No DMs, no replies, no quote reconstruction.** The monitor shows the tracked handle's posts as returned by the X API; it doesn't stitch together reply threads.
+- **No posting.** Twitter / X Monitor is read-only. You can't tweet from inside Interstate.
+
+## Why the allowlist
+
+X API access is rate-limited and the per-handle cost is non-trivial. The allowlist caps spend and ensures the handles surfaced are relevant to the memecoin and broader crypto context Interstate serves. Expect the list to grow over time.
+
+## Using the monitor alongside trading
+
+A common pattern:
+
+1. Scan the aggregated feed for mentions of new tokens or contract addresses
+2. Copy a contract address
+3. Paste it into Interstate's search or open it directly on a trade page
+4. Review [Token analytics](/discovery/token-analytics) before buying
+
+Twitter / X Monitor is a discovery tool. It doesn't auto-create trades or watch wallets — pair it with [Pulse](/discovery/pulse) and [Wallet Tracker](/monitors/wallet-tracker-overview) for end-to-end flow.
+
+## Troubleshooting
+
+**"Handle not approved" error.**
+The handle isn't on the allowlist. Nothing to do from the client side.
+
+**Handle exists but no tweets.**
+The account hasn't tweeted in the last 15 days, or its recent activity is protected. Try another handle.
+
+**Feed is empty despite tracked handles.**
+No tracked handle has tweeted in the 15-day window. Or the X API call is rate-limited — refresh after a minute.
+
+**Tweet from yesterday doesn't appear.**
+Rare — the X API sometimes delays indexing. Refreshing the tab refetches live.
+
+## What to read next
+
+- [Telegram Monitor](/monitors/telegram-monitor) — the other social feed
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — on-chain smart-money tracking
+- [Pulse](/discovery/pulse) — live launchpad feed
+- [Your first trade](/getting-started/first-trade) — taking action on a signal

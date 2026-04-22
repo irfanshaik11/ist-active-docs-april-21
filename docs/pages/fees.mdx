@@ -1,0 +1,76 @@
+---
+title: "Fees"
+description: "Interstate fee schedule — trading fees, withdrawal fees, priority fees, onramp fees, and Monad gas."
+---
+
+# Fees
+
+Every fee you pay on Interstate, in one place. No hidden charges.
+
+## Trading fees
+
+Interstate charges a small platform fee on every spot trade. The exact percentage is set per market and applied at execution — you'll see it reflected in the trade preview before you confirm.
+
+A portion of that fee is paid back to you as **SOL cashback** based on your Arena rank (10% → 35%). See the [Arena overview](/arena/overview) for the full cashback table.
+
+## Withdrawal fees
+
+| Chain | Fee | Notes |
+|---|---|---|
+| Solana | **0.0005 SOL** | Flat fee per withdrawal, network costs included |
+| Monad | Network gas | See below |
+
+Fees are charged from the withdrawing wallet's balance. If the balance can't cover the fee plus the requested amount, the withdrawal is rejected at pre-check.
+
+You can fetch the current withdrawal fee from the app before initiating a withdrawal.
+
+## Priority fees (Solana)
+
+Priority fees are a **SOL tip to validators** to get your transaction included faster during congestion. They are **not Interstate revenue** — the SOL goes directly to the validator.
+
+- User-configurable per trade or in Quick-Buy presets
+- `auto` mode sets the tip dynamically based on network conditions, capped by your `maxFee` setting
+- Higher tip = better inclusion odds during heavy traffic
+
+## MEV tips (bribes)
+
+Optional additional SOL tip routed through Jito bundle submission or Nozomi to protect against front-running. Also not Interstate revenue — the tip goes to the block builder.
+
+MEV protection via Jito / Nozomi currently works for **imported local wallets only**. Turnkey-backed wallets fall back to standard RPC submission.
+
+## Onramp fees
+
+Fiat-to-crypto onramps are provided by [Onramper](https://onramper.com/). Fees depend on the selected partner, payment method, and region.
+
+- **Coinbase integration**: up to **$500 / week with no KYC**
+- Other partners (card, bank transfer, Apple Pay, etc.) each publish their own fee schedule inside the Onramper flow before you confirm
+
+Onramp fees are shown in the Onramper widget before purchase.
+
+## Monad (Beta)
+
+Monad trading is in beta and uses a different gas model.
+
+| Item | Rule |
+|---|---|
+| Gas charged on | `gasLimit`, not gas used |
+| Estimate buffer | **+10%** applied to every estimate |
+| Max gas per tx | 30 million |
+| Wallet reserve | **10 MON must remain** at all times |
+| Finality | ~800 ms (Finalized); receipt ~400 ms |
+
+The 10 MON reserve is enforced at pre-check — trades that would drop the wallet below this are rejected.
+
+## Arena cashback
+
+Every Solana spot trade earns SOL cashback on the platform fee:
+
+| Rank | Cashback |
+|---|---|
+| Degen | 10% |
+| Warrior | 15% |
+| Gladiator | 20% |
+| Commander | 25% |
+| Titan | 35% |
+
+See [Arena overview](/arena/overview) for how ranks work and how to climb them.

@@ -1,0 +1,74 @@
+---
+title: "Top traders and holders"
+description: "See the wallets making the most PnL on a token and the largest holders of its supply."
+---
+
+# Top traders and holders
+
+Every trade page on Interstate has **Top Traders** and **Holders** tabs. They answer two different questions:
+
+| Tab | Question it answers |
+|---|---|
+| **Top Traders** | Who is making the most money trading this token right now? |
+| **Holders** | Who currently holds the largest share of supply? |
+
+A wallet appearing on both lists — big holder and big PnL — is a smart-money signal. A big holder with flat or negative PnL might be stuck, or might be the deployer.
+
+## Top Traders
+
+Wallets ranked by **realized PnL** for the current token. Columns typically include:
+
+- **Wallet address** (clickable)
+- **Realized PnL** (USD and SOL)
+- **Unrealized PnL** (if the wallet still holds)
+- **Bought and sold volume**
+- **Number of trades**
+
+Rankings update as trades land — if a wallet sells and locks in a big realized PnL, it'll climb the list immediately.
+
+## Holders
+
+The largest wallets holding the current token. Columns typically include:
+
+- **Wallet address**
+- **Balance** (token amount)
+- **Balance value** (USD)
+- **Share of supply** (%)
+
+Combine this with [token analytics](/discovery/token-analytics) — the top-10 holder % there is a summary of this table. This tab shows the individual wallets behind that number.
+
+## Data sources
+
+| Chain | Source |
+|---|---|
+| **Solana** | Codex |
+| **Monad** | Dedicated Monad endpoints |
+
+The Solana view pulls from Codex; the Monad view uses a separate data path. Both use Interstate's own indexing for current on-chain positions.
+
+## What to look for
+
+### Smart-money clusters
+
+When the same wallets appear near the top of multiple Trending tokens in the same session, that's a cluster of active traders worth watching. Click through to a wallet's address to open it in the [wallet tracker](/wallet-tracker/overview) (watch-only — no auto-copy).
+
+### Whale concentration
+
+A single wallet holding 10%+ of supply is a dump risk. Cross-check against **dev %** and **insider %** on the [analytics panel](/discovery/token-analytics) — if that wallet is the deployer or insider, treat it as a meaningful downside risk.
+
+### Burn and LP wallets
+
+Large balances held in known burn addresses or LP accounts are structural supply — not sell pressure. These usually appear in Holders but not Top Traders.
+
+## Caveats
+
+- **PnL is realized-only unless noted.** A wallet that's still holding a paper moonshot may not appear at the top until it sells.
+- **Split trades can inflate counts.** Multi-wallet children of a single trader are de-duplicated where possible.
+- **New tokens have thin data.** In the first minutes of a launch, rankings can swing violently.
+
+## Related pages
+
+- [Token analytics](/discovery/token-analytics) — sniper / bundler / insider / dev / top-10 summary
+- [Duplicate-image detection](/discovery/duplicate-image-detection) — logo-reuse rug signal
+- [Bundle checker](/discovery/bundle-checker) — detects coordinated block-level buying
+- [Watchlist](/discovery/watchlist) — pin tokens with interesting trader activity

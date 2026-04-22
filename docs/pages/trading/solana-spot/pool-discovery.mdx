@@ -1,0 +1,76 @@
+---
+title: "Pool discovery"
+description: "Interstate finds the active pool for every token automatically. Liquidity floor $50. Here is how it picks and what the error codes mean."
+---
+
+# Pool discovery
+
+You don't pick the pool. Interstate does.
+
+Every buy and sell on Solana runs through an automatic pool discovery step. It queries multiple data sources, finds an active pool with enough liquidity, and hands that pool to the trade executor.
+
+## What gets checked
+
+When you submit a trade without specifying a pool:
+
+1. Interstate asks **DexScreener** for pairs on the token.
+2. It cross-references **Jupiter** for the best routable pool.
+3. It filters out pools with liquidity below the floor.
+4. It picks the pool with the best combination of liquidity and protocol fit.
+5. Graduated or stale pools are auto-corrected to their live successors (Pump.fun → PumpSwap, Meteora DBC → Meteora AMM).
+
+## Liquidity floor
+
+| Minimum pool liquidity | **~$50 USD** |
+|---|---|
+
+Pools below this floor are excluded from automatic discovery. The reasoning: pools too thin for $50 to trade reliably are not worth executing against — slippage will be extreme and the trade will likely fail.
+
+If you see a `NO_ACTIVE_POOL` error on a token that clearly trades elsewhere, it usually means every pool Interstate found was under the floor.
+
+## Protocols checked
+
+All Solana DEX protocols Interstate supports are included in discovery:
+
+- Pump.fun bonding curve
+- PumpSwap (PumpAmm)
+- Raydium CPMM / CLMM / Launchpad
+- Meteora DBC / AMM V1 / AMM V2 (CPAMM) / DLMM
+- MoonShot
+
+## Error codes
+
+| Code | Meaning | What to do |
+|---|---|---|
+| `NO_ACTIVE_POOL` | No pool above the $50 liquidity floor was found for this token | Wait a minute — a new pool may still be indexing. Or search for a different token. |
+| `POOL_GRADUATED` | The pool you (or the cached frontend state) tried to trade against has graduated to a new pool mid-request | Retry. Interstate auto-corrects — the retry should route to the new pool. |
+
+You will see the human-readable version in your trade error toast.
+
+## When discovery is skipped
+
+If you or the frontend passes an explicit `poolAddress`, Interstate uses it directly — discovery is skipped. This is how the Migrated column on Pulse, the watchlist, and the limit-order worker operate: they already know the correct pool and pass it through.
+
+If the explicit pool turns out to be invalid (graduated, removed, etc), the backend falls back to discovery.
+
+## Why the pool might not be what you expect
+
+- **Pump.fun pre-graduation** — you trade the bonding curve, not a DEX pool. The "pool" is the curve contract.
+- **Post-graduation** — the same token now trades on PumpSwap or Raydium. The bonding curve rejects trades.
+- **Multi-pool tokens** — a token may have pools on both Raydium and Meteora. Interstate picks the one with better liquidity.
+- **Fresh launches** — pool may only be indexed on one data source for the first few seconds.
+
+## Watchlist pool verification
+
+The watchlist quick-buy re-verifies the live pool before every trade, so a bookmarked token still trades correctly even after its pool has migrated. See [Migration buy and sell](/trading/solana-spot/migration-buy-sell).
+
+## What this means for limit orders
+
+[Limit orders](/trading/solana-spot/limit-orders) run discovery at **execution time**, not creation time. A limit order placed pre-graduation will route to the post-graduation pool if that's what's live when the market cap trigger fires.
+
+## Read next
+
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [Market orders](/trading/solana-spot/market-orders)
+- [Migration buy and sell](/trading/solana-spot/migration-buy-sell)
+- [Limit orders](/trading/solana-spot/limit-orders)

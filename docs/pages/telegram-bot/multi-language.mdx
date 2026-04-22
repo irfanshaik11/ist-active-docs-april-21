@@ -1,0 +1,90 @@
+---
+title: "Multi-language"
+description: "The Interstate Telegram bot ships in 8 languages. Switch at any time with /language."
+---
+
+# Multi-language
+
+The bot's UI is fully translated into 8 languages. Pick one, every screen switches.
+
+## Supported locales
+
+| Code | Language |
+|---|---|
+| `en` | English |
+| `zh` | 简体中文 (Simplified Chinese) |
+| `ko` | 한국어 (Korean) |
+| `de` | Deutsch (German) |
+| `es` | Español (Spanish) |
+| `ja` | 日本語 (Japanese) |
+| `tr` | Türkçe (Turkish) |
+| `ru` | Русский (Russian) |
+
+All 8 locales are at full key coverage — every user-facing string in the bot is translated.
+
+## `/language`
+
+```
+/language
+```
+
+Bot replies with a 2-column grid. The active language is marked with a checkmark:
+
+```
+Choose a language
+
+[ ✓ English  ] [   简体中文 ]
+[   한국어    ] [   Deutsch ]
+[   Español  ] [   日本語   ]
+[   Türkçe   ] [   Русский ]
+```
+
+Tap a language (callback `lang:<code>`). The bot confirms in the new language, for example after tapping `Español`:
+
+```
+Idioma establecido: Español
+```
+
+And the grid refreshes with the checkmark on the new language.
+
+## Also in Settings
+
+You do not need to remember `/language`. Under `/settings` → **Language** is the same picker. See [Settings](/telegram-bot/settings).
+
+## Persistence
+
+Your language choice lives in the Redis-backed session with a **7-day TTL**, same as every other bot setting. If the session expires (no bot activity for 7 days), the bot falls back to English on the next `/start` and you will need to pick your language again.
+
+## How missing strings fall back
+
+If a translation is ever missing in a given locale, the bot walks this fallback chain:
+
+1. Your selected language.
+2. English.
+3. The raw string key (almost never hit — every key is covered in every locale today).
+
+You will effectively never see a raw key unless a build goes wrong.
+
+## Lazy loading
+
+To keep the bot fast, only English is preloaded at boot. Other locales load the first time any user selects them. The delay is tiny — you will not notice it.
+
+## Interpolation
+
+Numbers, token symbols, and amounts inside translated strings use `{{param}}` interpolation. Language choice does not change formatting for numbers (e.g. decimal separators), SOL amounts, or Solscan links — those stay canonical across locales.
+
+## Web app language
+
+The web app has independent language settings. Your bot language is bot-only. For now, the bot ships in more languages than the web UI does — this is a **bot-only** surface today.
+
+## What the bot will not localize
+
+- Token names and symbols. These come from on-chain metadata.
+- Solscan transaction URLs. Always English.
+- Error messages from upstream Solana or DEX programs surfaced verbatim (rare — most are mapped to translated messages first).
+
+## What to read next
+
+- [Settings](/telegram-bot/settings)
+- [Bot overview](/telegram-bot/overview)
+- [Error messages](/telegram-bot/error-messages)

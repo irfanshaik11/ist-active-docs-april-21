@@ -1,0 +1,76 @@
+---
+title: "Bundle checker"
+description: "How Interstate detects bundled buying on Solana — 4+ transactions in the same block, consistency filtering, and an unrestricted detection window."
+---
+
+# Bundle checker
+
+A **bundle** is several buy transactions that execute as separate transactions but land in the same Solana block — often milliseconds apart. Bundling is typically coordinated: one actor (or a small group) is capturing supply cheaply before the rest of the market can react.
+
+Interstate flags bundles with a dedicated signal — the **bundle %** shown on [token analytics](/discovery/token-analytics) and inline on [Pulse](/discovery/pulse) and [Discover](/discovery/discover-tabs) rows.
+
+## How Interstate detects bundles
+
+Two rules define the signal.
+
+### 1. Four or more transactions in the same block
+
+When **at least four** buy transactions for the same token land in a single Solana block, they're flagged as a potential bundle.
+
+One or two transactions in a block is not unusual during a hot launch — many traders racing for the same name. Four or more is a different regime: it's statistically unlikely under organic trading and indicates coordination.
+
+### 2. Filtering out wallets that aren't consistently bundling
+
+Catching four-in-a-block on its own produces noise. Traders occasionally end up in the same block without coordinating. To filter that out:
+
+- If a wallet participates in a flagged bundle **but its very next transaction falls outside of a bundle**, the wallet is excluded from bundle detection.
+- Only wallets that consistently bundle are counted toward the token's bundle %.
+
+This keeps the signal focused on real coordinated actors instead of bystanders.
+
+## What makes Interstate's bundle detection different
+
+Interstate's bundle signal differs from tools like Trench Radar in two structural ways.
+
+### Unrestricted detection window
+
+Most tools only flag bundles that happen in the **first few blocks after a token's launch** — they treat bundling as a launch-only pattern tied to the deployer or team.
+
+Interstate has no time limit. A bundle that happens an hour or a day after launch is still detected and counted. This matters because:
+
+- Bundles don't have to originate from the deployer or team — anyone with capital and intent can bundle
+- Post-launch bundling is common when a token starts running and someone wants to front-run retail flow
+- A launch-only detector misses these completely
+
+### Smarter filtering
+
+The consistency rule (rule #2 above) cuts false positives that plague simpler detectors. Tools that count every wallet in a flagged block will inflate the bundle % with traders who happened to land alongside an actual bundler.
+
+Interstate's numbers may look different from other tools for this reason — usually lower on tokens with lots of incidental co-block traffic, sometimes higher on tokens with quiet but persistent coordinated buying that launch-only detectors miss.
+
+## How to read the bundle %
+
+There's no universal "safe" threshold. A few intuitions:
+
+- **Bundle % near zero** — trading looks organic on this signal
+- **Single-digit bundle %** — common on active tokens with some coordination, usually not decisive on its own
+- **Bundle % above ~15–20%** — a meaningful fraction of supply arrived via coordinated block-level buying; cross-check with [sniper %, insider %, dev %](/discovery/token-analytics) before trading
+- **High bundle % combined with high top-10 holder %** — coordinated accumulation concentrated in a small group; treat as dump risk
+
+## Where you see it
+
+- **Token analytics panel** on the trade page — numeric bundle %
+- **Pulse and Discover rows** — inline safety bar alongside sniper / insider / dev
+- **Bundle %** contributes to the overall risk picture of a token, not a standalone verdict
+
+## Limits
+
+- **Not a rug detector.** A zero bundle % doesn't mean a token is safe. Check [duplicate-image detection](/discovery/duplicate-image-detection), top holders, and deployer behavior too.
+- **Solana-specific.** Block-level bundling semantics don't transfer directly to Monad; Monad's bundle signal is narrower.
+- **Some false positives and missed bundles are inherent** — no detector catches 100% at zero noise. The consistency filter trades some recall for precision.
+
+## What to read next
+
+- [Token analytics](/discovery/token-analytics) — the full safety panel this metric sits in
+- [Duplicate-image detection](/discovery/duplicate-image-detection) — logo-reuse rug signal
+- [Top traders and holders](/discovery/top-traders-holders) — who's behind the volume

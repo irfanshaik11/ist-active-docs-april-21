@@ -1,0 +1,89 @@
+---
+title: "Live feed mechanics"
+description: "How fast trades reach your live feed — ingest cycles, live windows, and why some events land in history only."
+---
+
+# Live feed mechanics
+
+The Wallet Tracker live feed is pushed over WebSocket. This page describes exactly when an event reaches you live, and when it quietly goes to history instead.
+
+## Solana
+
+| Stage | Timing |
+|---|---|
+| Ingestor poll cycle per watched wallet | ~10 seconds |
+| Reconciliation of newly added wallets | ~30 seconds |
+| Live window (event age at ingest) | 30 seconds |
+| Push to subscribed WebSocket clients | Immediate after ingest |
+
+Every ~10 seconds, the ingestor checks each watched Solana wallet for new transactions. When it finds a new swap, it parses the event and — if the event is within the **live window** — forwards it to every connected trader subscribed to that wallet.
+
+### The 30-second live window
+
+An event is only pushed live if it occurred **within the last 30 seconds at the moment of ingestion**. Older events are still parsed and stored, but they don't fire a live push.
+
+Why it matters:
+- A swap that happened 45 seconds before the ingestor picked it up **won't toast** in your feed.
+- It will appear when you query [Historical trades](/monitors/historical-trades).
+- Under normal conditions, the 10-second poll cycle keeps events well inside the 30-second window.
+- Under RPC latency spikes or batching, some events can slip past. They aren't lost — they just don't fire live.
+
+### Balance refresh
+
+Balance snapshots refresh every **5 minutes**. A balance update event streams to you right after each refresh, subject to the wallet's mute toggle.
+
+## Monad
+
+Monad uses a different transport:
+
+| Mechanism | Behavior |
+|---|---|
+| **Primary** | WebSocket subscription to the chain node — events arrive as new blocks land |
+| **Fallback** | Polling, engaged automatically if the WebSocket drops |
+
+Because Monad events come from a block subscription, they don't wait for a polling tick. Expect them to appear within the block time of the chain.
+
+Metadata enrichment on Monad is narrower than Solana — some fields that depend on external indexers may be empty. See [Wallet Tracker overview](/monitors/wallet-tracker-overview) for what's supported.
+
+## Subscription model
+
+Opening the Wallet Tracker tab subscribes you to your watched wallets over WebSocket. Events flow in as they are detected.
+
+- **Navigating away** keeps the connection warm — you don't re-subscribe on every page.
+- **Closing the tab** drops the subscription. When you come back, the connection is re-established.
+- **Keepalive pings** fire every 30 seconds. If your client stops responding, the connection is closed and you'll need to reopen Wallet Tracker to resume live data.
+
+## Event ordering
+
+Events within the feed are ordered by on-chain timestamp, descending. If two events from different wallets arrive in the same poll tick, both are pushed; the UI sorts them by timestamp as they appear.
+
+## What counts as an event
+
+| Event type | Trigger |
+|---|---|
+| **Trade** | A swap detected in a watched wallet — buy or sell |
+| **Balance** | A periodic refresh detected a change in token holdings |
+| **Subscription** | Confirmation that a wallet subscription succeeded |
+
+Transfers that are not swaps (plain SOL sends, token sends with no DEX involved) are not surfaced as trade events — Wallet Tracker is focused on trading activity.
+
+## Mute behavior
+
+Muted wallets are processed identically at the ingestor level. Their events are stored in your history, but **no live push** is sent for them. Unmute and the next event lands live again — previous events from the mute window stay in history only; they don't replay.
+
+## Troubleshooting
+
+**I see an event in history that I never saw live.**
+It probably arrived at the ingestor more than 30 seconds after the on-chain timestamp. Expected — history is the source of truth, the live feed is best-effort.
+
+**The feed went silent.**
+Check the chain selector. Check that at least one wallet is not muted. If both are fine, close and reopen the `/trackers` tab to re-establish the WebSocket.
+
+**Events arrive a few seconds late.**
+Normal. Solana polling adds up to ~10 seconds on top of on-chain confirmation. Monad events arrive at block time.
+
+## What to read next
+
+- [Historical trades](/monitors/historical-trades) — the 90-day store
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — what's in each event
+- [Adding wallets](/monitors/adding-wallets) — limits and bulk import

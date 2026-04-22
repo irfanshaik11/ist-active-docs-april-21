@@ -1,0 +1,66 @@
+---
+title: "Token analytics"
+description: "The safety panel on every Solana trade page — sniper %, bundler %, insider %, holder concentration, whale / shark / shrimp breakdown."
+---
+
+# Token analytics
+
+Every Solana token on Interstate ships with a safety panel on its trade page. The same signals are surfaced as colored bar indicators on [Pulse](/discovery/pulse) and [Discover](/discovery/discover-tabs) rows, so you can scan risk before clicking through.
+
+## The metrics
+
+| Metric | What it means | Why it matters |
+|---|---|---|
+| **Sniper %** | Supply held by wallets that bought in the first seconds after launch | High values mean a small group accumulated early and can dump hard. |
+| **Bundler %** | Supply held by wallets bundled into the same block at launch | Bundling is coordinated buying, often used to capture supply cheaply. See [Bundle checker](/discovery/bundle-checker). |
+| **Insider %** | Supply held by wallets connected to the deployer | Concentration among deployer-linked wallets is a common rug pattern. |
+| **Dev %** | Supply held by the deployer wallet | If the deployer still holds a large share, they can dump on you. |
+| **Top-10 holder %** | Share of supply held by the 10 largest wallets | High concentration = coordinated dump risk. |
+| **Total holders** | Distinct addresses holding any amount | A rough proxy for distribution. Growing holder count is a healthier signal than flat. |
+
+Each metric is recomputed on every trade — you don't wait for a scheduled refresh.
+
+## Whale / shark / shrimp breakdown
+
+Holders are also grouped by size tier so you can see distribution at a glance:
+
+| Tier | Definition |
+|---|---|
+| **Whale** | Large holder by token value |
+| **Shark** | Mid-sized holder |
+| **Shrimp** | Small holder |
+
+A healthy chart of holder distribution has many shrimp and sharks with a small, stable whale tail. A top-heavy distribution with few but huge whales is a common dump risk.
+
+## Where you see this data
+
+- **Trade page right panel** — full breakdown with numbers and tiers
+- **Pulse rows** — inline safety bars (sniper / bundler / insider / dev)
+- **Discover rows** — same inline bars on Trending / New Pairs / DEX / Live
+
+The inline bars are a quick-scan signal. For the full numbers, open the trade page.
+
+## How to read these numbers
+
+There is no universal threshold for "safe" — it depends on the token's stage and your risk tolerance. Some heuristics:
+
+- **Dev % above 5–10%** is a yellow flag. The deployer still has meaningful sell pressure.
+- **Sniper % above 20%** on a fresh launch suggests a coordinated entry that could unwind fast.
+- **Top-10 % above 40–50%** combined with high sniper or bundler % is a rug / dump profile.
+- **Low holder counts** (under a few hundred) on a high-market-cap token is a distribution red flag.
+
+These are signals, not verdicts. Combine with chart behavior, [top traders](/discovery/top-traders-holders), and [duplicate-image detection](/discovery/duplicate-image-detection) before trading.
+
+## Coverage
+
+| Chain | Coverage |
+|---|---|
+| **Solana** | Full — all metrics above |
+| **Monad** | Partial — holder and top-trader data available; some safety signals may be missing |
+
+## Related pages
+
+- [Bundle checker](/discovery/bundle-checker) — how bundle % is detected and what makes Interstate's signal different
+- [Duplicate-image detection](/discovery/duplicate-image-detection) — logo-reuse rug signal
+- [Top traders and holders](/discovery/top-traders-holders) — who's making money on the token
+- [Your first trade](/getting-started/first-trade) — where these metrics live in the trade flow

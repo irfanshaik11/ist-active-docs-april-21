@@ -1,0 +1,65 @@
+---
+title: "Duplicate-image detection"
+description: "Interstate detects reused logos across tokens — a common rug and scam pattern — and flags similar tokens inline."
+---
+
+# Duplicate-image detection
+
+A common scam pattern: launch a new token that reuses the logo of a successful or trending token, hoping traders confuse the two. Interstate flags this directly.
+
+## What it detects
+
+| Surface | What it catches |
+|---|---|
+| **Reused-image panel** | Other tokens currently or previously using the same logo image as the token you're viewing |
+| **Similar-tokens panel** | Tokens whose images are visually similar (not pixel-identical) — catches lightly modified rip-offs |
+| **Image search widget** | Lets you paste or upload an image and search across Interstate's indexed tokens for matches |
+
+All three appear on the right panel of every Solana trade page.
+
+## Why reused images matter
+
+A deployer can change a name, symbol, or contract address cheaply — but reusing a recognizable image betrays intent. Patterns you'll catch:
+
+- **Copycat launches** — a brand-new token uses the logo of a popular one to grab mistaken buys
+- **Serial rugs** — the same deployer recycles the same logo across several launches after each prior one rugged
+- **Community impostors** — a logo from a larger community gets cloned to phish traders who search by image
+
+Any of these is a reason to slow down before buying.
+
+## How it works
+
+Interstate indexes the logo image of every token it sees. When you open a trade page, it looks up:
+
+1. **Exact matches** — other tokens that share the same image hash as the current token
+2. **Visual near-matches** — images that are close to the current one on visual similarity (cropped, recolored, lightly edited versions)
+
+Both lists show the other tokens' name, symbol, contract address, and current market data so you can compare at a glance.
+
+## Image search widget
+
+The search widget lets you reverse-lookup any image. Useful when:
+
+- A Twitter post shows a token logo but not a contract address — paste the image to find the CA
+- You spot a logo on a different platform and want to check whether a matching token exists on Solana
+- You want to audit all historical tokens a deployer has used a specific image for
+
+## What to do with a match
+
+If the current token shares an image with other tokens:
+
+- **Check timing** — was the current token launched before or after the match? Older tokens reusing newer logos is a bigger flag than the reverse.
+- **Check market state** — are the other tokens rugged, dead, or still trading? A history of dead tokens with the same logo is a pattern.
+- **Check the deployer** — if the same wallet deployed the other tokens too, treat the current one as a serial rug risk.
+
+## Limits
+
+- **Image detection is a signal, not proof.** Legitimate projects occasionally iterate on logos or fork designs.
+- **Novel logos avoid detection by design.** A brand-new, unique image can still be a scam — check [token analytics](/discovery/token-analytics) and [top traders](/discovery/top-traders-holders) too.
+- **Solana coverage is full. Monad coverage is narrower.**
+
+## What to read next
+
+- [Token analytics](/discovery/token-analytics) — sniper / bundler / insider / dev %
+- [Bundle checker](/discovery/bundle-checker) — detects coordinated buying
+- [Top traders and holders](/discovery/top-traders-holders) — who holds and profits from the token

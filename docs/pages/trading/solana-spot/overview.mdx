@@ -1,0 +1,82 @@
+---
+title: "Solana Spot Trading"
+description: "Buy and sell memecoins on Solana across every major DEX. Automatic pool routing. No DEX picker."
+---
+
+# Solana Spot Trading
+
+Interstate routes every spot trade on Solana to the correct DEX automatically. You enter an amount, pick buy or sell, confirm. The backend finds the active pool, picks the right protocol, and executes.
+
+## DEX coverage
+
+| Protocol | What it covers |
+|---|---|
+| **Pump.fun** | Pre-graduation bonding curve |
+| **PumpSwap** (PumpAmm) | Post-graduation Pump.fun pools |
+| **Raydium CPMM** | Constant-product AMM |
+| **Raydium CLMM** | Concentrated liquidity |
+| **Raydium Launchpad** | Launchpad pools |
+| **Meteora DBC** | Dynamic bonding curve |
+| **Meteora AMM V1 / V2 (CPAMM)** | Meteora AMMs, including graduated DBC tokens |
+| **Meteora DLMM** | Dynamic liquidity market maker |
+| **MoonShot** | MoonShot launches |
+
+You do not pick the DEX. Interstate picks it for you based on the token's active pool.
+
+## Trade flow
+
+1. You enter an amount (SOL for buys; tokens or % for sells) and hit Buy or Sell.
+2. The backend looks up the active pool via DexScreener and Jupiter. If the pool has graduated or migrated, it auto-corrects to the new pool.
+3. The transaction is signed and submitted. Turnkey wallets go through the standard RPC path. Imported local wallets can route through Jito or Nozomi for MEV protection. See [MEV protection](/trading/mev-protection).
+4. On success you get the token amount received, the SOL spent, and a Solscan link. The position shows up in [Portfolio](https://app.interstate.so/portfolio).
+
+## Entry points
+
+- **Trade page** — `app.interstate.so/trade/[contractAddress]`. Full UI: chart, analytics, buy/sell panel, limit orders.
+- **Quick buy** from [Pulse](https://app.interstate.so/pulse) or Discover — one click using your active preset. See [Quick-buy presets](/trading/solana-spot/quick-buy-presets).
+- **Search** — header search, type name, symbol, or paste a contract address.
+
+## What's on each page
+
+Every trade page shows:
+
+- Live price, market cap, liquidity
+- OHLC chart
+- Token analytics on the right — sniper %, bundler %, insider %, top-10 holder %, total holders
+- Duplicate-image and similar-token flags for rug detection
+- Top traders and holders tabs
+- Buy / sell / limit panel
+
+## Pool migration
+
+When a Pump.fun (or other bonding-curve) token graduates, its pool changes. Interstate handles this automatically:
+
+- The [Pulse](https://app.interstate.so/pulse) feed has a **Migrated** column for graduated tokens.
+- Quick-buys on migrated tokens route to the post-graduation pool.
+- Sells fall back gracefully if the pool migrates mid-session. If a refresh is needed, you see a toast.
+
+See [Migration buy and sell](/trading/solana-spot/migration-buy-sell).
+
+## Limits and minimums
+
+- **Slippage**: 0.01% minimum, 100% maximum. Default 20%. See [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees).
+- **Liquidity floor**: pools under ~$50 liquidity are excluded from automatic discovery.
+- **Meteora DBC (CPAMM)**: minimum trade size 0.0001 SOL.
+
+## Errors you might see
+
+| Error | What it means | What to do |
+|---|---|---|
+| `NO_ACTIVE_POOL` | No pool with liquidity above the $50 floor | Wait a minute and retry, or search another token |
+| `POOL_GRADUATED` | Bonding curve has graduated mid-trade | Retry — Interstate will route to the new pool |
+
+See [Pool discovery](/trading/solana-spot/pool-discovery) for the full list.
+
+## Read next
+
+- [Market orders](/trading/solana-spot/market-orders)
+- [Limit orders](/trading/solana-spot/limit-orders)
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)
+- [MEV protection](/trading/mev-protection)
+- [Your first trade](/getting-started/first-trade)

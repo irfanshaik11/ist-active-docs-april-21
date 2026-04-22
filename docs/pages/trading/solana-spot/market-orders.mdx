@@ -1,0 +1,82 @@
+---
+title: "Market orders"
+description: "Immediate buy or sell at the current on-chain price. Enter SOL to buy; enter % or token amount to sell."
+---
+
+# Market orders
+
+A market order executes at the current on-chain price. It submits as soon as you confirm.
+
+## Market buy
+
+1. Open a token's trade page.
+2. Make sure the **Market** tab is selected (it is by default).
+3. Enter the amount **in SOL** — for example, `0.1`.
+4. Check slippage and priority fee under the gear icon. Defaults are reasonable. See [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees).
+5. Hit **Buy**.
+
+If your slippage or priority fee is unusually high, a confirmation dialog fires before the trade submits.
+
+::: info Minimum SOL
+You need the buy amount plus ~0.002 SOL for network fees. First-time buys of a token also incur a small one-time Solana token account creation cost. Keep at least ~0.01 SOL as buffer.
+:::
+
+## Market sell
+
+Sells have two input modes:
+
+| Mode | What you enter |
+|---|---|
+| **Percentage** | A % of your current holdings (25 / 50 / 100 or custom) |
+| **Exact amount** | The exact number of tokens to sell |
+
+Buttons on the trade page and in the Sell popup switch between modes.
+
+## Quick buy from Pulse / Discover
+
+You can skip the trade page entirely. From [Pulse](https://app.interstate.so/pulse) or Discover, the buy pill on each token row fires a one-click buy using your active [Quick-buy preset](/trading/solana-spot/quick-buy-presets).
+
+## Where it submits
+
+Interstate routes the trade to the correct DEX automatically:
+
+- Pump.fun bonding curve
+- PumpSwap (post-graduation)
+- Raydium CPMM / CLMM / Launchpad
+- Meteora DBC / AMM V1 / AMM V2 (CPAMM) / DLMM
+- MoonShot
+
+For Turnkey wallets (email/Google signup) the transaction goes through the standard RPC path. For imported local wallets you can also route through Jito or Nozomi for MEV protection. See [MEV protection](/trading/mev-protection) and [Order execution](/trading/order-execution).
+
+## Slippage validation
+
+| Value | Behavior |
+|---|---|
+| Below `0.01%` | Rejected |
+| `0` entered | Auto-corrected to the `0.1%` floor |
+| Above `100%` | Rejected |
+| Unusually high value | Confirmation dialog before submission |
+
+## What you see on success
+
+- Toast with token amount received and SOL spent
+- Solscan transaction link
+- Position appears in [Portfolio](https://app.interstate.so/portfolio)
+- Unrealized PnL updates live as the price moves
+
+## Common errors
+
+| Error | Meaning |
+|---|---|
+| `NO_ACTIVE_POOL` | No pool above the liquidity floor for this token |
+| `POOL_GRADUATED` | Pool graduated between price quote and submission — retry |
+| Insufficient SOL | Your wallet balance is below the trade amount plus fees |
+
+See [Pool discovery](/trading/solana-spot/pool-discovery) for the full error taxonomy.
+
+## Read next
+
+- [Limit orders](/trading/solana-spot/limit-orders) — target a market cap instead
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)
+- [Order execution](/trading/order-execution)

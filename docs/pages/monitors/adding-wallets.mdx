@@ -1,0 +1,92 @@
+---
+title: "Adding wallets"
+description: "How to add, label, bulk-import, and remove wallets from your watch list. 500 wallets per chain."
+---
+
+# Adding wallets
+
+You add wallets from the `/trackers` page under the **Wallet Tracker** tab. Changes apply instantly — the ingestor picks up newly added wallets within ~30 seconds.
+
+## Single add
+
+1. Click **Add Wallet**.
+2. Paste the address.
+3. (Optional) Set a **name** and an **emoji**.
+4. Choose the chain — Solana or Monad.
+5. Save.
+
+Interstate backfills roughly the last 10 transactions for the wallet so you have immediate history to scan.
+
+## Bulk import
+
+Bulk import accepts up to **500 addresses in a single call**. Useful when migrating a watch list from another tool or loading the default smart-money set in one go.
+
+## Limits
+
+| Limit | Value |
+|---|---|
+| Max wallets per user, per chain | 500 |
+| Max addresses per bulk import | 500 |
+| Solana + Monad combined | 1000 (500 each) |
+
+Duplicate addresses **on the same chain** are rejected with a clear error. The same address on two different chains is allowed (they resolve to different wallets).
+
+## Labels
+
+Every wallet supports:
+
+- **Name** — free text. Used to identify the wallet in the feed.
+- **Emoji** — a single emoji shown next to the name.
+
+Labels are personal. They are not visible to anyone else and do not travel with the wallet address.
+
+Edit a label at any time from the wallet's row in the tracker.
+
+## Default wallets
+
+Interstate ships a curated list of known smart-money wallets. Click **Load default wallets** on the Wallet Tracker tab to add them in one operation. Defaults count against your 500-per-chain cap. Remove any you don't want.
+
+Reloading defaults is idempotent — existing duplicates are skipped, not re-added.
+
+## Notification toggle
+
+Every wallet has a **mute** switch. Muted wallets still record events to your history and appear in the feed when you open it, but they don't push live updates.
+
+Mute is per-wallet, per-user. It doesn't delete the wallet and doesn't stop the backend from processing its events — those still go to the database so your history stays complete.
+
+## Remove
+
+Click the remove button on a wallet row. Removal is immediate. The wallet stops being polled, and its history is no longer queried for your account.
+
+::: info History stays accessible
+Removing a wallet stops new events from being associated with your watch list. Prior events recorded while the wallet was watched remain in the event store and can still be queried via [Historical trades](/monitors/historical-trades) for as long as they fall in the 90-day window.
+:::
+
+## Address formats
+
+| Chain | Expected format |
+|---|---|
+| **Solana** | Base58 pubkey (32–44 characters). The trade page will reject malformed addresses. |
+| **Monad** | `0x…` EVM-style address (42 characters). |
+
+Addresses are stored case-sensitively on Solana and case-insensitively on Monad (per EVM convention).
+
+## Troubleshooting
+
+**"Wallet already tracked" error.**
+The address is already in your watch list for that chain. Duplicates are rejected.
+
+**"Wallet limit reached" error.**
+You are at the 500-per-chain cap. Remove some wallets before adding more.
+
+**New wallet shows no activity.**
+Give it ~30 seconds for the ingestor to pick it up, then check history — the backfill typically fills in within a minute.
+
+**Solana address entered on Monad tab (or vice versa).**
+Switch chains. The watch list is per-chain.
+
+## What to read next
+
+- [Live feed mechanics](/monitors/live-feed-mechanics) — how quickly events arrive
+- [Historical trades](/monitors/historical-trades) — query back 90 days
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — what the feed shows

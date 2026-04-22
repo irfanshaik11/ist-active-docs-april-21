@@ -1,0 +1,70 @@
+---
+title: "Sniper"
+description: "Arm a buy that fires automatically when a new token launches matching your criteria. Solana only. Distinct from the sniper % analytics metric."
+---
+
+# Sniper
+
+Pre-arm a buy that fires the moment a new token launches matching your criteria. Used for catching launches in the first seconds, before the token hits the trading terminal.
+
+::: info Two things called "sniper" in Interstate
+- **Arm Sniper** — the feature described on this page. A proactive buy trigger on launch.
+- **Sniper %** — an analytics metric on the trade page showing how much of a token's supply is held by wallets that bought in the first seconds after launch. High sniper % is a dump-risk signal.
+
+They are not the same thing. This page is about the first one.
+:::
+
+## How to arm a sniper
+
+1. On [Pulse](https://app.interstate.so/pulse), click the **Snipe** action on the row of a token you want to target (or on the launch criteria you want to set).
+2. The snipe modal opens.
+3. Fill in:
+   - Buy amount (SOL)
+   - Slippage
+   - Priority fee
+   - Any other available trigger parameters
+4. Confirm. The sniper is armed.
+
+## How it executes
+
+Armed snipes run through a dedicated sniper execution path — separate from regular market orders and limit orders. The backend path is tuned for speed and retries, wired into the Raydium CPMM sniper flow with timeout handling.
+
+When the trigger condition is met, the buy fires. You see a result toast and the position shows up in [Portfolio](https://app.interstate.so/portfolio) like any other trade.
+
+## Timing expectations
+
+Snipes are fast — much faster than the 5-second check loop used by [limit orders](/trading/solana-spot/limit-orders) — but not zero-latency. Network conditions, pool depth, and priority fee all affect whether you land in the first block, the second, or later.
+
+A higher priority fee buys you a better chance at early inclusion. See [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees).
+
+## Scope
+
+- **Chain**: Solana only
+- **Surface**: Web only. The Telegram bot does not currently expose arm-sniper.
+
+## Risks to understand
+
+Sniping fresh launches is among the highest-variance ways to trade on Interstate.
+
+- **Sniper % is high on launches by definition** — you are the sniper %. If the chart is dominated by snipers, a dump risk is baked in.
+- **Rug risk** — fresh launches with no lockup can drain liquidity at any time.
+- **Dev activity** — a single dev-wallet sell can tank the market cap mid-trade.
+- **Pool graduation / migration** — a token might graduate within seconds of launch. Interstate will route to the new pool, but your analytics view may show stale data until refresh. See [Migration buy and sell](/trading/solana-spot/migration-buy-sell).
+
+Start small. Probe-sized snipes calibrate your settings before you scale them up.
+
+## What you see on execution
+
+- Success toast with token amount and SOL spent
+- Solscan link
+- Position in Portfolio with unrealized PnL
+
+If the snipe fails (no active pool, pool graduated, out of range), a failure toast describes the reason and the position is not opened.
+
+## Read next
+
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [Market orders](/trading/solana-spot/market-orders)
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)
+- [Pool discovery](/trading/solana-spot/pool-discovery)

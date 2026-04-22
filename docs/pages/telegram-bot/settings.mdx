@@ -1,0 +1,115 @@
+---
+title: "Settings — slippage, tips, MEV, presets"
+description: "Tune slippage, priority fees, MEV protection, and custom buy/sell presets for the Interstate Telegram bot."
+---
+
+# Settings
+
+Every trade parameter the bot exposes lives under one command.
+
+## `/settings`
+
+```
+/settings
+```
+
+Bot replies with the current values and inline buttons:
+
+```
+Settings
+
+Slippage:       20%
+Buy tip:        0.0001 SOL
+Sell tip:       0.0001 SOL
+MEV protection: off
+Buy amounts:    0.1, 0.5, 1, 5 SOL
+Sell %:         25, 50, 100
+Language:       English
+
+[ Slippage ] [ Buy tip ] [ Sell tip ]
+[ MEV: off ] [ Buy amounts ] [ Sell % ]
+[ Language ]
+```
+
+Tap a button. A sub-menu opens with preset options. Tap a preset. The value is set immediately and the settings view refreshes.
+
+## Defaults
+
+| Setting | Default |
+|---|---|
+| Slippage | 20% |
+| Buy priority fee (tip) | 0.0001 SOL |
+| Sell priority fee (tip) | 0.0001 SOL |
+| MEV protection | Off |
+| Buy amount presets | 0.1, 0.5, 1, 5 SOL |
+| Sell percentage presets | 25, 50, 100 |
+| Language | English |
+
+## Slippage
+
+```
+[ 10% ] [ 15% ] [ 20% ] [ 25% ] [ 50% ]
+```
+
+Maximum price movement you accept between quote and execution. Low values are safer but more likely to fail in volatile markets. High values are riskier — especially on low-liquidity tokens, where a 50% slippage can mean materially worse fills.
+
+## Buy tip / Sell tip (priority fee)
+
+```
+[ 0.0001 ] [ 0.0005 ] [ 0.001 ] [ 0.005 ] [ 0.01 ] SOL
+```
+
+Priority fee paid to validators to land the transaction faster. Higher tip = more reliable landing, particularly during network congestion. Most trades land fine at the default `0.0001 SOL`.
+
+Separate tips for buys and sells let you bias toward reliability on exits without paying up on every entry.
+
+## MEV protection
+
+```
+[ MEV: off ]   (tap to toggle)
+```
+
+Toggle. When **on**, the bot flags the buy for MEV-protected routing server-side. When **off**, trades route through standard RPC.
+
+A few things worth knowing:
+
+- MEV protection applies to **buys**. Sells route normally.
+- Whether a given buy actually ends up on a private mempool depends on backend routing, which depends on wallet type and availability. The toggle surfaces the intent; the backend honors it where it can.
+- For the full picture of how MEV protection behaves across wallet types, see [MEV protection](/trading/mev-protection).
+
+## Custom buy amounts
+
+Replace the default `0.1 / 0.5 / 1 / 5` preset list with your own values. Useful if you mostly trade `0.25`, `0.5`, `2` SOL and want those buttons instead.
+
+Presets show up on every token card when you paste a CA. See [Quick buy](/telegram-bot/quick-buy-paste-ca).
+
+## Custom sell percentages
+
+Replace the default `25 / 50 / 100` preset list. Show up on every sell screen. See [Sell by percentage](/telegram-bot/sell-by-percentage).
+
+## Language
+
+```
+[ Language ]
+```
+
+Shortcut into the language picker — same as running `/language` directly. See [Multi-language](/telegram-bot/multi-language).
+
+## Where settings are stored
+
+Settings live in the Redis-backed session with a **7-day TTL**. They are **not synced to the web app account** — if you also use the web app, those settings are independent.
+
+If your session expires (no bot activity for 7 days), settings reset to defaults on the next `/start`. A good reason to run the bot at least occasionally if you've tuned it heavily.
+
+## What you cannot change in the bot
+
+- **RPC endpoint.** Fixed server-side.
+- **Quick-buy presets (web-style 3-profile system).** The web app has 3 named presets that bundle amount + sell% + slippage + priority fee + MEV + RPC. The bot has per-field presets instead. See [Quick-buy presets (web)](/trading/solana-spot/quick-buy-presets).
+- **Circuit breaker thresholds or rate limits.** Those are internal operational parameters.
+
+## What to read next
+
+- [Multi-language](/telegram-bot/multi-language)
+- [Quick buy](/telegram-bot/quick-buy-paste-ca)
+- [Sell by percentage](/telegram-bot/sell-by-percentage)
+- [MEV protection (how it works)](/trading/mev-protection)

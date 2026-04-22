@@ -1,0 +1,72 @@
+---
+title: "Migration buy and sell"
+description: "Pump.fun and Meteora DBC tokens graduate to new pools. Interstate handles the migration automatically on both buys and sells."
+---
+
+# Migration buy and sell
+
+When a token on a bonding curve (Pump.fun, Meteora DBC) hits its graduation threshold, liquidity migrates to a permanent pool — typically PumpSwap (for Pump.fun) or a Meteora AMM (for Meteora DBC). Trading on the old pool stops.
+
+Interstate handles this transparently.
+
+## The Migrated column on Pulse
+
+[Pulse](https://app.interstate.so/pulse) has three columns:
+
+| Column | What's in it |
+|---|---|
+| **New** | Freshly launched tokens |
+| **Final Stretch** | Tokens near their graduation threshold |
+| **Migrated** | Tokens whose pool has graduated |
+
+::: info Migration is an event, not a percentage
+A token enters the **Migrated** column only after the on-chain migration event is detected by the indexer. The "Final Stretch" threshold at 80% is a progress signal — it does not mean the token has migrated. Use the column the token is actually in.
+:::
+
+## Quick-buy on migrated tokens
+
+Quick-buy pills in the Migrated column route directly to the post-graduation pool. You don't select the pool — the backend reads `migrated_pool_address` from the token metadata and uses it.
+
+## Sell fallback if a pool migrates mid-session
+
+You open a Pump.fun token. You hold it. Before you sell, the token graduates. You click sell.
+
+What happens:
+
+1. The sell path checks the live pool address server-side.
+2. If the pool has migrated, the sell routes to the new pool automatically.
+3. If the frontend was showing stale pool info, you see a toast: **"Pool has migrated. Refresh the page."**
+
+The sell still goes through using the correct pool. The toast tells you to refresh so the UI shows accurate live price and analytics data.
+
+## Where graduated tokens live
+
+| Source pool | Typical destination |
+|---|---|
+| Pump.fun bonding curve | **PumpSwap** (PumpAmm) |
+| Meteora DBC | **Meteora AMM V1 / V2 (CPAMM)** |
+
+If you try to trade a graduated bonding curve directly, you see a human-readable error pointing you to the migrated pool — this is rare in practice because Interstate auto-corrects.
+
+## Watchlist and pool verification
+
+The watchlist quick-buy **re-verifies the live pool address before transacting**, so a token you bookmarked weeks ago still trades correctly even if its pool has since migrated.
+
+## Limit orders on tokens that may migrate
+
+[Limit orders](/trading/solana-spot/limit-orders) use whatever pool is active at trigger time, not at creation time. So a limit order placed pre-graduation will fill against the post-graduation pool if that's what's active when the market cap hits your target.
+
+## Common symptoms of a migration you haven't noticed
+
+- Price on the trade page looks frozen — chart isn't updating
+- A sell attempt returns a graduated-pool error
+- The token disappeared from the New or Final Stretch column
+
+Refresh the page. If the token migrated, it will show up in the Migrated column with the new pool wired up.
+
+## Read next
+
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [Pool discovery](/trading/solana-spot/pool-discovery)
+- [Market orders](/trading/solana-spot/market-orders)
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)

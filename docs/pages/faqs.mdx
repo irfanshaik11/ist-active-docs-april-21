@@ -1,51 +1,125 @@
-# FAQs
-
-## What is Interstate?
-
-Interstate is an all-in-one onchain trading platform built so you never need to switch between apps. We bring together a full suite of integrations, letting you trade the most in-demand assets from a single interface.
-
-## Is Interstate a wallet too?
-
-Absolutely — and it goes beyond that. Interstate is a hybrid crypto trading app and wallet rolled into one. We currently support Solana, with additional chains on the way. Your wallet is protected by top-tier security infrastructure, meaning your assets stay under your control at all times — no exceptions.
-
-## How does Interstate keep my funds secure?
-
-Interstate employs best-in-class security practices including non-custodial architecture, robust key management, and end-to-end encryption. For more details on our wallet infrastructure, check out our partner [Turnkey](https://turnkey.com).
-
-## Can I purchase crypto directly on Interstate?
-
-Yes. Through our integration with Coinbase, you can purchase up to $500 in crypto per week without KYC requirements.
-
-## Can I earn yield on my holdings?
-
-Interstate makes it easy to earn passive income on your assets. We offer up to 15% APY with instant withdrawals available at any time. For more information, visit our partner [Marginfi](https://marginfi.com).
-
-## Is Interstate decentralized?
-
-Yes. Interstate connects directly with decentralized protocols and applications. All of your transactions happen fully onchain, and your funds remain in your custody at all times.
-
+---
+title: "FAQs"
+description: "Common questions about Interstate — access, trading, wallets, fees, and feature availability."
 ---
 
-## Bundle Checker
+# FAQs
 
-A slot (or block) can process multiple buy transactions at the same time. In a bundle, several buys execute as separate transactions but land within the same block, often just milliseconds apart. While some platforms offer basic warnings, these tend to be too vague to distinguish genuine coordinated buys from normal market activity.
+Quick answers to the most common questions. For anything not covered here, see [Support](/support).
 
-To detect bundles accurately, we apply two core rules:
+## Getting started
 
-### 1. Four or more transactions in the same block
+### What is Interstate?
 
-When at least four transactions occur within a single block, they get flagged as a potential bundle.
+Interstate is an all-in-one onchain trading platform for memecoin traders. Spot trading, Pulse feed, token analytics, perps, prediction markets, and Arena rewards — one interface, one wallet. See [What is Interstate](/getting-started/what-is-interstate).
 
-### 2. Filtering out non-bundled wallets
+### How do I get an access code?
 
-If a wallet participates in a detected bundle but its next transaction falls outside of a bundle, it gets excluded from detection. This removes noise from traders who aren't consistently bundling.
+Interstate is currently **invite-only**. You can:
 
-While no bundle detection method is perfect, this approach gives you a strong signal for identifying which transactions are likely part of a coordinated effort. Some false positives or missed bundles are unavoidable.
+- Redeem an **access code** or **referral code** from an existing user
+- Join the **waitlist** and complete the Twitter + Telegram quests
+- Wait for admin promotion from the waitlist
 
-### How Interstate's bundle detection stands apart
+A referral code and an access code are interchangeable — either unlocks the platform.
 
-Other tools like Trench Radar take a different approach, and there are important distinctions:
+### Is Interstate available in my country?
 
-**Unrestricted detection window** — Interstate identifies bundles whenever they happen, with no time limit. Other tools often rely on flags that only catch transactions in the first few blocks after a token launches. Bundles can occur at any point, not just at creation, and they don't have to originate from the deployer or team.
+Interstate is a non-custodial trading terminal accessible from most regions. Certain jurisdictions may be restricted — see the [Terms of Service](/terms-of-service). Onramp availability depends on the Onramper partner and your region.
 
-**Smarter filtering** — We cut down on false positives by excluding wallets that don't show a consistent bundling pattern. While our bundled percentage may look different from other tools, it provides a more accurate picture of the actual risk involved in trading a specific token.
+### Which chains does Interstate support?
+
+| Chain | Status |
+|---|---|
+| Solana | Full support |
+| Monad | **Beta** — spot trading only; no Live tab, no MEV mode, 10 MON reserve required |
+
+BNB Chain is **not supported**. Other chains are on the roadmap.
+
+## Wallets & security
+
+### Is Interstate a wallet too?
+
+Yes. When you sign up with email or Google, a non-custodial wallet is created for you inside a **Turnkey** secure enclave — private keys never leave the enclave in plaintext. You can also import an existing Solana or EVM private key.
+
+### How does Interstate keep my funds secure?
+
+- Non-custodial architecture via [Turnkey](https://turnkey.com) HSM (hardware-backed key management)
+- 1-user-1-suborg isolation
+- Private key export available at any time with an explicit acknowledge step
+- End-to-end encryption on session data
+
+### Can I export my private key?
+
+Yes. The export flow uses the Turnkey iframe and requires an explicit acknowledgement. Keys are never transmitted or logged in plaintext by Interstate.
+
+## Trading
+
+### Which DEXs does Interstate support?
+
+On Solana, routing is automatic across:
+
+- **Pump.fun** (bonding curve)
+- **PumpSwap / PumpAmm** (post-graduation)
+- **Raydium** (CPMM, CLMM, Launchpad)
+- **Meteora** (DBC, AMM V1, AMM V2 / CPAMM, DLMM)
+- **MoonShot**
+- **Orca**
+
+If you don't specify a pool, Interstate picks the active pool with highest liquidity (floor: $50).
+
+On Monad, routing uses Uniswap V2/V3-compatible routers.
+
+### Is copy-trading supported?
+
+**No.** The Wallet Tracker is **watch-only**. You can see every trade a tracked wallet makes in real time, but nothing auto-executes. You still decide whether and when to trade.
+
+### Does the Telegram bot have all the same features as the web app?
+
+**No.** The bot is intentionally narrower. Key gaps:
+
+- **Limit-order creation** is web-only (the bot can view and cancel existing orders)
+- **Referrals** are web-only
+- **MEV "Secure" mode** for Turnkey wallets is web-only
+- **24h price change** on token cards is intentionally hidden in the bot
+- Some advanced settings and analytics panels are web-only
+
+Account and wallet are shared — trades made in the bot show up instantly in your web portfolio.
+
+### Do limit orders trigger on price or market cap?
+
+**Market cap**, not price. The worker re-checks conditions every 5 seconds, so expect up to a 5-second delay between the trigger condition firing and execution.
+
+### Can I buy crypto with a card?
+
+Yes. The Onramp tab uses [Onramper](https://onramper.com/) with multiple partners. The Coinbase integration offers up to **$500 / week with no KYC**. Fees vary by partner — see [Fees](/fees).
+
+### What's the Bundle Checker?
+
+A tool that flags likely coordinated buys on a token by looking at transactions inside the same block. It now lives on its own page — see [Bundle Checker](/discovery/bundle-checker).
+
+## Earning
+
+### How do rewards work?
+
+Every spot trade earns Credits. Credits push you up a 5-rank ladder (Degen → Warrior → Gladiator → Commander → Titan) with up to a 4× multiplier on SOL cashback and referral earnings. Full breakdown: [Arena overview](/arena/overview).
+
+### How do referrals work?
+
+5 layers deep. Direct referrals earn you 20% of their fees. Four more network tiers earn 3% / 2% / 1.5% / 1%. Referrals are **web-only** — the TG bot does not currently issue referral credit.
+
+### Is the TG bot included in Arena rewards?
+
+Trades placed through the bot earn the same Credits and cashback as web trades (they hit the same account). **Referral credit and some quest completions are web-only.**
+
+## Account & support
+
+### Where do I get help?
+
+- Common issues: this page
+- Detailed questions: [Support](/support) — Telegram and X
+- Never DM anyone claiming to be support. Interstate moderators will not DM you first.
+
+### Does Interstate ever ask for my private key or seed phrase?
+
+**No. Ever.** Any message asking for your key or seed is a scam. Report it in the Telegram group and ignore.
