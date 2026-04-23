@@ -1,120 +1,99 @@
 ---
 title: "Privacy Policy"
-description: "How Interstate collects, uses, and protects your data. Plain-language summary."
+description: "How Interstate collects, uses, and protects your information."
 ---
 
 # Privacy Policy
 
-This page is a plain-language summary of how Interstate handles your data.
+This page explains what information Interstate collects, how it's used, who it's shared with, and how you can exercise your rights over your data.
 
-_Last updated: [TO BE FILLED BY LEGAL]_
+## What we collect
 
-_Operator: **[Company Name — TO BE FILLED BY LEGAL]**_
+### Account information
+- Email address (if you sign up with email)
+- Google account identifier (if you sign in with Google)
+- Wallet addresses — the custodial Solana and Monad addresses Turnkey creates for you, plus any external wallets you import
+- Referral code and waitlist status
 
-## 1. What we collect
+### Trading and activity data
+- Every trade you execute: token, amount, price, timestamp, transaction signature
+- Current positions and historical portfolio state
+- Watchlist, tracked wallets, monitored Twitter handles, monitored Telegram channels
+- Settings (slippage, priority fees, MEV mode, themes, language, buy/sell presets)
+- Telegram user ID if you use the Interstate Telegram bot
 
-We collect only what's needed to run the platform.
+### Technical data
+- IP address, device type, and browser (for security and abuse prevention)
+- Session logs (for troubleshooting and audit)
+- Cookies and local storage that keep you signed in and preserve your preferences
 
-### You provide
+## How we use it
 
-- **Email address** — if you sign up with email
-- **Google account identifier** — if you sign up via Google OAuth (email + basic profile)
-- **Wallet signatures** — if you sign in with Phantom or MetaMask
-- **Telegram handle & user ID** — if you use the Interstate Telegram bot
-- **X / Twitter handle** — if linked for quests or the X monitor allowlist
+- **To operate the platform** — authenticate you, execute trades, track positions, serve the leaderboard and Arena rewards.
+- **To keep the platform safe** — detect abuse, fraud, wash trading, and sanctions risk.
+- **To improve the product** — aggregated usage metrics that guide feature work.
+- **To comply with law** — meet applicable regulatory and compliance obligations.
+- **To communicate with you** — transactional emails and, if you opt in, product updates.
 
-### Generated as you use the platform
+We do **not** sell your personal data.
 
-- **Wallet addresses** generated for you via Turnkey, or imported by you
-- **Trade history** — orders, fills, PnL, trade timestamps
-- **Portfolio state** — balances, positions, realized/unrealized PnL
-- **Quest completion data** — waitlist and referral activity
-- **Referral graph** — who referred whom (used for 5-layer rewards)
-- **Session metadata** — IP address, user agent, login timestamps
-- **Feature usage** — which pages and features you use (aggregated/analytics)
+## Who we share it with
 
-### Not collected
+Interstate relies on third-party infrastructure. When you use the relevant feature, data flows to the relevant provider under their own privacy terms.
 
-- Your **private keys** — Turnkey-generated keys never leave the secure enclave in plaintext. Imported keys are encrypted at rest.
-- Your **seed phrase** — never requested, never stored.
-- Payment card details — handled by the Onramper partner, not by Interstate.
-
-## 2. How we use it
-
-| Purpose | Data used |
+| Service | What they see |
 |---|---|
-| Account authentication | Email, OAuth ID, wallet signatures, JWT sessions |
-| Trading execution & history | Wallet addresses, trade data |
-| Leaderboards & Arena | Wallet, trade volume, PnL, rank |
-| Customer support | Wallet, trade history, screenshots you share |
-| Referral rewards | Referral graph, trade fees |
-| Platform improvement | Aggregated feature usage, error logs |
-| Fraud & abuse detection | Session metadata, wallet behavior |
-| Legal compliance | Any of the above, where required |
+| **Turnkey** | Wallet public keys and encrypted private-key material |
+| **Hyperliquid** | Perpetual futures orders and positions |
+| **Polymarket + DFlow** | Prediction market orders and positions |
+| **Onramper** | Any fiat-onramp information you enter into their widget |
+| **Google** | OAuth sign-in identifiers |
+| **Solana and Monad public infrastructure** | Your trades — public by nature of the blockchain |
+| **Twitter / X API** | The handles you choose to monitor (to fetch their public tweets) |
+| **Telegram** | Your interactions with the Interstate Telegram bot |
 
-We do not sell your data.
+We may also share information with law enforcement or regulators when legally required or to protect the platform and its users from harm.
 
-## 3. Third-party services
+## On-chain data is public
 
-Interstate integrates with third parties to deliver features. Each has its own privacy policy.
+Anything you do on Solana or Monad is recorded on a public blockchain. Addresses, amounts, and transaction history are visible to anyone. Interstate cannot remove or mask on-chain records — the chain itself controls that.
 
-| Provider | What it handles | Data shared |
-|---|---|---|
-| [Turnkey](https://www.turnkey.com) | Non-custodial wallet custody (HSM) | Account ID, wallet addresses |
-| [Onramper](https://onramper.com) | Fiat-to-crypto onramp | Your wallet address (for deposit), plus whatever the chosen partner requires (Coinbase, card processors, etc.) |
-| [Hyperliquid](https://hyperliquid.xyz) | Perpetual futures venue | Wallet address, orders |
-| [Polymarket](https://polymarket.com) / [DFlow](https://dflow.net) | Prediction markets | Wallet address, orders |
-| [Google](https://policies.google.com/privacy) | OAuth sign-in | Email, basic profile |
-| Public RPC providers | Transaction submission & reads | Wallet addresses, transaction data (public by nature on-chain) |
+## Cookies and local storage
 
-Onchain transactions are, by design, **public and permanent**. Any wallet you connect is visible on block explorers.
+Interstate uses cookies and browser local storage to keep you signed in, remember preferences (theme, language, quick-buy presets), and detect abuse. You can clear these at any time through your browser, but doing so will log you out and reset preferences.
 
-## 4. Cookies & analytics
+## Data retention
 
-Interstate uses cookies and similar technologies to keep you signed in, remember preferences, and measure feature usage. Specific providers and opt-out options: [TO BE FILLED BY LEGAL].
+We retain data for as long as your account is active and for a reasonable period after, to comply with legal obligations, resolve disputes, and maintain security audit trails. On-chain records are permanent by the nature of blockchains and cannot be deleted.
 
-## 5. Data retention
+## Your rights
 
-- Trade history, positions, and referral data: retained while your account is active and for a reasonable period after to support audits, disputes, and legal obligations
-- Session logs: typical retention window [TO BE FILLED BY LEGAL]
-- Deleted accounts: certain data may be retained where required by law
+Depending on where you live, you may have the right to:
 
-## 6. Your rights
-
-Depending on your jurisdiction, you may have the right to:
-
-- **Access** the data we hold about you
+- **Access** the personal data Interstate holds about you
 - **Correct** inaccurate data
-- **Delete** your data (subject to legal/retention constraints)
-- **Export** your data
-- **Object** to certain processing
-- **Withdraw consent** where processing is consent-based
+- **Delete** your off-chain data (on-chain records remain)
+- **Export** your data in a portable format
+- **Object to** or **restrict** certain processing
 
-To exercise any of these, contact us: [privacy contact — TO BE FILLED BY LEGAL].
+To exercise any of these rights, contact Interstate through the channels on the [Support](/support) page.
 
-## 7. Security
+## Security
 
-- Private keys are held by Turnkey in hardware-backed secure enclaves (1-user-1-suborg isolation)
-- Session data is encrypted in transit and at rest
-- Access to production systems is restricted and audited
-- We use JWT-based authentication with server-side session controls
+Interstate uses industry practices to protect your data: HTTPS end-to-end, HSM-backed wallet custody via Turnkey, encrypted session tokens, and ongoing security review. No system is perfectly secure — use a strong email password, enable two-factor authentication on your email and Google accounts, and protect your device.
 
-No system is perfectly secure. If you believe your account has been compromised, rotate passwords, revoke sessions, and contact [Support](/support) immediately.
+## Children
 
-## 8. Children
+Interstate is not designed for anyone under 18. We do not knowingly collect personal data from minors. If we learn that a minor has created an account, we will delete it.
 
-Interstate is not intended for users under the age of majority in their jurisdiction. We do not knowingly collect data from minors.
+## International users
 
-## 9. International transfers
+Interstate is accessible globally. If you access the platform from outside your country of residence, your data may be processed in jurisdictions with different privacy laws than your own.
 
-Interstate operates globally. Your data may be processed in jurisdictions other than your own. We apply reasonable safeguards consistent with applicable law.
+## Changes to this policy
 
-## 10. Changes to this policy
+We may update this policy as the product evolves. Material changes will be announced in-product. Continued use after a change means you accept the updated policy.
 
-We may update this policy. Material changes will be announced through in-app notice, the Telegram group, or our X account. The "last updated" date at the top of this page will reflect the change.
+## Contact
 
-## 11. Contact
-
-For privacy questions or to exercise your rights, contact: [privacy contact — TO BE FILLED BY LEGAL].
-
-For general support, see [Support](/support).
+For privacy questions or to exercise any of the rights above, reach Interstate through the channels listed on the [Support](/support) page.
