@@ -1,0 +1,68 @@
+---
+title: "Portfolio"
+description: "Where all your positions, PnL, and trade history live. One page, both chains, all wallets."
+---
+
+# Portfolio
+
+Your portfolio page at [app.interstate.so/portfolio](https://app.interstate.so/portfolio) is the single source of truth for everything you hold and everything you've traded on Interstate.
+
+## What's on the page
+
+| Section | What it shows |
+|---|---|
+| **Active positions** | Every token you currently hold on Solana and Monad, with live current price, market cap, and your unrealized PnL in SOL and % |
+| **Realized PnL** | Running total of profit/loss on closed positions, computed at the moment you sold |
+| **Total portfolio value** | Sum of all positions in SOL, updated live |
+| **PnL chart** | Your portfolio value over time — daily, weekly, or since inception |
+| **Trade history** | Every buy and sell, with timestamps, prices, and transaction links to Solscan or the Monad explorer |
+| **Top 100 positions** | A ranked view if you hold a long tail — largest positions first |
+| **Prediction market positions** | Your Polymarket YES/NO positions, embedded on the same page |
+
+## How PnL is calculated
+
+**Unrealized PnL** uses live WebSocket prices and your on-chain token balance at the current block. It updates automatically as prices move — you don't need to refresh.
+
+**Realized PnL** is recorded at the moment you execute a sell. Interstate stores the realized PnL on the trade record so historical totals stay stable even as prices move.
+
+::: info Multi-wallet trades
+If you split a single trade across multiple wallets ([multi-wallet trading](/funding/multi-wallet-trading)), the portfolio filters out the "child" trades so you don't see the same position counted twice. Only the combined parent trade shows up.
+:::
+
+## Switching chains
+
+The portfolio is chain-aware. Toggle between **Solana** and **Monad** with the chain switcher in the header — each chain has its own positions, PnL, and history. Monad portfolio features are in **Beta** and cover the MON spot surface; perpetuals and predictions positions are tracked separately.
+
+## Selling from the portfolio
+
+Click any active position to open the sell panel. You can sell:
+
+- By **percentage** (25 / 50 / 100% or custom)
+- By **exact token amount**
+
+Sells execute through the same routing as the trade page — Meteora, Raydium, Pump.fun, PumpSwap, or MoonShot, whichever has the active pool. If the pool has migrated since you bought, the sell automatically uses the new pool address.
+
+See [Market orders](/trading/solana-spot/market-orders) for the full sell mechanics.
+
+## Trade history filters
+
+- **By token** — click any token to see every trade you've made on it
+- **By wallet** — if you use multiple wallets, filter to one at a time
+- **By time range** — standard date pickers
+
+## What's earned automatically
+
+Every trade in your history earned you:
+
+- **Credits** toward your Arena rank — see [How Credits, Ranks & Rewards work](/points)
+- **SOL cashback** — a slice of the platform fee paid back in SOL, scaled by rank (10% at DEGEN, up to 35% at TITAN)
+- **Referral rewards** if someone signed up with your code and traded — see [Referrals](/arena/referrals)
+
+These don't show as line items in the portfolio itself — check the [Arena overview](/arena/overview) for cashback totals and rank progress.
+
+## What to read next
+
+- [Your first trade](/getting-started/first-trade) — end-to-end walkthrough
+- [Market orders](/trading/solana-spot/market-orders) — buy and sell mechanics
+- [Limit orders](/trading/solana-spot/limit-orders) — market-cap triggered orders
+- [Arena overview](/arena/overview) — how trading activity turns into rewards
