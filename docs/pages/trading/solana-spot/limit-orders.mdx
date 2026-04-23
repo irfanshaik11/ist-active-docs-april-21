@@ -1,0 +1,89 @@
+---
+title: "Limit orders"
+description: "Place a limit order triggered by market cap, not price. Orders run on a 5-second check loop. Solana only, web only."
+---
+
+# Limit orders
+
+Place a buy or sell that fires automatically when a token's **market cap** crosses a target.
+
+::: warning Market cap, not price
+The trigger is denominated in **USD market cap** — not price. Interstate does not offer a traditional price-level limit order. Enter a target market cap (above or below current) and the order executes when that threshold is hit.
+:::
+
+::: danger Bonding-curve trigger is not live
+Interstate's limit order entity has a `bonding` trigger type in code, but the underlying data (`bonding_pct`) is not currently returned by the token service. Bonding-curve triggers are **not available**. Use market cap triggers only.
+:::
+
+## How it works
+
+1. Open a token's trade page.
+2. Switch from **Market** to the **Limit** tab.
+3. Enter an amount (SOL for buys; % or tokens for sells).
+4. Enter the **Target Market Cap** in USD.
+5. Confirm.
+
+The chart shows a preview line at your target market cap while you're on the Limit tab, plus an estimated token price derived from target ÷ circulating supply.
+
+## Execution timing
+
+::: warning 5-second check loop
+Orders run on a 5-second check loop. Expect up to **5 seconds of latency** between the market cap condition being met and the trade actually submitting.
+:::
+
+Each active order has its own worker that re-evaluates the trigger every 5 seconds. There is no instant fill.
+
+Failed executions retry up to 3 times before the order is marked failed. Failure logs are retained for debugging and surfaced via the order error endpoint.
+
+## Order persistence
+
+- Active orders survive backend restarts. On startup, every `Active` order is re-queued from the database.
+- Saved trade parameters at creation time: slippage, priority fee, bribe, MEV mode, auto-fee toggle, max fee, custom RPC.
+- Once saved, these parameters are used at execution — they do not pick up later changes to your [Quick-buy presets](/trading/solana-spot/quick-buy-presets).
+
+## Managing active orders
+
+The **Limit Orders panel** on the trade page and the global Limit Orders view show:
+
+- Target market cap
+- Direction (buy above / buy below / sell above / sell below)
+- Amount
+- Status — Active, Executed, Cancelled, Failed
+- Execution result with transaction hash (if filled)
+
+You can cancel any Active order from the same panel.
+
+## Scope
+
+- **Chain**: Solana only. Monad does not currently support limit orders.
+- **Surface**: Web only. The Telegram bot can view and cancel limit orders but cannot create them.
+
+## What to enter — example
+
+You hold a token with a current market cap of **$400k**. You want to sell 50% of your bag if it hits **$1M**.
+
+| Field | Value |
+|---|---|
+| Tab | Limit |
+| Side | Sell |
+| Amount | 50% |
+| Target Market Cap | `1000000` |
+| Direction | Sell when market cap **above** target |
+
+The order sits waiting. When the 5-second worker sees market cap ≥ $1M, it submits your sell.
+
+## Common failure modes
+
+| Scenario | What happens |
+|---|---|
+| Pool migrates before trigger | Order uses the current active pool at execution time |
+| Liquidity dries up | Sell may fail with insufficient output; retries up to 3× |
+| Wallet has insufficient SOL at trigger | Order fails — no auto-refund |
+| Target never hits | Order stays Active until you cancel it |
+
+## Read next
+
+- [Market orders](/trading/solana-spot/market-orders)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Order execution](/trading/order-execution)

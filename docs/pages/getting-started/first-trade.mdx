@@ -1,0 +1,91 @@
+---
+title: "Your first trade"
+description: "End-to-end walkthrough for your first Solana spot trade on Interstate — find a token, buy, confirm, and see it in your portfolio."
+---
+
+# Your first trade
+
+This is the complete path from signup to your first position. It takes under two minutes.
+
+## Before you start
+
+You need:
+- A signed-in account ([Invite-only access & signup](/getting-started/signup))
+- **SOL in your Interstate wallet** — deposit SOL, buy with fiat through the onramp, or import an existing funded wallet. See [Deposits, Withdrawals, and Onramp](/funding/deposits-withdrawals-onramp) *(coming soon)*.
+
+::: info Minimum SOL
+You need at least the buy amount **plus ~0.002 SOL** for network fees and, on first-time buys of a token, a one-time Solana account creation cost. A small buffer (e.g., 0.01 SOL) is safer.
+:::
+
+## Step 1 — Find a token
+
+Three ways:
+
+- **Pulse** — live feed of new, graduating, and migrated tokens at [app.interstate.so/pulse](https://app.interstate.so/pulse)
+- **Discover** — trending, new pairs, DEX-listed tokens at [app.interstate.so/discover](https://app.interstate.so/discover)
+- **Search** — click the search icon in the header and type a name, symbol, or paste a contract address
+
+Click any token to open its trade page.
+
+## Step 2 — Review the token
+
+The right panel on every trade page shows safety metrics that matter for memecoins:
+
+| Metric | What it means |
+|---|---|
+| **Sniper %** | How much of the supply is held by wallets that bought in the first seconds after launch. High = risk of coordinated dump. |
+| **Bundler %** | Supply held by wallets that bought in the same block. High = likely coordinated, often rug risk. |
+| **Insider %** | Supply held by wallets connected to the deployer. |
+| **Top-10 holder %** | Concentration in the largest 10 wallets. High concentration = higher rug / dump risk. |
+| **Total holders** | Unique addresses holding the token. |
+
+Look for duplicate-image warnings and similar-token flags in the right panel — these catch common rug patterns where scammers reuse a successful token's logo.
+
+## Step 3 — Buy
+
+On the trade page, the buy panel is on the right. Make sure **Market** is selected (not Limit).
+
+1. Enter the amount in **SOL** (e.g., `0.1`).
+2. Review your **slippage** and **priority fee** under the settings gear:
+   - **Slippage**: default 20%. Memecoin prices move fast; lower slippage often fails. 15–25% is typical.
+   - **Priority fee**: the tip paid to Solana validators. Higher = faster inclusion. Default is safe.
+3. Click **Buy**.
+
+If the slippage or priority fee is unusually high, you'll see a confirmation dialog before the trade submits.
+
+::: tip Quick-buy presets
+If you plan to trade a lot, set up [Quick-buy presets](/trading/solana-spot/quick-buy-presets) *(coming soon)*. You can buy directly from Pulse or Discover with one click, no trade page needed.
+:::
+
+## Step 4 — Confirm
+
+The trade executes on-chain. You'll see:
+
+- A success toast with the **token amount received** and **SOL spent**
+- A link to view the transaction on **Solscan**
+- The position appears in your **Portfolio**
+
+Interstate automatically routes the trade to the right DEX for that token — Pump.fun bonding curve, PumpSwap, Raydium (CPMM, CLMM, or Launchpad), Meteora (DBC, AMM, or DLMM), or MoonShot. You don't pick the DEX; the backend finds the pool with liquidity.
+
+If the token has no active pool with sufficient liquidity, you'll see an error like `NO_ACTIVE_POOL`. Try again in a minute — a new pool may be indexing — or search for a different token.
+
+## Step 5 — Track and sell
+
+Go to [Portfolio](https://app.interstate.so/portfolio) to see your position.
+
+- **Unrealized PnL** updates live via WebSocket as the price moves
+- To **sell**, click the position and pick a percentage (25%, 50%, 100%) or enter a custom amount
+- **Realized PnL** is computed when you sell
+
+## What just happened in the background
+
+- Your buy earned **Credits** toward your Arena rank
+- A share of the platform fee came back to you as **SOL cashback** (rate depends on your rank — starts at 10%, up to 35% at Titan)
+- The trade is on the public leaderboard counting toward your volume and PnL rankings
+
+## What to read next
+
+- [Limit orders](/trading/solana-spot/limit-orders) *(coming soon)* — set a market-cap target instead of buying immediately
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets) *(coming soon)* — one-click trading from Pulse
+- [How Credits, Ranks & Rewards work](/points) — the full Arena mechanics
+- [Pulse feed](/discovery/pulse) *(coming soon)* — how to read the three-column live feed

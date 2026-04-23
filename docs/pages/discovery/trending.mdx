@@ -1,0 +1,82 @@
+---
+title: "Trending"
+description: "How Interstate ranks trending Solana tokens — weights, timeframes, and the blacklist."
+---
+
+# Trending
+
+The Trending tab on [Discover](/discovery/discover-tabs) is Interstate's own momentum ranking. It combines several live trading signals into a single score and publishes three ranked lists: **5 minutes**, **1 hour**, **6 hours**.
+
+## Score weights
+
+Every ranked token gets a score computed from the following signals:
+
+| Signal | Weight | Window |
+|---|---|---|
+| Volume (USD) | 50% | 5 minutes |
+| Transaction count | 20% | 5 minutes |
+| Price change | 20% | 5 minutes |
+| Volume growth (momentum) | 10% | 5 minutes |
+
+Volume dominates. Raw traded USD matters more than anything else in the score. Transaction count and price change pull similar weight — a token that's moving with many distinct trades ranks higher than a token with the same volume in a handful of large trades. Volume growth is the smallest factor but it's what separates "big" from "accelerating."
+
+## Three timeframes
+
+Although the score is computed from a 5-minute window, the ranked output is published across three timeframes:
+
+| Timeframe | Use it for |
+|---|---|
+| **5m** | Hottest right now. Short-lived pumps, fresh momentum. |
+| **1h** | Consistent runners. Tokens that have been moving for a while. |
+| **6h** | Sustained trends. Tokens with durable volume over hours. |
+
+Switching timeframes changes which tokens are near the top. A token can rank #1 on 5m and not appear on 6h, and vice versa.
+
+## Why one token outranks another
+
+A token ranks higher when it has more buy/sell volume, more unique transactions, a stronger positive price move, and faster volume acceleration relative to its own recent baseline.
+
+Two useful intuitions:
+
+- **High absolute volume with flat growth** loses rank to a smaller token that's accelerating rapidly.
+- **Big single trades** contribute less than many small trades that add up to the same volume — transaction count matters.
+
+## Update cadence
+
+Scores refresh every few seconds. Ranks that change are pushed to the UI over WebSocket, so you don't need to reload the page. Names, prices, market caps, and liquidity are refreshed inline.
+
+Each rank entry is enriched with:
+
+- Name, symbol, logo, contract address
+- Current price, market cap, liquidity
+- Holder count
+- **Safety signals** — sniper %, insider %, dev %, top-10 %, bundle %. See [token analytics](/discovery/token-analytics).
+
+## Blacklist
+
+A hardcoded blacklist removes:
+
+- **Wrapped SOL** (wSOL) — it would otherwise dominate by volume
+- **Known spam / wash-traded tokens** identified by the indexer
+
+Blacklist results never appear in Trending, regardless of score.
+
+## Trending vs DexScreener's DEX tab
+
+Trending is Interstate's **internal** ranking. The **DEX** tab on Discover pulls from DexScreener's trending page — a separate scrape, different methodology, 60-second cadence. Use them together for consensus. See [DexScreener trending](/discovery/dexscreener-trending).
+
+## Working from Trending
+
+Typical flow:
+
+1. Pick a timeframe (**5m** for scalps, **1h** for swings, **6h** for sustained moves).
+2. Scan the top rows for names, safety indicators, and recent price moves.
+3. Click a row to open the full [trade page](/getting-started/first-trade) — chart, analytics panel, trade history.
+4. Quick-buy directly from the row using your active [preset](/trading/solana-spot/quick-buy-presets) if you don't need a chart.
+
+## What to read next
+
+- [DexScreener trending](/discovery/dexscreener-trending) — separate external source
+- [Token analytics](/discovery/token-analytics) — the safety signals on each row
+- [OHLC charts](/discovery/ohlc-charts) — the chart you see after clicking a row
+- [Market orders](/trading/solana-spot/market-orders) — executing the buy

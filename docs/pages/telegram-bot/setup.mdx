@@ -1,0 +1,82 @@
+---
+title: "Finding the bot and running /start"
+description: "Open Interstate in Telegram, run /start, and get a wallet — one command, no passwords."
+---
+
+# Setup
+
+The Interstate bot is a regular Telegram bot. Open Telegram, find it, send `/start`. That's the whole setup.
+
+## Find the bot
+
+Search for the Interstate bot inside Telegram or open the bot link shared from the Interstate web app. Tap **Start** on the bot's welcome screen — Telegram sends `/start` for you.
+
+## What `/start` does
+
+```
+/start
+```
+
+On the first run, the bot:
+
+1. Registers your Telegram user with the Interstate backend.
+2. Silently creates a Solana wallet for you inside a Turnkey secure enclave. Private keys never leave the enclave in plaintext.
+3. Stores a session (7-day TTL) so you do not log in again.
+4. Replies with your welcome screen.
+
+On every run after that, `/start` is idempotent — it just refreshes the welcome screen and balance. You can send it any time to get back to the main menu.
+
+## What the welcome screen shows
+
+```
+Welcome to Interstate
+
+Wallet: <your Solana address — tap to copy>
+Balance: 0.000 SOL
+
+Paste any Solana contract address to buy, or use the menu below.
+```
+
+Inline menu buttons:
+
+- **Buy / Sell** — sell from your current positions, or paste a CA to buy
+- **Assets** — portfolio with live PnL
+- **Wallet** — address, balance, deposit, withdraw
+- **Limit Orders** — view and cancel existing limit orders
+- **Settings** — slippage, priority fee, MEV, presets, language
+- **Login Website** — opens [app.interstate.so](https://app.interstate.so)
+
+## Fund the wallet
+
+The bot creates an empty wallet. Before you can trade, send SOL to the address shown in the welcome screen or under `/wallet`.
+
+- Only send **SOL on the Solana network**. Other networks or other tokens will be lost.
+- The address is tap-to-copy.
+- A first-time buy of any new token needs roughly **0.002 SOL extra** to cover the Solana token-account rent. The bot surfaces this as an error if your balance is too tight — top up and retry.
+
+See [Wallet](/telegram-bot/wallet-bot) for deposit and withdraw details.
+
+## Same account as the web app
+
+The bot and [app.interstate.so](https://app.interstate.so) share one account. If you already signed up on the web, your Telegram `/start` ties the two surfaces together on the backend automatically — no linking step, no password to remember. Trades from either surface show up in the same portfolio.
+
+## Session lifetime
+
+- Sessions are Redis-backed with a **7-day TTL**.
+- Settings, language, and any in-progress multi-step flow state (custom buy amount, withdraw address, etc.) all live in the session.
+- If you do not interact with the bot for 7 days, the session expires and you will get a `Please run /start first.` prompt — run `/start` once and you are back.
+
+## `/help`
+
+```
+/help
+```
+
+Lists every command with a one-line description. Use it when you forget a slash command. All commands are documented in the pages under this section.
+
+## What to read next
+
+- [Paste a CA and buy](/telegram-bot/quick-buy-paste-ca)
+- [Sell a position](/telegram-bot/sell-by-percentage)
+- [Wallet — deposit and withdraw](/telegram-bot/wallet-bot)
+- [Change slippage, tips, MEV](/telegram-bot/settings)

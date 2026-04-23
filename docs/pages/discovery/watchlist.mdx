@@ -1,0 +1,71 @@
+---
+title: "Watchlist"
+description: "Pin tokens for live monitoring. Quick-buy from the watchlist. Pool address is re-validated at buy time."
+---
+
+# Watchlist
+
+The watchlist lets you pin tokens for live monitoring — prices, market caps, and liquidity update over WebSocket while the modal is open. You can trade directly from the list without navigating to each token's trade page.
+
+Open it from the header or from any trade page.
+
+## Adding and removing tokens
+
+Any token row across Interstate — [Pulse](/discovery/pulse), [Discover](/discovery/discover-tabs), search results, trade pages — has a star / bookmark icon. Tap it to add. Tap again to remove.
+
+Watchlists are stored per user and sync across devices when you sign in.
+
+## What you see
+
+Every row in the watchlist shows:
+
+- Name, symbol, logo, contract address
+- **Live price** (USD)
+- **Market cap** (USD)
+- **Liquidity** (USD)
+- **24h change** where available
+- **Quick-buy pill** — one-click buy at your active [Quick-buy preset](/trading/solana-spot/quick-buy-presets)
+
+Prices update via WebSocket as trades land — watch a watchlist token move without opening its chart.
+
+## Quick-buy from the watchlist
+
+Clicking the quick-buy pill on a watchlist row behaves exactly like quick-buy elsewhere in the app:
+
+1. The trade is submitted at your active preset's amount, slippage, priority fee, and MEV mode
+2. You see a success toast with SOL spent and tokens received
+3. The new position appears in your portfolio
+
+One important behavior: **the pool address is re-validated at buy time**.
+
+## Pool re-validation at buy time
+
+A token you added to your watchlist a week ago may have migrated since — its bonding-curve pool could be retired and a new permanent AMM pool active. Interstate handles this transparently:
+
+- When you click quick-buy, the backend looks up the current live pool for the token
+- If the pool has changed (e.g., the token migrated), the trade routes to the new pool automatically
+- You don't need to remove and re-add the token
+
+If the pool has migrated while the watchlist is open, a sell will show a toast prompting you to refresh — the frontend needs fresh metadata before a sell can route correctly.
+
+## When to use the watchlist vs Pulse vs Portfolio
+
+| Use the **watchlist** when | Use **Pulse** when | Use **Portfolio** when |
+|---|---|---|
+| You want to monitor tokens you haven't bought | You want the live launchpad firehose | You're tracking positions you already hold |
+| You want fast quick-buys without scrolling | You want to catch new arrivals | You want PnL and trade history |
+
+The watchlist is a cheap way to narrow the universe of tokens to the ones you care about without committing capital.
+
+## Caveats
+
+- **Watchlist is not an alert system.** There's no price-target alert — use [limit orders](/trading/solana-spot/limit-orders) for market-cap-triggered execution.
+- **No auto-buy.** The watchlist does not buy for you. Triggered auto-buys are [Sniper](/trading/solana-spot/sniper).
+- **Large watchlists can get noisy.** Prune tokens that have migrated, rugged, or stopped trading.
+
+## Related pages
+
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets) — the preset driving one-click buys
+- [Market orders](/trading/solana-spot/market-orders) — what actually runs when you click buy
+- [Pulse](/discovery/pulse) — where most watched tokens originate
+- [Portfolio](/portfolio/overview) — where positions land after a buy

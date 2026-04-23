@@ -1,0 +1,92 @@
+---
+title: "Limit orders in the bot — view and cancel"
+description: "The Interstate bot lets you view and cancel existing limit orders. Order creation is web app only."
+---
+
+# Limit orders in the bot
+
+The bot can **view** and **cancel** limit orders. It cannot create them.
+
+> **Create limit orders on the web app.** Use [app.interstate.so](https://app.interstate.so) → the token's trade panel → Limit tab. See [Limit orders (trading)](/trading/solana-spot/limit-orders). Any orders you create there show up in the bot under `/limit`.
+
+This is the single biggest gap between the bot and the web app. The rest of the limit-order surface — market-cap triggers, pending vs active, cancel from mobile — works the same way across both.
+
+## `/limit`
+
+```
+/limit
+```
+
+Bot replies with your active and pending limit orders:
+
+```
+Your limit orders
+
+1. BUY  <SYMBOL_A>  at MC $2.0M   0.5 SOL   [ Cancel ]
+2. SELL <SYMBOL_B>  at MC $15M    50%       [ Cancel ]
+3. BUY  <SYMBOL_C>  at MC $800K   0.25 SOL  [ Cancel ]
+
+[ Refresh ]
+```
+
+Each row shows:
+
+- **Side** — BUY or SELL.
+- **Token symbol**.
+- **Trigger market cap** — the order fires when the token crosses this market-cap threshold. Interstate limit orders are market-cap triggered, not price triggered.
+- **Amount** — SOL for buys, percentage of position for sells.
+- **Cancel** button — sends `limit:cancel:<id>`.
+
+## Cancel an order
+
+Tap **Cancel** on the row. The bot confirms:
+
+```
+Limit order cancelled.
+```
+
+The list refreshes. If the cancel failed (order already filled, or transient backend issue) you'll see:
+
+```
+Could not cancel order. Please try again.
+```
+
+Retry, or refresh the list — if the order already filled it will no longer show.
+
+## Menu entry
+
+You can also reach `/limit` via the main-menu **Limit Orders** button (callback `menu:limit`). Same list.
+
+## No orders?
+
+```
+You have no active limit orders.
+
+Create limit orders on app.interstate.so — the bot will show them here once created.
+```
+
+Head to the web app to create one.
+
+## What you will not see in the bot
+
+- **Creation UI.** There is no `/limit create` command, no inline keyboard for placing a new order, no "Set trigger" flow. Creation is web-only today.
+- **Order detail view.** Tapping an order row does not open a detail screen — only the inline **Cancel** button is wired. A detail view may arrive in a future release.
+- **Bonding-curve-percent triggers.** Limit orders use market-cap thresholds, not bonding-curve percent. (This also applies on the web app — the bonding-curve trigger is not usable today.)
+
+## Trigger latency
+
+Market-cap triggers check on the order of seconds, not milliseconds. For fast-moving tokens, price can overshoot the trigger before the order lands. This is the same behavior as the web app — see [Limit orders (trading)](/trading/solana-spot/limit-orders) for the full mechanics.
+
+## Errors you may see
+
+- `Could not load limit orders.` — brief backend outage. Retry.
+- `Could not cancel order. Please try again.` — retry, or refresh; if the order already filled it will drop off the list.
+- `Please run /start first.` — 7-day session expired.
+
+Full list: [Error messages](/telegram-bot/error-messages).
+
+## What to read next
+
+- [Create limit orders on the web app](/trading/solana-spot/limit-orders)
+- [Portfolio and trade history](/telegram-bot/portfolio-assets)
+- [Settings — slippage and tips](/telegram-bot/settings)

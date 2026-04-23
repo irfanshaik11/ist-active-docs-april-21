@@ -1,0 +1,84 @@
+---
+title: "Turnkey wallet security"
+description: "How Interstate's default wallet works. Turnkey HSM-backed, 1-user-1-suborg, private keys never leave the enclave in plaintext."
+---
+
+# Turnkey wallet security
+
+Interstate's default wallet is **non-custodial in fact, custodial in UX**. You sign up with email or Google, a wallet appears, you trade. Under the hood the wallet lives inside a **Turnkey** hardware security module — and the private key never leaves that enclave in plaintext.
+
+## Who is Turnkey
+
+Turnkey is a third-party wallet infrastructure provider. Their product is HSM-backed private key management exposed via an API. Coinbase, Bridge, and other regulated platforms use Turnkey for the same reason Interstate does: HSM security without each user self-managing a seed phrase.
+
+## The model at a glance
+
+| Property | Behavior |
+|---|---|
+| **Key generation** | Inside Turnkey's HSM. Interstate never sees the key at creation. |
+| **Key storage** | Inside Turnkey's HSM. Encrypted at rest. |
+| **Key export** | Via encrypted iframe at `export.turnkey.com`. Plaintext only reaches your browser. |
+| **Transaction signing** | Happens inside the HSM. Signed transaction is returned — the key isn't. |
+| **Interstate's access** | Request a signature on a specific transaction payload. Nothing else. |
+
+## 1 user → 1 Turnkey sub-organization
+
+Every Interstate account maps to its own Turnkey **sub-organization**. Isolation is hard: one user's keys are in one sub-org, which has its own policies, its own root user, and no cross-access to other users' sub-orgs.
+
+When you sign up, two addresses are provisioned in your sub-org:
+
+- One Solana address (Ed25519)
+- One Ethereum / Monad address (secp256k1)
+
+Both are the same "wallet" from your perspective — one sub-org, one key tree, two chains.
+
+Additional wallets you create on the account are additional key pairs within the same sub-org. See [Managing multiple wallets](/funding/multi-wallet-management).
+
+## HSM-backed, not cloud-key-stored
+
+Turnkey's signing backend is built on AWS Nitro Enclaves and equivalent confidential computing environments. What that gets you:
+
+- Keys cannot be read by Turnkey staff, even with full admin access to their AWS account.
+- Key material never touches a standard server disk or memory region.
+- Every signing operation happens inside an attestable enclave that proves what code is running.
+
+This is the same category of security a hardware wallet gives you, operated by a specialized company instead of a physical device in your desk drawer.
+
+## How trades sign without seeing the key
+
+When you click **Buy**, Interstate builds the transaction, asks Turnkey to sign it under your sub-org's policy, and gets back a signed transaction. The key never moves.
+
+The mechanism is a **delegated signing** pattern: Interstate's server holds a credential that's authorized to request signatures for specific transaction types on your behalf, under policies you accepted when you signed up. The credential can't extract keys. It can request signatures, bounded by what the sub-org's policy allows.
+
+We intentionally don't go deeper into that plumbing here. The public surface is: **trades happen, keys don't move**.
+
+## Export, import, and why you might do either
+
+**Export** — if you want to use your wallet outside Interstate, or just hold a cold backup, you can pull the private key out. Export routes through a Turnkey-hosted iframe (`export.turnkey.com`) that decrypts the key locally in your browser. Interstate servers never see the plaintext.
+
+**Import** — if you already have a Solana or EVM wallet and want to trade from that address inside Interstate, import brings the key into your Turnkey sub-org's signing path. Required if you want real MEV protection on Solana — see [MEV protection](/trading/mev-protection).
+
+Full flow in [Wallet import & export](/funding/wallet-import-export).
+
+## What this model does and doesn't protect against
+
+**Protects against:**
+
+- Turnkey staff exfiltration of keys
+- Interstate server compromise leading to key theft
+- Key exposure from a database leak
+
+**Does not protect against:**
+
+- Your Interstate account credentials being compromised (a logged-in attacker can trade from your wallet, same as any custodial service)
+- You exporting the key and storing it insecurely
+- Social-engineering you into signing a malicious transaction
+
+Account security — strong password, 2FA where available, no shared email access — is on you. The enclave protects the key, not your login.
+
+## What to do next
+
+- Set up multi-wallet management → [Managing multiple wallets](/funding/multi-wallet-management)
+- Export or import a wallet → [Wallet import & export](/funding/wallet-import-export)
+- Understand MEV routing caveats → [MEV protection](/trading/mev-protection)
+- New here? → [Invite-only access & signup](/getting-started/signup)

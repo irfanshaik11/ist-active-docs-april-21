@@ -1,0 +1,72 @@
+---
+title: "Pulse lifecycle"
+description: "Exact rules that move a Solana launchpad token through New, Final Stretch, and Migrated in Pulse."
+---
+
+# Pulse lifecycle
+
+Every token on [Pulse](/discovery/pulse) has exactly one status at a time: **NEW**, **FINAL_STRETCH**, or **MIGRATED**. Transitions follow strict rules and — critically — **MIGRATED is triggered by an on-chain event, not a percentage**.
+
+## Status table
+
+| Status | Enters when | Leaves when |
+|---|---|---|
+| **NEW** | Token is first indexed from a supported launchpad (Pump.fun, Raydium, Meteora). | Bonding curve reaches **≥ 80.0%**. |
+| **FINAL_STRETCH** | Bonding curve is **≥ 80.0%**. | Indexer detects a confirmed on-chain migration event. |
+| **MIGRATED** | Launchpad indexer confirms a real migration event on-chain. | Never. MIGRATED is permanent. |
+
+## The 80% rule applies only to FINAL_STRETCH
+
+80% is the threshold for a token to become **FINAL_STRETCH** — not a threshold for MIGRATED. A token at 99% bonding is still FINAL_STRETCH until the indexer sees the actual migration event.
+
+This is a deliberate accuracy choice. On bonding-curve launchpads, a token can sit near the top of the curve for minutes or hours without graduating. Using a percentage as a proxy for migration would produce false positives — tokens that appear migrated in the UI but still trade on the bonding curve on-chain, leading to failed or mis-routed trades.
+
+## How transitions fire
+
+Two paths run in parallel.
+
+### Primary — event-driven (target < 50 ms)
+
+The launchpad indexer publishes a lifecycle event the moment it sees a state change on-chain. Interstate's market-data engine consumes these events and broadcasts a WebSocket message to every connected client immediately. That message carries enough metadata (name, symbol, image, price, market cap, liquidity) to render the card without waiting for database commits.
+
+### Backup — scheduled rescan (every 60 s)
+
+A background worker rescans all active tokens, recomputes their status from bonding-curve progress, and corrects the database if anything drifted. It only pushes WebSocket updates for **forward** transitions (NEW → FINAL_STRETCH → MIGRATED) and only for tokens younger than 5 minutes.
+
+The scheduled path is a safety net, not the main path. Under normal conditions you will see transitions via the sub-50 ms event path.
+
+## Backward transitions are silent
+
+Bonding-curve percentages can fluctuate — a large sell can briefly drop a token back below 80%. If that happens after a **FINAL_STRETCH** notification has already fired:
+
+- The database is corrected silently.
+- The UI does **not** show the token moving backward.
+- A de-duplication flag prevents a second FINAL_STRETCH notification from firing for the same token when it crosses 80% again.
+
+This is intentional. The backward-flicker would produce alert fatigue without adding signal.
+
+## MIGRATED is permanent
+
+Once the indexer confirms a migration event on-chain:
+
+- The token is permanently marked MIGRATED.
+- No scheduled rescan, background job, or percentage check can undo this.
+- Quick-buys and sells on the row route directly to the migrated pool. See [Migration buy/sell](/trading/solana-spot/migration-buy-sell).
+
+## How long does a token stay in each column?
+
+There is no fixed time cap. A token stays in NEW for as long as its bonding curve is below 80%, stays in FINAL_STRETCH until migration, and stays in MIGRATED forever. Popular launches can traverse all three in minutes; quiet ones can sit in NEW for hours.
+
+## What this means for trading
+
+- **NEW** — Trades route through the bonding curve (Pump.fun, Raydium Launchpad, Meteora DBC). Price impact is curve-driven.
+- **FINAL_STRETCH** — Still bonding-curve trading. A migration is likely imminent but not guaranteed.
+- **MIGRATED** — Trades route to the permanent DEX pool. Standard AMM pricing applies.
+
+Interstate detects the right DEX automatically — you don't pick. See [Pool discovery](/trading/solana-spot/pool-discovery) for details.
+
+## What to read next
+
+- [Pulse](/discovery/pulse) — the feed itself
+- [Migration buy/sell](/trading/solana-spot/migration-buy-sell) — trading graduated tokens
+- [Market orders](/trading/solana-spot/market-orders) — buying from any column

@@ -1,0 +1,100 @@
+---
+title: "Order execution"
+description: "How a trade goes from your click to an on-chain transaction. Turnkey-signed vs imported local wallet. RPC paths and MEV routing."
+---
+
+# Order execution
+
+Every trade on Interstate follows roughly the same path. The path differs in **who signs** and **where the transaction submits**.
+
+## Two wallet types
+
+| Wallet | How you got it | How it signs |
+|---|---|---|
+| **Turnkey wallet** | Default — created at email / Google signup. Key lives in a Turnkey HSM enclave. | Interstate backend requests a signature from Turnkey on your behalf. Your key never leaves the enclave in plaintext. |
+| **Imported local wallet** | You imported an existing Solana private key or mnemonic. | Sign locally with your key. |
+
+You can hold both. The active wallet in the header's `WalletSwitcher` is the one that signs the next trade.
+
+## The execution path
+
+1. You click Buy / Sell (or a limit-order trigger fires).
+2. The backend pre-checks balance, slippage, and pool.
+3. **Pool discovery** — the correct DEX pool is identified. See [Pool discovery](/trading/solana-spot/pool-discovery).
+4. A Solana transaction is built for the correct protocol (Pumpfun, PumpSwap, Raydium CPMM/CLMM/Launchpad, Meteora DBC/AMM V1/V2/DLMM, MoonShot).
+5. The transaction is signed — either by Turnkey on your behalf, or locally if you're using an imported wallet.
+6. The transaction is submitted to the chain.
+7. On confirmation, the backend records the trade, updates your portfolio, and returns the result.
+
+## Standard RPC submission
+
+The default path. The signed transaction goes through the platform's RPC endpoint to a validator. This is the path used for:
+
+- All Turnkey wallets, regardless of MEV mode
+- Any Solana trade with MEV mode **Off**
+- All Monad trades
+
+## MEV-protected submission
+
+Imported local wallets can opt in to MEV protection. When enabled, the signed transaction routes through either:
+
+- **Jito** — bundle submission to Jito block engine
+- **Nozomi** — multi-region transaction forwarding
+
+::: danger MEV protection only works for imported local wallets
+If you signed up with email or Google, you have a **Turnkey wallet**, which silently falls back to standard RPC even when MEV mode is set to Reduced or Secure.
+
+To get actual Jito/Nozomi routing, you need to **import a local Solana wallet** and trade from that wallet. See [MEV protection](/trading/mev-protection).
+:::
+
+## Helius fast-send for PumpSwap
+
+PumpSwap (PumpAmm) buys use a Helius-based fast-send path for reduced latency. This is a transport optimization — it does not change signing semantics. Turnkey-signed PumpSwap buys still go through standard submission; the Helius path speeds up the round trip.
+
+## Pumpfun buy — fire-and-record
+
+Buys on the Pump.fun bonding curve return a response **immediately** after submission. Confirmation and trade recording happen in a **background job**.
+
+What this means:
+
+- The UI responds fast
+- The portfolio entry may lag by a second or two while the job confirms
+- A failed confirmation will surface as an error in the trade activity feed
+
+## Parameters carried on every trade
+
+Every trade request (market, quick-buy, limit-order fill) carries:
+
+- Slippage
+- Priority fee
+- Optional bribe
+- MEV mode (Solana)
+- Optional custom RPC (Solana, imported local wallets)
+
+Limit orders **snapshot these at creation time**. They do not pick up preset changes made later. See [Limit orders](/trading/solana-spot/limit-orders).
+
+## Multi-wallet execution
+
+You can split a single trade across multiple wallets. Distribution strategies: proportional (default, recommended), equal, greedy. Executed sequentially on Solana to avoid RPC rate limits. Up to 5–10 wallets per trade is the reasonable practical ceiling.
+
+Each child trade returns its own tx hash; the parent result aggregates them. Partial success (some wallets fill, some fail) is possible.
+
+## What you get back on success
+
+- Token amount received (for buys) or SOL/MON received (for sells)
+- Transaction hash — linkable to Solscan or the Monad explorer
+- Per-wallet hashes if multi-wallet
+- Updated portfolio position with live PnL
+
+## What you get on failure
+
+- Error code — e.g., `NO_ACTIVE_POOL`, `POOL_GRADUATED`, insufficient balance, slippage exceeded
+- Human-readable reason
+- For limit orders: retry attempt number (up to 3)
+
+## Read next
+
+- [MEV protection](/trading/mev-protection)
+- [Pool discovery](/trading/solana-spot/pool-discovery)
+- [Limit orders](/trading/solana-spot/limit-orders)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)

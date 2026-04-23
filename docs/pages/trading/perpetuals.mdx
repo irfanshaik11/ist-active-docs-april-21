@@ -1,0 +1,90 @@
+---
+title: "Perpetuals"
+description: "Long/short perpetual futures via Hyperliquid. Market and Limit orders. Client-side liquidation preview."
+---
+
+# Perpetuals
+
+Interstate routes perpetual futures through **Hyperliquid**. Long or short any listed perp market with adjustable leverage.
+
+## Where to trade
+
+Perpetuals live at `app.interstate.so/perpetuals/[symbol]` — e.g., `/perpetuals/BTC`, `/perpetuals/ETH`, `/perpetuals/SOL`.
+
+The perps page has:
+
+- Live order book
+- Recent trades
+- Open positions
+- Funding rate (expandable in the funding modal)
+- TradingView chart
+- Trade panel — side, leverage slider, order type, amount
+
+## Order types
+
+| Type | Behavior |
+|---|---|
+| **Market** | Fills immediately at current orderbook price |
+| **Limit** | Rests on the Hyperliquid order book at your price |
+
+Both are placed via the same trade panel. Pick the type before confirming.
+
+## Leverage
+
+Leverage is adjustable via a slider with preset breakpoints. Each market has its own maximum (enforced by Hyperliquid).
+
+Higher leverage means:
+
+- Smaller margin required for the same notional position
+- Smaller adverse price move before liquidation
+
+Pick leverage deliberately. You can change it between positions but not mid-position.
+
+## Liquidation preview
+
+Before you submit, the trade panel shows your **estimated liquidation price** — computed client-side from your entry, leverage, side, and the mark price.
+
+This is an estimate. Actual liquidation is determined by Hyperliquid's mark price, maintenance margin, funding payments, and PnL at the moment the liquidation check runs. Treat the preview as directional, not exact.
+
+## Funding rate
+
+Perpetual contracts pay funding between longs and shorts on a recurring schedule — this is the core mechanism that keeps perp prices aligned with spot.
+
+The trade panel surfaces funding via the **funding rate modal**. It shows the current rate and which side is paying which. Sustained negative or positive funding has a meaningful effect on PnL over time.
+
+## Execution path
+
+All perps trades execute against Hyperliquid's API. Interstate is the interface; Hyperliquid is the venue. Your wallet and account are managed within Interstate, and your perps positions show up in [Portfolio](https://app.interstate.so/portfolio) alongside spot.
+
+## Wallet
+
+Perpetuals use your primary Solana wallet — the one Turnkey provisions at signup, or a wallet you've imported. There is no separate perp wallet or deposit step on Interstate.
+
+## Where this differs from spot
+
+| | Spot | Perpetuals |
+|---|---|---|
+| **Chain / venue** | Solana DEXs (Pump, Raydium, Meteora, etc) | Hyperliquid |
+| **Leverage** | 1× only | Up to market-specific max |
+| **Order types** | Market, Limit (market-cap triggered) | Market, Limit (price) |
+| **Liquidation** | Not applicable | Yes — positions can be forcibly closed |
+| **Funding** | None | Yes |
+| **Chart** | Backend / Birdeye / Codex / Lightweight | TradingView widget |
+
+## Risk to understand
+
+Perpetuals are a leveraged product. You can lose more than your entry size quickly.
+
+- A 10× long gets liquidated on roughly a 10% adverse move.
+- Funding payments accumulate over time and can flip a profitable position into a loss.
+- Fees on entry + exit + funding stack. Account for all three when modeling PnL.
+
+## Rewards on perps
+
+Perpetual trading does **not** currently earn SOL cashback like spot does. Spot cashback is specific to the Solana DEX fee structure. See the [Points guide](/points) for how Credits and cashback work in Arena.
+
+## Read next
+
+- [Prediction markets](/trading/prediction-markets)
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [What is Interstate](/getting-started/what-is-interstate)

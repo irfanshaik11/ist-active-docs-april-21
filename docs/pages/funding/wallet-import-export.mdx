@@ -1,0 +1,94 @@
+---
+title: "Wallet import & export"
+description: "Export your Turnkey-backed private key via encrypted iframe. Import an existing Solana or EVM wallet to trade from. Required for real MEV routing on Solana."
+---
+
+# Wallet import & export
+
+Interstate's default wallet is custodial-in-form, non-custodial-in-fact: every account has a Turnkey-backed wallet where private keys are generated and held inside a secure enclave. You can **export** that key to use outside Interstate, or **import** an existing wallet and trade from it inside Interstate.
+
+## Export a Turnkey wallet
+
+### How the export is safe
+
+Private keys never leave the Turnkey enclave in plaintext.
+
+Export goes through an **encrypted iframe hosted at `export.turnkey.com`**. Your browser creates an ephemeral keypair, the enclave encrypts the private key to your browser's key, and only your browser can decrypt. Interstate's servers never see the unencrypted key. Neither does Turnkey outside the enclave.
+
+### Steps
+
+1. Account settings → **Export wallet**
+2. Acknowledge the prompt (you must confirm you're aware of the risks)
+3. The export iframe loads at `export.turnkey.com`
+4. The key is decrypted locally in your browser
+5. Copy it to a password manager or seed-phrase backup
+
+::: danger Handle the exported key offline
+Once you've exported, the key exists outside Turnkey. Anyone who sees it controls the wallet. Don't paste it into random sites, don't store it in cloud notes, don't put it in a browser bookmark. Prefer a hardware wallet or an encrypted vault.
+:::
+
+## Import a wallet
+
+Two import flows, chain-specific.
+
+### Import a Solana wallet
+
+Account settings → **Import wallet** → **Solana**.
+
+Supported inputs:
+
+- 64-byte Ed25519 private key (base58)
+- 12 / 24-word mnemonic (BIP-39, standard Solana derivation)
+
+Once imported, the wallet appears in your [wallet switcher](/funding/multi-wallet-management) alongside your Turnkey wallets.
+
+### Import an EVM wallet
+
+Account settings → **Import wallet** → **EVM** (for Monad).
+
+Supported inputs:
+
+- 32-byte hex private key (`0x...`)
+- 12 / 24-word mnemonic (BIP-39, standard EVM derivation path)
+
+The imported EVM wallet covers Monad trading.
+
+## Why you might import
+
+### MEV protection on Solana
+
+This is the most concrete reason. Interstate's MEV protection routes trades through **Jito** bundles and **Nozomi** forwarders — but **only for imported local wallets**. Turnkey wallets silently fall back to standard RPC, regardless of the MEV mode you select.
+
+If you want actual sandwich and front-run protection on large trades, import a local Solana wallet and trade from it. See [MEV protection](/trading/mev-protection).
+
+### Trading with an existing bankroll
+
+You already have a funded Solana wallet — no need to move funds through an onramp or external transfer. Import and trade.
+
+### External tool compatibility
+
+A wallet you own in a browser extension (Phantom, Backpack, MetaMask) or hardware wallet can be imported, letting you use the same address inside Interstate and outside. Note: importing copies the key into Turnkey's enclave for signing; for hardware-wallet-only custody, don't import — use the wallet externally and deposit SOL to Interstate when you want to trade inside.
+
+### Splitting strategy across wallets
+
+Pair imported wallets with Turnkey wallets for [multi-wallet trading](/funding/multi-wallet-trading) — imported wallets get MEV routing; Turnkey wallets don't. The parent trade still executes, but you choose where MEV protection actually lands.
+
+## Security notes on import
+
+- **You are pasting a private key into an iframe.** The iframe is served by Turnkey (`export.turnkey.com` equivalent import endpoints). Confirm the origin in the address bar before pasting.
+- **Delete clipboard history after pasting.** Some clipboard managers retain copied text.
+- **Imported keys are stored in Turnkey's enclave.** After import, they have the same HSM protection as a generated Turnkey wallet — but the key existed before you imported, so prior exposure is on you.
+- See [Turnkey wallet security](/account/turnkey-wallet-security) for the underlying model.
+
+## Can't I just use Phantom with Interstate?
+
+Phantom and MetaMask **login** is supported for authentication — connecting your wallet to sign in. That's separate from importing the key into Turnkey. The **login** flow authenticates the user but does not put the key in Turnkey; trading still happens through signed messages from the external wallet. Import, by contrast, brings the key into Interstate's signing path.
+
+If your goal is "don't put my key on Interstate's servers," use Phantom/MetaMask login instead of import. If your goal is "one flow that covers MEV routing and multi-wallet splitting," import.
+
+## What to do next
+
+- Set up MEV routing → [MEV protection](/trading/mev-protection)
+- Split trades across wallets → [Multi-wallet trading](/funding/multi-wallet-trading)
+- Understand the enclave model → [Turnkey wallet security](/account/turnkey-wallet-security)
+- First-time trader? → [Your first trade](/getting-started/first-trade)

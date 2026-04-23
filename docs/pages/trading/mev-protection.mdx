@@ -1,0 +1,88 @@
+---
+title: "MEV protection"
+description: "Three MEV modes on Solana: Off, Reduced, Secure. Only works for imported local wallets. Turnkey wallets fall back to standard RPC silently."
+---
+
+# MEV protection
+
+MEV protection routes your Solana transaction through Jito or Nozomi instead of the standard RPC, reducing exposure to front-running and sandwich attacks.
+
+::: danger Read this before you rely on MEV mode
+MEV protection **only works for imported local wallets**. If you signed up with email or Google, you have a **Turnkey wallet**, and your trades go through the standard RPC path even if you've set MEV mode to Reduced or Secure. The fallback is silent — you will not see an error.
+
+To get actual Jito/Nozomi routing, **import a local Solana wallet** and trade from that wallet.
+:::
+
+## The three modes
+
+| Mode | What it does |
+|---|---|
+| **Off** | Standard RPC. No MEV protection. |
+| **Reduced** | Partial shielding — transactions routed to MEV-aware forwarders. |
+| **Secure** | Transactions sent only to whitelisted validators. Strongest protection. |
+
+You set the mode per [quick-buy preset](/trading/solana-spot/quick-buy-presets), or in the trade page's advanced settings.
+
+## Who gets actual protection
+
+| Wallet type | MEV mode effective? |
+|---|---|
+| **Turnkey** (email / Google signup — default) | **No.** Silently falls back to standard RPC. |
+| **Imported local wallet** | **Yes.** Jito / Nozomi routing is used. |
+
+This is the single most important caveat on the page. Plan accordingly.
+
+## Jito and Nozomi — what they are
+
+- **Jito** — a Solana MEV infrastructure provider. Transactions submitted as bundles to Jito's block engine can be included atomically with other related transactions and are less exposed to sandwiching.
+- **Nozomi** — a multi-region transaction forwarder optimized for latency. Helps land transactions quickly and via MEV-aware paths.
+
+Interstate integrates both. Which one your trade routes through depends on the mode and the DEX path.
+
+## Solana only
+
+MEV protection is **Solana only**. Monad does not have an equivalent MEV protection layer exposed through Interstate. Monad trades always use standard RPC. See [Trading on Monad](/trading/monad).
+
+## Where it applies on Solana
+
+MEV routing applies to the **PumpAmm (PumpSwap) buy path** specifically — this is where front-running risk concentrates for memecoins coming off graduation. Coverage on other DEX paths may vary. When in doubt, assume your trade lands via standard RPC unless you are on an imported local wallet with MEV mode set.
+
+## Tips and priority fees still apply
+
+MEV protection does not replace priority fees. When you route through Jito:
+
+- Your priority fee is still paid
+- Jito bundles may also carry a tip for priority inclusion
+- Total cost is priority fee + Jito tip (if used)
+
+See [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees).
+
+## How to tell which path your trade took
+
+Today, the UI does not surface the exact submission path on each trade receipt. If you need to know whether a specific trade went via Jito / Nozomi vs standard RPC, the rules above are the definitive guide:
+
+- Turnkey wallet → always standard RPC
+- Imported local wallet + MEV mode on → Jito / Nozomi on supported paths (PumpAmm buys)
+- MEV mode Off → always standard RPC
+
+## Why this matters on memecoins
+
+Memecoins are where MEV extraction bites hardest. A single sandwich attack on a 0.5 SOL buy in a thin pool can cost you several percent. MEV protection shrinks that attack surface — but only if you're on the wallet type that qualifies.
+
+## Action to take
+
+If you care about MEV protection:
+
+1. **Import a local Solana wallet** via the Import Wallet modal.
+2. Select it in the `WalletSwitcher`.
+3. Set MEV mode to Reduced or Secure in your [quick-buy preset](/trading/solana-spot/quick-buy-presets).
+4. All subsequent buys on PumpAmm (and other supported paths) route via Jito / Nozomi.
+
+If you're happy with standard RPC (most Solana traders are), leave your Turnkey wallet active and MEV mode Off. Your trade still lands — it just doesn't get the extra shielding.
+
+## Read next
+
+- [Order execution](/trading/order-execution)
+- [Solana Spot overview](/trading/solana-spot/overview)
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Trading on Monad](/trading/monad)

@@ -1,0 +1,75 @@
+---
+title: "Token search"
+description: "Global token search — find tokens by name, symbol, or contract address. Monad uses a separate endpoint."
+---
+
+# Token search
+
+Global search is the fastest way to jump to a specific token. Open it from the search icon in the header or via the keyboard shortcut.
+
+## What you can search by
+
+| Input | Match type |
+|---|---|
+| **Name** | Substring or fuzzy match against token names |
+| **Symbol** | Substring match against tickers |
+| **Contract address** | Exact match — pastes load the token directly |
+
+Paste a full contract address and Interstate resolves straight to the trade page. Typing a name or symbol returns a list of candidates you can click through.
+
+## What each result shows
+
+- Name, symbol, logo
+- Contract address (shortened, click to copy)
+- Price and market cap
+- Chain indicator — **SOL** or **MONAD**
+
+Clicking a result opens the relevant [trade page](/getting-started/first-trade).
+
+## Solana vs Monad
+
+Interstate searches both chains. Results are labeled with a chain indicator so you can tell them apart.
+
+Under the hood the two chains are searched through **separate endpoints** — Monad results don't share infrastructure with Solana results. You may see slightly different freshness and coverage between them:
+
+- **Solana** — broad coverage across all indexed launchpads and DEXes
+- **Monad** — narrower coverage; tokens appear once Interstate has indexed them
+
+If a Monad token is very new, it may take a few seconds to appear in search after first trade.
+
+## Pasting a contract address
+
+Pasting a full contract address is the fastest path:
+
+- **Solana (base58)** — 32–44 character address
+- **Monad (EVM 0x...)** — 42-character hex address
+
+Interstate auto-detects the chain from the address format. You don't pick Solana vs Monad manually.
+
+If the address is valid but Interstate has no record of the token yet, you'll see a "not found" result. Try again in a moment — fresh launches sometimes need a few seconds to index.
+
+## Search vs Discover vs Pulse
+
+| Use **search** when | Use **Pulse** when | Use **Discover** when |
+|---|---|---|
+| You already know the token | You want the live launchpad stream | You want ranked lists |
+| You have a contract address in hand | You're hunting brand-new tokens | You're comparing trending tokens |
+
+Search is a precision tool. Pulse and Discover are exploration tools.
+
+## Image search
+
+Separate from name/symbol/CA search, Interstate has an **image-search widget** — paste or upload a logo image to find tokens with matching or similar images. Useful when a CA isn't handy. See [Duplicate-image detection](/discovery/duplicate-image-detection).
+
+## Tips
+
+- **Copy-paste from Twitter / X.** Most alpha tweets include a CA. Paste it directly — faster than typing a symbol that could collide with dozens of tokens.
+- **Check the chain indicator.** A Solana token and a Monad token can share the same symbol. The chain badge prevents mistakes.
+- **Star from the search result.** You can add a result to your [Watchlist](/discovery/watchlist) without opening the trade page.
+
+## Related pages
+
+- [Pulse](/discovery/pulse) — live launchpad feed
+- [Discover tabs](/discovery/discover-tabs) — ranked lists
+- [Watchlist](/discovery/watchlist) — pin tokens after finding them
+- [Duplicate-image detection](/discovery/duplicate-image-detection) — search by image

@@ -1,0 +1,76 @@
+---
+title: "Deposits"
+description: "How to fund your Interstate wallet with SOL on Solana or MON on Monad — copy address, scan QR, confirm on-chain."
+---
+
+# Deposits
+
+Funds land in your Interstate wallet directly. No intermediate custodian. No pending "balance credit" step.
+
+## Open the deposit modal
+
+One entry point on the web app:
+
+- Header → **Deposit** button, or
+- Portfolio page → **Add Funds**
+
+The modal has four tabs: **Deposit**, **Withdraw**, **Buy** (fiat onramp), **Convert** (in-app swap).
+
+## What you deposit
+
+| Chain | Asset | Notes |
+|---|---|---|
+| **Solana** | SOL | Native asset used for every Solana trade. |
+| **Solana** | SPL tokens | Any SPL you want to hold or sell. |
+| **Monad** | MON | Native asset on Monad. 10 MON must stay in the wallet at all times — see [Trading on Monad](/trading/monad). |
+
+Pick the chain in the app header before opening the Deposit modal. The address shown matches the selected chain.
+
+## Copy address or scan QR
+
+The Deposit tab shows:
+
+- Your wallet address (click to copy)
+- A QR code for the same address
+- A chain label so you don't cross-send
+
+Send from any exchange or external wallet. The address is your own — every Interstate account maps 1:1 to a Turnkey-backed wallet. See [Turnkey wallet security](/account/turnkey-wallet-security).
+
+::: danger Match the chain
+Solana addresses and Monad (EVM) addresses are different formats. Sending SOL to your Monad address, or MON to your Solana address, will lose the funds. The Deposit tab shows the correct address for the selected chain — copy from there, not from anywhere else.
+:::
+
+## Confirmation times
+
+| Chain | Typical |
+|---|---|
+| Solana | 1–2 slots (~1–2 seconds) after the sender's block. |
+| Monad | Speculative receipt ~400ms; finalized ~800ms. |
+
+Your Interstate balance updates when the network confirms. If you don't see it within a minute, refresh the portfolio page or check the transaction on the source chain's explorer.
+
+## Multi-wallet deposits
+
+If you've created multiple wallets, each has its own address. Pick the wallet in the header's **wallet switcher** before opening Deposit. The address changes per wallet.
+
+See [Managing multiple wallets](/funding/multi-wallet-management).
+
+## Minimums
+
+No protocol-imposed minimum to deposit. Practical minimum:
+
+- **Solana** — enough SOL to cover the buy amount plus ~0.002 SOL for network fees, plus a buffer (0.01 SOL is safe). See the first-trade note.
+- **Monad** — at least 10 MON reserve plus MON for gas and the trade itself.
+
+## Common mistakes
+
+- Sent SOL to the Monad (EVM) address. Unrecoverable.
+- Sent an SPL token before the Associated Token Account exists. Most senders create the ATA automatically; some do not. If the send fails, include a small SOL amount with the first deposit so the ATA can be created.
+- Used the wrong wallet in the switcher and deposited into an unintended wallet. You can [redistribute funds](/funding/multi-wallet-management) between your own wallets without leaving the app.
+
+## What to do next
+
+- Make your first trade → [Your first trade](/getting-started/first-trade)
+- Buy crypto with a card → [Onramp](/funding/onramp)
+- Swap between assets → [Convert](/funding/convert)
+- Withdraw back out → [Withdrawals](/funding/withdrawals)

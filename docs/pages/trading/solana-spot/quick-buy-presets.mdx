@@ -1,0 +1,78 @@
+---
+title: "Quick-buy presets"
+description: "Three one-click buy profiles. Each stores amount, sell %, slippage, priority fee, MEV mode, and custom RPC."
+---
+
+# Quick-buy presets
+
+Three configurable presets — **Preset 1**, **Preset 2**, **Preset 3** — each holding a full set of trade parameters. Pick the active preset and every quick-buy pill in Pulse, Discover, and the watchlist uses it.
+
+## What each preset stores
+
+| Setting | What it controls |
+|---|---|
+| **Buy amount** | SOL spent per quick buy |
+| **Sell %** | Default % used by quick sell pills |
+| **Slippage** | Max slippage for the trade (% — 0.1 floor, 100 max) |
+| **Priority fee** | SOL tip to validators |
+| **MEV mode** | Off / Reduced / Secure — Solana only |
+| **Custom RPC** | Override the default RPC endpoint — Solana only |
+
+Settings are stored server-side per user and sync on login. Switching the active preset is instant — no reload needed.
+
+## Setting presets
+
+1. Open the **Quick Buy settings** (gear icon on the quick-buy pill, or from the trade page).
+2. Pick Preset 1 / 2 / 3.
+3. Enter amount, sell %, slippage, priority fee.
+4. Pick MEV mode (Solana only).
+5. Optionally set a custom RPC (Solana only).
+6. Save.
+
+## Switching the active preset
+
+One click on the preset tab. The pill updates immediately. All subsequent quick-buys use the new preset until you switch again.
+
+## Where quick-buys appear
+
+- **Pulse** — buy pill on every row, in New / Final Stretch / Migrated columns
+- **Discover** — buy pill on Trending, New Pairs, DEX, Live rows
+- **Watchlist** — quick buy from the watchlist overlay
+- **Search** — buy pill on search results
+- **Wallet Tracker** — quick buy next to a tracked wallet's trade
+
+## Warnings before a trade submits
+
+If the preset's slippage or priority fee is unusually high, a confirmation dialog fires when you click the pill. You must confirm to proceed. See [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees).
+
+## Preset behavior on Monad
+
+Monad trading supports quick-buy amount, sell %, slippage, and priority fee. It does **not** expose:
+
+- **MEV mode** — no Jito/Nozomi equivalent on Monad
+- **Custom RPC** override
+
+See [Trading on Monad](/trading/monad).
+
+## Suggested preset layouts
+
+No right answer — build what you trade. A common layout:
+
+| Preset | Amount | Slippage | MEV mode | Use case |
+|---|---|---|---|---|
+| Preset 1 | `0.05` SOL | 15% | Off | Safe probes on new tokens |
+| Preset 2 | `0.25` SOL | 20% | Reduced | Normal size on trending |
+| Preset 3 | `1.0` SOL | 25% | Secure | Conviction buys on liquid pools |
+
+Adjust for your portfolio size and risk.
+
+## Migration and pool changes
+
+Quick-buys on the **Migrated** column of Pulse route to the post-graduation pool automatically. If a pool migrates mid-session, the quick-buy verifies the active pool server-side before submission. See [Migration buy and sell](/trading/solana-spot/migration-buy-sell).
+
+## Read next
+
+- [Market orders](/trading/solana-spot/market-orders)
+- [Slippage and priority fees](/trading/solana-spot/slippage-priority-fees)
+- [MEV protection](/trading/mev-protection)
+- [Pool discovery](/trading/solana-spot/pool-discovery)

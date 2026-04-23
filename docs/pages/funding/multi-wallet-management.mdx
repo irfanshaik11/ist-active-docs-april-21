@@ -1,0 +1,101 @@
+---
+title: "Managing multiple wallets"
+description: "Create, rename, set primary, delete, and redistribute funds across multiple Turnkey-backed wallets on one Interstate account."
+---
+
+# Managing multiple wallets
+
+One Interstate account can hold multiple wallets. Each wallet is independently funded, independently addressable, and trades independently. Use them to separate bankrolls, isolate strategies, or split size across a single trade.
+
+## Wallet switcher
+
+Top of every page, in the header: the **wallet switcher**. Click to:
+
+- See all wallets on the account with balances
+- Switch the active wallet (trades and withdrawals use the active wallet)
+- Open the wallet management panel
+
+On Monad, the switcher is a separate control — Monad and Solana wallets are listed per chain.
+
+## Create a new wallet
+
+Wallet switcher → **Add wallet** → give it a name.
+
+A new Turnkey-backed wallet is provisioned. You get:
+
+- A fresh Solana address
+- A fresh Ethereum / Monad address
+
+Private keys stay inside the Turnkey enclave — see [Turnkey wallet security](/account/turnkey-wallet-security).
+
+## Rename a wallet
+
+Wallet switcher → wallet row → **Rename**. Purely a label for you; doesn't touch the address.
+
+## Set a primary wallet
+
+One wallet per account is the **primary**. The primary is what pre-fills:
+
+- The [fiat onramp](/funding/onramp) destination address
+- The deposit address when the app first opens
+- The default active wallet on login
+
+Wallet switcher → wallet row → **Set as primary**.
+
+## Delete a wallet
+
+Wallet switcher → wallet row → **Delete**.
+
+::: danger Deleting is not reversible inside the app
+Before deleting, move funds to another wallet (redistribute) or withdraw externally. If you delete a wallet still holding funds, recovery requires the exported private key — see [Wallet import & export](/funding/wallet-import-export). Export first if you're unsure.
+:::
+
+## Redistribute funds
+
+Move SOL (or MON) between your own wallets without paying withdrawal fees to the network for nothing. Wallet settings → **Redistribute**.
+
+Pick:
+
+- Source wallet(s)
+- Destination wallet(s)
+- Amount per destination, or split strategy
+
+You pay normal on-chain transfer gas per hop, but no Interstate withdrawal fee — this is a transfer between accounts you own.
+
+Use redistribute to:
+
+- Consolidate dust before a withdrawal
+- Spread a large deposit across wallets for [multi-wallet trading](/funding/multi-wallet-trading)
+- Rebalance after one wallet took the full hit on a trade
+
+## How many wallets should you have
+
+| Use case | Count |
+|---|---|
+| Simple trader, one bankroll | 1 |
+| Separating real from experimental | 2 |
+| Multi-wallet trade splitting | 5–10 — see [Multi-wallet trading](/funding/multi-wallet-trading) |
+
+Above 10, the app still works but [trade splitting](/funding/multi-wallet-trading) becomes slower and the per-wallet minimum (~0.0035 SOL) means tiny balances get skipped.
+
+## Chains per wallet
+
+Each wallet holds both a Solana address and an EVM (Monad) address — one wallet, two chains. You don't create "a Monad wallet" separately.
+
+When you redistribute SOL, you move SOL between Solana addresses. When you redistribute MON, you move MON between Monad addresses. Same wallet set, different chain.
+
+## Import external wallets
+
+Alongside Interstate-created Turnkey wallets, you can **import** a Solana or EVM private key / mnemonic and trade from it. Imported wallets:
+
+- Appear in the same switcher
+- Can be set as primary
+- Are required to get real [MEV protection](/trading/mev-protection) on Solana
+
+See [Wallet import & export](/funding/wallet-import-export) for the full import flow.
+
+## What to do next
+
+- Split a trade across wallets → [Multi-wallet trading](/funding/multi-wallet-trading)
+- Import an existing wallet → [Wallet import & export](/funding/wallet-import-export)
+- Understand the wallet security model → [Turnkey wallet security](/account/turnkey-wallet-security)

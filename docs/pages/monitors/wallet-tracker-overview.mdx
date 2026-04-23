@@ -1,0 +1,78 @@
+---
+title: "Wallet Tracker overview"
+description: "Watch any Solana or Monad wallet and see every trade it makes in real time. Watch-only — no auto copy-trading."
+---
+
+# Wallet Tracker overview
+
+Wallet Tracker lets you build a personal watch list of wallet addresses and see every buy and sell they make, almost as it happens.
+
+Open it at [app.interstate.so/trackers](https://app.interstate.so/trackers).
+
+::: warning Watch-only
+Wallet Tracker does **not** copy trades, mirror orders, or submit transactions for you. It only shows what a wallet does. Every trading decision stays with you. Auto-execution is not implemented.
+:::
+
+## What the feed shows
+
+Every event in the live feed is one swap by one watched wallet. Each row contains:
+
+| Field | What it is |
+|---|---|
+| **Wallet** | Address + your custom name and emoji |
+| **Side** | Buy or sell |
+| **Token** | Symbol, name, mint address |
+| **Amount** | Token amount bought or sold |
+| **Cost / Proceeds** | SOL and USDC moved in the swap |
+| **Price** | USD price at the time of the swap |
+| **Market cap** | USD market cap at the time of the swap |
+| **Tx signature** | Clickable link to the on-chain transaction |
+
+Balance updates (the token holdings of a watched wallet) also stream in as separate events on a 5-minute cycle.
+
+## Supported chains
+
+| Chain | Status |
+|---|---|
+| **Solana** | Full support. Polled every ~10 seconds. |
+| **Monad** | Beta. WebSocket subscription with polling fallback. |
+
+Monad coverage is narrower — some metadata fields that depend on external indexers may be empty. Wallet last-active on Monad returns a transaction count only, not a timestamp.
+
+## Default wallets
+
+Interstate ships a curated list of known smart-money wallets. Click **Load default wallets** on the Wallet Tracker tab to import them in one click. They count against your wallet cap like any other entry, so remove any you don't want tracked.
+
+## Labels
+
+Every wallet can have:
+- A **custom name** (e.g., "Ansem alt")
+- An **emoji** (e.g., a shark, a crown)
+
+Labels are personal — they are not shared with other users. They appear on every row in the feed so you can identify wallets at a glance.
+
+## Notifications
+
+Each wallet has a **mute toggle**. Muted wallets still record every event to your history, but they don't push live to the feed or fire notifications. Useful for wallets you want to audit later without noise in real time.
+
+Mute is per-wallet, per-user. Muting a wallet does not affect any other trader.
+
+## History
+
+Every event a watched wallet generates is stored. You can query up to the last 90 days, 500 rows at a time. When you add a new wallet, Interstate backfills roughly the last 10 transactions so the history isn't empty while you wait for new activity. See [Historical trades](/monitors/historical-trades).
+
+## What it doesn't do
+
+- **No auto-buy.** Watching a wallet never triggers a trade.
+- **No mirror trades.** Interstate does not submit a copy of the watched wallet's swap to your wallet.
+- **No alerts outside the app.** No email, SMS, or webhook delivery.
+- **No PnL attribution for the watched wallet.** The feed shows swaps; it doesn't compute the wallet's realized PnL for you.
+
+If you want to act on what a wallet does, open the token's [trade page](/getting-started/first-trade) and trade it yourself.
+
+## What to read next
+
+- [Adding wallets](/monitors/adding-wallets) — limits, labels, bulk import
+- [Live feed mechanics](/monitors/live-feed-mechanics) — how fast events reach you
+- [Historical trades](/monitors/historical-trades) — query past activity
+- [Token analytics](/discovery/token-analytics) — safety metrics before you trade what a wallet bought

@@ -1,0 +1,86 @@
+---
+title: "Slippage and priority fees"
+description: "Slippage controls your worst-case price tolerance. Priority fee is the SOL tip to validators. Defaults are reasonable; here is how to tune them."
+---
+
+# Slippage and priority fees
+
+Two knobs on every Solana trade: **slippage** and **priority fee**. Both live in your [Quick-buy preset](/trading/solana-spot/quick-buy-presets) and in the trade page's advanced settings.
+
+## Slippage
+
+The maximum price move you will tolerate between your click and the trade landing on-chain.
+
+| Value | Behavior |
+|---|---|
+| Default | **20%** |
+| Floor | **0.1%** — `0` is auto-corrected up to 0.1% |
+| Minimum accepted | **0.01%** — values below this are rejected |
+| Maximum accepted | **100%** — values above this are rejected |
+
+On memecoins, slippage below 10% tends to fail during volatile moments. A typical range is **15–25%**. Higher slippage means your trade is more likely to land but at a potentially worse price.
+
+::: tip Why memecoins need higher slippage
+Prices on fresh pools can move several percent in a single block. A 2% slippage setting that works on majors will reject most Pump.fun trades.
+:::
+
+### High-slippage warning
+
+If your slippage exceeds the platform's safe threshold, a **High Slippage Warning** dialog fires before the trade submits. You confirm to proceed. This catches accidental "100%" inputs that would let you buy at any price.
+
+## Priority fee
+
+A SOL-denominated tip to the Solana validator who includes your transaction. Higher fee = earlier inclusion in a block.
+
+| Setting | What it does |
+|---|---|
+| Low | Cheap, but may land later or fail during congestion |
+| Medium / Default | Reasonable balance — fine for most trades |
+| High | Priority inclusion, used when sniping or racing for a fill |
+
+Priority fee is distinct from your **slippage**. Slippage is price tolerance; priority fee is speed.
+
+### High-priority-fee warning
+
+If your priority fee looks unusually high — e.g. from a mis-typed `0.1 SOL` tip — a **High Priority Fee Warning** dialog fires before the trade submits.
+
+## Where to set them
+
+Both live in two places:
+
+| Location | Scope |
+|---|---|
+| **Quick-buy preset** settings | Applies to every quick buy using that preset |
+| **Trade page** — Advanced settings | Applies to the next market / limit order from that page |
+
+## Bribes (optional, per trade)
+
+Some trades (sniper path, Pumpfun flows) accept an optional `bribe` parameter on top of the priority fee. This is an extra tip routed for faster inclusion in specialized paths. It is advanced — leave it at default unless you know why you're setting it.
+
+## How defaults interact with MEV mode
+
+When you enable [MEV protection](/trading/mev-protection) in Secure or Reduced mode, transactions route through Jito or Nozomi. In that path:
+
+- Your priority fee is still paid.
+- Jito tips go to the bundle for priority.
+- **Only works for imported local wallets.** Turnkey wallets (email/Google signup) fall back to standard RPC silently. Your fee is charged the same way.
+
+## Limits for limit orders
+
+[Limit orders](/trading/solana-spot/limit-orders) snapshot slippage and priority fee at **creation time**, not execution time. Updating a preset later does not change queued limit orders. You cancel and recreate to change them.
+
+## Practical tuning
+
+| Situation | Slippage | Priority fee |
+|---|---|---|
+| Buying a fresh Pump.fun launch | 20–30% | Medium–High |
+| Trading a liquid, graduated pool | 10–20% | Default |
+| Sniping — trying to land in the first block | 25%+ | High |
+| Selling a thin-liquidity position | 20%+ | Default |
+
+## Read next
+
+- [Quick-buy presets](/trading/solana-spot/quick-buy-presets)
+- [Market orders](/trading/solana-spot/market-orders)
+- [MEV protection](/trading/mev-protection)
+- [Order execution](/trading/order-execution)

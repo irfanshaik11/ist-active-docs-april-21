@@ -1,0 +1,101 @@
+---
+title: "Wallet — balance, deposit, withdraw"
+description: "Check balance, copy your deposit address, and withdraw SOL directly from the Interstate Telegram bot."
+---
+
+# Wallet
+
+The bot's wallet view is the same Solana wallet as your web app account. One address, one balance, accessible from both surfaces.
+
+## `/wallet`
+
+```
+/wallet
+```
+
+Bot replies:
+
+```
+Wallet
+
+Address:  <your Solana address>   (tap to copy)
+Balance:  1.234 SOL
+
+[ Deposit ]  [ Withdraw ]
+```
+
+You can also tap **Wallet** in the main menu (`menu:wallet` callback). Same view.
+
+## Deposit
+
+Tap **Deposit** (callback `wallet:deposit`). The bot replies:
+
+```
+Deposit SOL
+
+Send only SOL on the Solana network to the address below. Tokens or other networks will be lost.
+
+<your Solana address>   (tap to copy)
+```
+
+The address is in a code block so Telegram makes it tap-to-copy. Paste it into your sending wallet, send SOL, and the balance will update on the next `/wallet` refresh.
+
+**Rules of thumb:**
+
+- Solana network only. Not EVM, not BSC, not any other chain.
+- SOL only. Do not send SPL tokens to fund the wallet — the bot does not auto-swap deposits.
+- Small amounts (~0.01 SOL) are fine for testing. For a first-time buy of any new token, keep at least **0.002 SOL extra** beyond your intended buy amount for the Solana token-account rent.
+
+## Withdraw
+
+Tap **Withdraw** (callback `wallet:withdraw`). The bot runs a two-step text-input flow.
+
+**Step 1 — destination address.** Bot asks:
+
+```
+Send to which Solana address? Paste the destination address.
+```
+
+Type or paste a valid Solana address. The `awaitingWithdrawAddress` session flag captures your next text message. The bot validates the format — invalid addresses are rejected in-line with a re-prompt.
+
+**Step 2 — amount.** Bot asks:
+
+```
+How much SOL to send?
+```
+
+Type a number. The `awaitingWithdrawAmount` session flag captures it. The bot executes the withdrawal and replies:
+
+```
+Withdrawal successful
+
+Sent:         0.5000 SOL
+To:           <destination address>
+
+View on Solscan ↗
+```
+
+Send `/cancel` at any step to abort. Both session flags survive bot restarts (7-day Redis TTL), so a restart mid-flow does not strand you — just continue the conversation where you left off.
+
+## Keep enough SOL for the transaction
+
+Solana withdrawals need a small transaction fee and a priority tip. If you try to withdraw your entire balance the transaction will fail with an insufficient-balance error. Leave a small buffer (a few thousandths of a SOL) when sweeping the wallet.
+
+## Address validation
+
+The bot validates that what you pasted is a syntactically valid Solana address (base58, correct length) before sending. It does **not** validate that the destination is active or that the chain is correct. **If you paste an EVM address, a Bitcoin address, or anything that isn't Solana, the bot will reject it at the format check.** If you paste a well-formed Solana address that happens to be the wrong destination, the funds go there — same as any other Solana wallet.
+
+## Errors you may see
+
+- `Invalid Solana address. Please paste again.` — the string wasn't a well-formed Solana address. Try again.
+- `Insufficient balance.` — not enough SOL to cover amount + fees. Reduce the amount.
+- `Transaction failed.` — the network did not accept the transaction. Retry; if persistent, try again in ~30 seconds.
+- `Please run /start first.` — session expired.
+
+Full list: [Error messages](/telegram-bot/error-messages).
+
+## What to read next
+
+- [Quick buy — spend from the wallet](/telegram-bot/quick-buy-paste-ca)
+- [Portfolio and trade history](/telegram-bot/portfolio-assets)
+- [Settings](/telegram-bot/settings)

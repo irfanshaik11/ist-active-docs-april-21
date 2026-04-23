@@ -1,0 +1,149 @@
+---
+title: "Error messages"
+description: "What the common Interstate Telegram bot error messages mean and how to resolve them."
+---
+
+# Error messages
+
+The bot maps raw Solana, DEX, and backend errors to readable messages. This page lists the ones you are most likely to see, what they mean, and what to do.
+
+## Rate limit
+
+```
+Too many messages. Please slow down.
+```
+
+- **Limit:** 30 messages per minute per user, sliding window.
+- The first message over the limit triggers this warning. Further messages in that window are silently dropped.
+- Wait ~60 seconds and try again.
+- Fair use — pasting the same CA 20 times in 10 seconds, or tapping buy buttons repeatedly, will hit this.
+
+## Token lookup timeout
+
+```
+Token lookup timed out. Please paste the address again to retry.
+```
+
+The token service did not respond in time. Usually transient — paste the CA again in a few seconds and it will work.
+
+## Could not find token
+
+```
+Could not find token.
+```
+
+One of:
+
+- The CA is not a valid Solana token address.
+- The token service has no record of this mint.
+- The token service is briefly unavailable (see "temporary service issues" below).
+
+Verify the CA on Solscan, then retry.
+
+## Temporary service issues (circuit breaker)
+
+When an upstream service is failing repeatedly, the bot stops hammering it and fast-fails for a short window instead of hanging. Two surfaces you'll see this on:
+
+- **Token service unhealthy:** pasting any CA will briefly return `Could not find token.` even for tokens the bot knew about moments ago.
+- **Backend unhealthy:** trades, portfolio fetches, and wallet operations fast-fail with a generic error.
+
+Thresholds and recovery windows are fixed internal operational parameters — not user-tunable. In practice, **wait about 30 seconds and retry.** Service resumes automatically.
+
+## Insufficient balance
+
+```
+Insufficient balance.
+```
+
+or, specifically for a first-time buy of a new token:
+
+```
+Insufficient balance. First-time buys for a token need about 0.002 SOL extra for the Solana token account. Top up and try again.
+```
+
+Fund the wallet from `/wallet` → **Deposit**. See [Wallet](/telegram-bot/wallet-bot).
+
+## Slippage exceeded
+
+```
+Slippage exceeded.
+```
+
+The price moved past your slippage tolerance between quote and execution. Options:
+
+- Raise slippage under `/settings` (10 / 15 / 20 / 25 / 50%). See [Settings](/telegram-bot/settings).
+- Trade a smaller size.
+- Retry — markets move fast, the next quote may land.
+
+## No route found
+
+```
+No route found.
+```
+
+No DEX route has enough liquidity to fill your trade right now. Try a smaller size or wait — new routes appear as liquidity shifts.
+
+## Transaction failed
+
+```
+Transaction failed.
+```
+
+The signed transaction was dropped by the network or reverted onchain. Usually:
+
+- Priority fee too low during congestion — raise **Buy tip** or **Sell tip** in `/settings`.
+- Transient Solana network issue — retry in a few seconds.
+
+## Session expired
+
+```
+Please run /start first.
+```
+
+Your session expired. Sessions have a **7-day TTL**. Run `/start` once to re-authenticate silently and continue. Your Solana wallet is unchanged — same address, same balance, same positions.
+
+## Invalid Solana address (withdraw)
+
+```
+Invalid Solana address. Please paste again.
+```
+
+You pasted something that is not a well-formed Solana address during the withdraw flow. Addresses must be base58, correct length. The bot does not check whether the address belongs to an active wallet — only the format. Double-check before confirming.
+
+## Could not cancel order
+
+```
+Could not cancel order. Please try again.
+```
+
+Either:
+
+- The order already filled (refresh the list, it will drop off).
+- A brief backend issue — retry.
+
+## Could not load positions / limit orders / trade history
+
+```
+Could not load positions.
+Could not load limit orders.
+Could not load trade history.
+```
+
+Transient backend issue. Retry in ~30 seconds. If it persists, open [app.interstate.so](https://app.interstate.so) as a fallback.
+
+## Navigation
+
+- **`/cancel`** or the inline **Cancel** button — exits any active multi-step input flow (custom buy amount, custom sell %, withdraw address, withdraw amount).
+- **Back** — returns to the welcome / main menu.
+
+## When to use the web app instead
+
+- You need to create a limit order. See [Limit orders (trading)](/trading/solana-spot/limit-orders).
+- You need full trade history beyond the last 10 trades.
+- You need referrals, perps, prediction markets, monitors, wallet tracker, Arena pages — none of these exist in the bot. See [Referrals (web only)](/arena/referrals) and the [product overview](/getting-started/what-is-interstate).
+
+## What to read next
+
+- [Bot overview and feature parity](/telegram-bot/overview)
+- [Settings](/telegram-bot/settings)
+- [Wallet](/telegram-bot/wallet-bot)

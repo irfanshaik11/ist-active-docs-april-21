@@ -1,0 +1,86 @@
+---
+title: "Pulse"
+description: "Pulse is Interstate's real-time feed of Solana launchpad tokens, organized into New, Final Stretch, and Migrated columns."
+---
+
+# Pulse
+
+Pulse is a live stream of Solana launchpad tokens. It shows every token that is currently launching, graduating, or freshly migrated — with prices, market caps, liquidity, bonding progress, and trade counts updating continuously.
+
+Open it at [app.interstate.so/pulse](https://app.interstate.so/pulse) or as a slide-out panel from any trade page.
+
+## The three columns
+
+| Column | What it shows |
+|---|---|
+| **New** | Tokens that have just been indexed from a supported launchpad — Pump.fun, Raydium (including Launchpad), Meteora. These are on the bonding curve and have not yet graduated. |
+| **Final Stretch** | Tokens that have crossed 80% of their bonding curve. They are close to migrating to a permanent DEX pool. |
+| **Migrated** | Tokens that have graduated from their bonding curve via a confirmed on-chain migration event. Trading here routes to the permanent pool. |
+
+For the exact rules that move a token between columns, see [Pulse lifecycle](/discovery/pulse-lifecycle).
+
+## What each row shows
+
+Every row is a token card with:
+
+- **Name, symbol, logo, contract address**
+- **Price** (USD)
+- **Market cap** (USD)
+- **Liquidity** (USD)
+- **Bonding curve progress** (%) while in New / Final Stretch
+- **Volume and trade counts** in rolling windows
+- **Safety indicators** — sniper %, bundler %, insider %, dev %, top-10 holder concentration
+- **Quick-buy pill** — one-click buy using your active [Quick-buy preset](/trading/solana-spot/quick-buy-presets)
+
+Click a token to open its full [trade page](/getting-started/first-trade).
+
+## Update cadence
+
+| Signal | How often it updates |
+|---|---|
+| List order / new arrivals | Every 500 ms |
+| Prices, market cap, liquidity | Pushed per-trade over WebSocket, typically under 2 s end-to-end |
+| Lifecycle transitions (New → Final Stretch → Migrated) | Event-driven, target latency under 50 ms from the on-chain event |
+
+New tokens are prepended to the New column the moment they arrive — you don't wait for the next refresh interval. The WebSocket connection is kept open across page navigation, so Pulse data is already warm when you come back to it.
+
+## Chain selector
+
+Pulse defaults to Solana. You can switch to Monad via the chain switcher in the header or `?chain=monad`.
+
+::: info Monad is beta
+Data coverage on Monad is narrower than Solana. Some columns and safety signals may be missing or sparse.
+:::
+
+## Working from Pulse
+
+Pulse is built to be a launchpad workstation, not a static feed. Traders typically:
+
+1. **Scan New** for names, images, and early volume that look interesting
+2. **Watch Final Stretch** for tokens about to graduate — these often see a liquidity event at migration
+3. **Trade Migrated** once a token is safely on a permanent pool
+
+Every row supports:
+
+- **Quick-buy** — one-click buy at your preset amount. See [Quick-buy presets](/trading/solana-spot/quick-buy-presets) for setup.
+- **Snipe** — arm an auto-buy that fires when a new token matches criteria. Solana only.
+- **Star to watchlist** — pin a token for monitoring. See [Watchlist](/discovery/watchlist).
+- **Open trade page** — full chart, safety panel, trade history.
+
+## Common questions
+
+**Why did a token move back from Final Stretch to New?**
+It didn't — at least not visibly. If a bonding curve % dips below 80% after the Final Stretch notification fired, the database is corrected silently. The UI does not surface backward transitions.
+
+**Why is a token still showing in New when it looks migrated?**
+Migration requires a confirmed on-chain migration event from the indexer, not just a high percentage. Until that event fires, the token stays in New or Final Stretch. See [Pulse lifecycle](/discovery/pulse-lifecycle) for the exact rules.
+
+**Does Pulse show every launchpad?**
+Pump.fun, Raydium (including Launchpad), and Meteora are indexed. Tokens that never hit one of these launchpads won't appear in Pulse — use [Discover](/discovery/discover-tabs) or [Search](/discovery/token-search) for those.
+
+## What to read next
+
+- [Pulse lifecycle](/discovery/pulse-lifecycle) — exact rules for column transitions
+- [Discover tabs](/discovery/discover-tabs) — Trending, New Pairs, DEX, Live
+- [Watchlist](/discovery/watchlist) — pin tokens for monitoring
+- [Your first trade](/getting-started/first-trade) — from Pulse to executed buy

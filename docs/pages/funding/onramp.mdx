@@ -1,0 +1,82 @@
+---
+title: "Buy with fiat (Onramp)"
+description: "Buy SOL and other crypto with a card or bank via Onramper. Embedded in the deposit modal with your Solana wallet pre-filled."
+---
+
+# Buy with fiat
+
+Buy crypto with a card, bank transfer, or Apple Pay without leaving the app. Funds land in your Interstate wallet directly.
+
+## Provider
+
+Interstate uses **Onramper** — an aggregator that routes you to the best-priced fiat-on-ramp for your region and payment method. Onramper replaced the previous MoonPay integration.
+
+Onramper itself is not the exchange — it picks between underlying providers (including Coinbase, Transak, and others) per order.
+
+## Where to find it
+
+Header → **Deposit** → **Buy** tab.
+
+The tab embeds the Onramper widget in an iframe. Your primary Solana wallet address is pre-filled as the destination — you don't paste it. After paying, the provider sends crypto straight to your Interstate wallet.
+
+## Payment methods
+
+Varies by country. Typical options:
+
+- Credit and debit card (Visa, Mastercard)
+- Apple Pay / Google Pay
+- SEPA bank transfer (EU)
+- ACH / Wire (US, where supported)
+- Local bank rails in supported regions
+
+Final availability is shown in the widget after you enter amount and country.
+
+## Coinbase $500/week no-KYC
+
+One of the routed providers is **Coinbase Onramp**, which offers up to **$500/week with no KYC** for eligible users (US-heavy, subject to Coinbase's own checks). When Onramper routes your order through Coinbase, this applies — no document upload, no video verification.
+
+Above the threshold, or for other providers, standard KYC (ID + selfie) is required.
+
+The `$500/week no-KYC` allowance is set and enforced by Coinbase, not Interstate. Interstate cannot raise it or bypass it.
+
+## What you can buy
+
+The Buy tab is Solana-side:
+
+- **SOL** — recommended; used for every Solana trade
+- **USDC** (Solana) — stable, useful for pre-funding before a volatile move
+
+After purchase, if you ended up with a different asset than you want, use the [Convert](/funding/convert) tab to swap in-app.
+
+Monad / MON is not supported through the onramp yet. To get MON, buy SOL or USDC, bridge or swap externally, and deposit to your Monad address. See [Deposits](/funding/deposits).
+
+## Fees
+
+Two fee layers:
+
+1. **Provider fee** — charged by Coinbase / Transak / etc. Varies per method.
+2. **Network fee** — on-chain transfer fee from the provider to your wallet.
+
+Both are shown in the widget before you confirm. Interstate does not add a fee on top.
+
+## Settlement time
+
+| Method | Typical |
+|---|---|
+| Card / Apple Pay | Minutes. |
+| ACH / SEPA | 1–3 business days. |
+| Wire | Same-day once received. |
+
+The widget shows a status screen. You can close it and come back — funds arrive in your Interstate wallet when the provider settles.
+
+## Troubleshooting
+
+- **Card declined** — your bank may block crypto merchants. Call the bank to authorize, or try a different card.
+- **Region not supported** — Onramper coverage is wide but not global. If your country isn't in the list, [deposit](/funding/deposits) from an exchange instead.
+- **Order "pending" for hours** — provider-side KYC review. Check the email the provider sent.
+
+## What to do next
+
+- Make your first trade → [Your first trade](/getting-started/first-trade)
+- Swap the asset you bought → [Convert](/funding/convert)
+- Already have crypto? → [Deposits](/funding/deposits)

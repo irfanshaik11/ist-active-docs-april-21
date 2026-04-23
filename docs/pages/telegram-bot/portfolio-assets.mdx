@@ -1,0 +1,101 @@
+---
+title: "Portfolio and trade history"
+description: "Check every position, PnL, and the last 10 trades from the Interstate Telegram bot."
+---
+
+# Portfolio and trade history
+
+Two commands. One for positions, one for history.
+
+## `/assets` (alias `/positions`)
+
+```
+/assets
+```
+
+or
+
+```
+/positions
+```
+
+Both show the same portfolio view:
+
+```
+Your positions
+
+1. <SYMBOL_A>  0.82 SOL   +12.3%
+2. <SYMBOL_B>  1.40 SOL   −4.1%
+3. <SYMBOL_C>  0.05 SOL   +210.0%
+
+Total value:  2.27 SOL
+Total PnL:    +0.37 SOL (+19.5%)
+
+[ <SYMBOL_A> ] [ <SYMBOL_B> ] [ <SYMBOL_C> ]
+[ Refresh ]  [ Trade History ]
+```
+
+Each position lists **current value in SOL**, **PnL in SOL**, and **PnL %**. Aggregate total value and total PnL are at the bottom.
+
+You can also tap **Assets** in the main menu — it is the `menu:assets` callback and lands on the same view.
+
+## Position detail
+
+Tap a token button. The bot opens the position detail, which also doubles as the sell screen:
+
+```
+<SYMBOL_A>
+
+Tokens:         123,456.789
+Value:          0.82 SOL
+Avg buy:        $0.0000091
+Current price:  $0.0000102
+PnL:            +0.09 SOL (+12.3%)
+
+Sell:
+[ 25% ] [ 50% ] [ 100% ] [ X% (custom) ]
+```
+
+Sell mechanics are documented in [Sell by percentage](/telegram-bot/sell-by-percentage).
+
+Note: **24h price change is intentionally hidden** on the bot's position and token cards today — upstream data is unreliable for most mints. The field will return once the token service can compute it from OHLC candles.
+
+## Refresh
+
+Tap **Refresh** to re-fetch positions and prices. Use this after a pending trade lands or if prices look stale. The portfolio view does not auto-poll.
+
+## Trade history
+
+Tap **Trade History** from the portfolio view (callback `history`). The bot replies with your last 10 trades, inline:
+
+```
+Recent trades
+
+1. BUY   <SYMBOL_A>   1.00 SOL
+2. SELL  <SYMBOL_B>   0.50 SOL
+3. BUY   <SYMBOL_C>   0.25 SOL
+…
+```
+
+Each line shows the trade type (BUY or SELL), the token symbol, and the SOL amount. The list is capped at 10 inside the bot — for a full history, open the web app at [app.interstate.so](https://app.interstate.so).
+
+## No positions?
+
+```
+You have no positions yet. Paste a contract address to buy your first token.
+```
+
+See [Quick buy](/telegram-bot/quick-buy-paste-ca).
+
+## Errors you may see
+
+- `Please run /start first.` — 7-day session expired. Run `/start`.
+- `Could not load positions.` — a brief backend outage. Retry in ~30 seconds.
+
+Full list: [Error messages](/telegram-bot/error-messages).
+
+## What to read next
+
+- [Sell by percentage](/telegram-bot/sell-by-percentage)
+- [Wallet — balance, deposit, withdraw](/telegram-bot/wallet-bot)
+- [Limit orders in the bot (view + cancel)](/telegram-bot/limit-orders-bot)

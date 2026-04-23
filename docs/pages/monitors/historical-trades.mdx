@@ -1,0 +1,95 @@
+---
+title: "Historical trades"
+description: "Query past trades for your watched wallets. 90-day window, up to 500 rows per request."
+---
+
+# Historical trades
+
+The live feed is best-effort — events older than 30 seconds at ingest go straight to history without a live push. History is the source of truth.
+
+## Window
+
+| Default look-back | 90 days |
+| Maximum window | 90 days |
+
+You can narrow the window client-side when querying, but 90 days is the outer limit. Older events may be pruned.
+
+## Row limits
+
+| Default rows per request | 50 |
+| Maximum rows per request | 500 |
+
+If you need more than 500 events, paginate by narrowing the window (e.g., query one week at a time).
+
+## What each row contains
+
+Same shape as the live feed:
+
+| Field | Notes |
+|---|---|
+| Wallet address | The watched wallet |
+| Side | Buy or sell |
+| Token mint, symbol, name | Enriched from cached metadata |
+| Amounts | Token amount + SOL / USDC moved |
+| Price (USD) | At the time of the swap |
+| Market cap (USD) | At the time of the swap |
+| Tx signature | Solscan-linkable |
+| Timestamp | On-chain timestamp, not ingest time |
+
+Sorted newest-first.
+
+## How it's served
+
+Results are merged from a short-lived in-memory cache and the persistent event store. Repeat queries for the same wallet and window return quickly; fresh queries hit the store.
+
+Because the live feed is filtered by a 30-second window but the store records everything, **history can contain events that never fired live**. This is expected.
+
+## Backfill on wallet add
+
+When you add a new wallet, Interstate kicks off a backfill that pulls roughly the **last 10 transactions** for that wallet. You can start scanning history immediately after adding.
+
+- Backfill runs in the background and usually completes within a minute.
+- If the wallet was recently inactive, history may be sparse until new events arrive.
+- On Monad, backfill depth depends on what the indexer can return at wallet-add time.
+
+## Muted wallets
+
+Events from muted wallets are stored and queryable in history exactly like events from unmuted wallets. Muting only suppresses the live push.
+
+## Multi-wallet queries
+
+You can query across multiple wallets in one request. The response merges events from all requested wallets and sorts by timestamp. Row limits apply to the merged result, not per wallet.
+
+For a wide scan (say, 50 smart-money wallets over 30 days), expect results to be dominated by the most active wallets in the set.
+
+## Time zones
+
+Timestamps are stored and returned as Unix epoch milliseconds. The UI displays them in your local browser time zone. On-chain timestamp is authoritative; ingest time is not shown.
+
+## What history doesn't include
+
+- **Transfers that aren't swaps.** Plain sends don't appear.
+- **Failed transactions.** Only successful, parsed swaps are stored.
+- **Private transactions.** Anything that didn't hit a DEX Interstate indexes won't appear.
+- **PnL calculations for the watched wallet.** History is a list of swaps, not a computed performance view.
+
+## Working from history
+
+Historical trades pair well with [Token analytics](/discovery/token-analytics) — pick a swap a watched wallet made last week, open the token's trade page, and review the safety metrics before deciding whether to buy now.
+
+## Troubleshooting
+
+**Empty history for a wallet I just added.**
+Backfill is still running, or the wallet has had no recent activity in the indexed DEXes. Wait ~60 seconds and query again.
+
+**Row counts capped at 50.**
+That's the default page size. Pass a larger limit (up to 500) if the client exposes it.
+
+**Events older than 90 days missing.**
+Outside the retention window. Not recoverable.
+
+## What to read next
+
+- [Live feed mechanics](/monitors/live-feed-mechanics) — why live and history can diverge
+- [Wallet Tracker overview](/monitors/wallet-tracker-overview) — feed structure
+- [Token analytics](/discovery/token-analytics) — safety metrics for tokens in the history feed

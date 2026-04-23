@@ -1,0 +1,110 @@
+---
+title: "Trading on Monad"
+description: "Spot trading on Monad via Uniswap V2/V3 and the Universal Router. Beta — some Solana features are unavailable."
+---
+
+# Trading on Monad
+
+Monad spot trading is **beta**. Same UX surface as Solana — buy, sell by percentage, sell exact amount — with a different execution engine underneath.
+
+::: warning Beta status
+Monad trading works but has narrower feature coverage than Solana. See [What's unavailable on Monad](#whats-unavailable-on-monad) below.
+:::
+
+## What Interstate routes through
+
+| Protocol | Coverage |
+|---|---|
+| **Uniswap V2** | Constant-product pools |
+| **Uniswap V3** | 0.05%, 0.3%, 1% fee tiers |
+| **Universal Router** | Trade path aggregation |
+
+Pool discovery queries Uniswap V2 and V3 factory contracts and picks the highest-TVL pool for the token.
+
+## Native asset
+
+| Asset | MON |
+|---|---|
+
+You pay for trades in MON and the platform denominates sells in MON. ERC-20 tokens on Monad are traded against native MON.
+
+## 10 MON reserve
+
+::: danger 10 MON must remain in your wallet at all times
+The pre-check on every Monad trade enforces this. A trade that would drop your MON balance below **10 MON** after gas and value transfer is rejected. This keeps your wallet funded for future gas.
+:::
+
+Plan trade sizes to leave at least 10 MON headroom plus an estimate for gas.
+
+## Gas — charged on gasLimit, not on use
+
+::: warning Monad charges gas on `gasLimit`, not `gasUsed`
+Unlike Ethereum mainnet, Monad charges you for the full `gasLimit` you send — not just what the transaction actually consumed.
+:::
+
+To avoid overpaying while still ensuring trades land:
+
+- Interstate adds a **10% buffer** to its gas estimate.
+- Gas is capped at **30 million per transaction**.
+
+You don't set this manually. The pre-check endpoint handles it. But know that your MON cost per trade is higher than it would be on a gas-refund chain.
+
+## Finality
+
+| State | Timing |
+|---|---|
+| **Voted / speculative** (receipt available) | ~400ms |
+| **Finalized** | ~800ms |
+
+Interstate treats Finalized as the execution confirmation for portfolio updates. Receipts surface faster but are not final.
+
+## Chain IDs
+
+| Network | Chain ID |
+|---|---|
+| Monad mainnet | **143** |
+| Monad testnet | **10143** |
+
+## How trading works
+
+1. Navigate to `app.interstate.so/trade/monad/[contractAddress]`, or switch the chain in the header `BlockchainSwitcher`.
+2. Enter an amount (MON for buys; % or tokens for sells).
+3. Confirm.
+4. Pool discovery picks the highest-TVL Uniswap V2 / V3 pool.
+5. The tx signs and submits via your Turnkey wallet.
+6. Portfolio updates once the tx is Finalized.
+
+## What's unavailable on Monad
+
+The following Solana features are **not exposed** on Monad trading:
+
+- **MEV mode** — no Jito/Nozomi equivalent. Transactions submit through the standard RPC. See [MEV protection](/trading/mev-protection).
+- **Custom RPC** override in quick-buy presets
+- **Limit orders** — not currently available on Monad
+- **Live tab** on Discover — Monad is limited to Trending and New Pairs tabs
+- **Surge / xStocks tabs** — Solana-only
+- **Some token analytics** — data coverage is narrower than Solana
+
+## Multi-wallet trading
+
+Multi-wallet trading is supported on Monad at the backend level. You can route a single buy or sell across multiple Monad wallets.
+
+## Portfolio
+
+Monad positions show up in [Portfolio](https://app.interstate.so/portfolio) alongside Solana positions. Chain is indicated on every row. The `blockchain` filter switches between `sol` and `monad`.
+
+## Discover on Monad
+
+Only two tabs are available on Monad Discover:
+
+- Trending
+- New Pairs
+
+Everything else is Solana-only for now.
+
+## Read next
+
+- [Solana Spot overview](/trading/solana-spot/overview) — for comparison
+- [Order execution](/trading/order-execution)
+- [MEV protection](/trading/mev-protection) — why Monad doesn't have it yet
+- [What is Interstate](/getting-started/what-is-interstate)
