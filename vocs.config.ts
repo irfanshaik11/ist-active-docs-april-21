@@ -43,6 +43,10 @@ export default defineConfig({
       ],
     },
     {
+      text: 'Portfolio',
+      link: '/portfolio',
+    },
+    {
       text: 'Discovery & Intelligence',
       items: [
         { text: 'Pulse', link: '/discovery/pulse' },
