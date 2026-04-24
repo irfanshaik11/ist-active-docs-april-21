@@ -72,13 +72,13 @@ export default defineConfig({
       ],
     },
     {
-      text: 'Arena & Rewards',
+      text: 'Airdrop Genesis & Rewards',
       items: [
-        { text: 'Arena overview', link: '/arena/overview' },
-        { text: 'Credits, Ranks & Rewards', link: '/points' },
+        { text: 'Airdrop Genesis overview', link: '/arena/overview' },
+        { text: 'Credits, Ranks & Rewards', link: '/credits' },
         { text: 'Referrals', link: '/arena/referrals' },
         { text: 'Leaderboard', link: '/arena/leaderboard' },
-        { text: 'Airdrop Genesis', link: '/arena/airdrop-genesis' },
+        { text: 'Ranks & Cashback reference', link: '/arena/airdrop-genesis' },
       ],
     },
     {

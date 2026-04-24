@@ -1,34 +1,42 @@
 ---
 title: "Referrals"
-description: "Refer traders to Interstate and earn a cut of their trading fees five layers deep. Plus Credits passthrough from your network."
-date: 2026-04-21
+description: "Refer traders to Interstate and earn a cut of their trading fees up to four tiers deep. Plus Credits passthrough from your network."
+date: 2026-04-24
 ---
 
 # Referrals
 
-Every Interstate user gets a referral code. Share it, and you earn a share of the platform fees from every trade your referrals make — five layers deep.
+Every Interstate user gets a referral code. Share it, and you earn a share of the platform fees from every trade your referrals make — up to four tiers deep. How big that share is depends on your **Honors** tier, which you climb based on the activity of your referral network.
 
 ::: warning Web app only
 Referrals run through the Interstate **web app** (`app.interstate.so`). The Telegram bot does **not** currently support referrals. If you want to refer traders, share your web app code.
 :::
 
-## How the 5-Layer Program Works
+## How the Honors program works
 
 When someone signs up with your referral code, they become your **direct referral**. When they refer someone else, that person becomes your **Tier 1**. And so on, down to Tier 4. You earn a percentage of the platform fee on every trade at every layer.
 
-| Layer | Your cut of their platform fee |
-|---|---|
-| **Direct** (someone you referred) | **20%** |
-| **Tier 1** (someone your direct referred) | 3% |
-| **Tier 2** | 2% |
-| **Tier 3** | 1.5% |
-| **Tier 4** | 1% |
+What percentage? That depends on your **Honors tier**. Everyone starts at **Honors I** and climbs to Honors IV as the network they've built gets bigger and more active.
 
-A direct referral pays you **20%** of the platform fee on every trade they make, for as long as they keep trading. There is no cap, no time limit, and no action needed on your part — rewards accumulate automatically into your referrals balance.
+| Honors tier | Direct | Tier 1 | Tier 2 | Tier 3 | Tier 4 | **Total up to** |
+|---|---|---|---|---|---|---|
+| **Honors I** (default) | 20% | 3% | 2% | 1.5% | 1% | 27.5% |
+| **Honors II** | 22.5% | 4% | 2.5% | 2% | 1.5% | 32.5% |
+| **Honors III** | 30% | 5% | 3.5% | 2.5% | 1.5% | 42.5% |
+| **Honors IV** | 35% | 6% | 4% | 3% | 2% | **50%** |
+
+A direct referral pays you **20%** of the platform fee at Honors I, scaling all the way up to **35%** once you reach Honors IV. There is no cap on volume, no time limit, and no action needed on your part — rewards accumulate automatically into your referrals balance.
 
 ## Credits Passthrough (On Top of Fee Sharing)
 
-In parallel with fee sharing, Arena also passes a slice of your direct referral's **Credits** back to you. Your rank multiplier applies on top. See **[How Credits, Ranks & Rewards Work → Referrals](/points#referrals--your-network-compounds)** for the full mechanic and worked examples.
+In parallel with the Honors fee share, Airdrop Genesis also passes a slice of your direct referral's **Credits** back to you: **10% of their base Credits**, with your own rank multiplier applied on top. See **[How Credits, Ranks & Rewards Work → Referrals](/credits#referrals--your-network-compounds)** for the full mechanic and worked examples.
+
+These two programs are **separate**:
+
+- **Honors fee share** pays in **SOL** (a cut of real trading fees).
+- **Credits passthrough** pays in **Credits** (10% of your referee's base Credits, multiplied by your rank).
+
+You earn **both** from the same referral, at the same time.
 
 ## Your Referral Code
 
@@ -49,21 +57,24 @@ The sooner they sign up, the longer your fee share runs. Every trade they make f
 
 Referral rewards accumulate in your referral balance on the `/referrals` page. You can see:
 
+- Your current Honors tier and the percentages it unlocks
 - Everyone you've referred and their current status
+- The full pyramid — direct referrals plus tiers 1–4 — with counts per layer
 - Real-time updates (pushed over WebSocket while the page is open)
 - Your accumulated referral earnings, claimable to your wallet
 
 ## Things to Know
 
 - **Referrals are for new signups.** If someone already has an Interstate account, they can't be retroactively attached to your code.
-- **Five layers, not infinite.** You earn from your direct referrals down through four more tiers — everyone below that doesn't pay you.
-- **Fee share ≠ Credits passthrough.** The 5-layer fee program pays you in real trading fees. The Credits passthrough (covered in `/points`) pays you in Arena Credits. You earn both from the same referral.
+- **Four tiers of nested referrals, not infinite.** You earn from your direct referrals down through four more layers — everyone below Tier 4 doesn't pay you.
+- **Honors I is the default.** You start at the base table (27.5% total); higher Honors tiers unlock as your referral network hits activity milestones.
+- **Fee share ≠ Credits passthrough.** The Honors program pays you in real trading fees (SOL). The Credits passthrough (covered in `/credits`) pays you in Credits. You earn both from the same referral.
 - **Telegram bot referrals are disabled.** Only the web app supports referrals today.
 
 ## What to Read Next
 
-- [Arena Overview](/arena/overview)
-- [How Credits, Ranks & Rewards Work](/points) — the definitive Arena guide, including the Credits passthrough details.
-- [Airdrop Genesis](/arena/airdrop-genesis) — rank tiers and multipliers.
+- [Airdrop Genesis Overview](/arena/overview)
+- [How Credits, Ranks & Rewards Work](/credits) — the definitive guide, including the Credits passthrough details.
+- [Ranks & Cashback reference](/arena/airdrop-genesis) — rank tiers and multipliers.
 - [Leaderboard](/arena/leaderboard) — see where your volume (and your referrals' volume) puts you.
 - [Waitlist](/access/waitlist) — for the friends who still need to get in.
